@@ -4,10 +4,10 @@ using UnityEngine;
 
 public sealed class GameInitialiazation
 {
-    private UpdateController updateController;
+    private IUpdateController mainUpdateController;
     public void Start(GameStarter gameStarter)
     {
-        updateController = new UpdateController();
-        gameStarter.SetUpdateController(updateController);
+        mainUpdateController = new UpdateController();
+        gameStarter.SetUpdateController(mainUpdateController);
     }
 }
