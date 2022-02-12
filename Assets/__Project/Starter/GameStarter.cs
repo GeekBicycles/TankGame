@@ -4,32 +4,32 @@ using UnityEngine;
 
 public sealed class GameStarter : MonoBehaviour
 {
-    private UpdateController updateController;
+    private IUpdateController mainUpdateController;
     private void Start()
     {
         GameInitialiazation gameInitialiazation= new GameInitialiazation();
         gameInitialiazation.Start(this);
     }
 
-    public void SetUpdateController(UpdateController updateController)
+    public void SetUpdateController(IUpdateController updateController)
     {
-        this.updateController = updateController;
+        this.mainUpdateController = updateController;
     }
 
     private void Update()
     {
-        updateController.Update(Time.deltaTime);
-        updateController.UnscaledUpdate(Time.unscaledDeltaTime);
+        mainUpdateController.Update(Time.deltaTime);
+        mainUpdateController.UnscaledUpdate(Time.unscaledDeltaTime);
     }
 
     private void FixedUpdate()
     {
-        updateController.FixedUpdate(Time.fixedDeltaTime);
+        mainUpdateController.FixedUpdate(Time.fixedDeltaTime);
     }
 
     private void LateUpdate()
     {
-        updateController.LateUpdate(Time.deltaTime);
+        mainUpdateController.LateUpdate(Time.deltaTime);
     }
 
 }

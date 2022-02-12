@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class UpdateController
+public sealed class UpdateController : IUpdateController
 {
     private List<IUpdate> updateList;
     private List<IFixedUpdate> fixedUpdateList;
@@ -55,5 +55,13 @@ public sealed class UpdateController
         if (updatable is IFixedUpdate fixedUpdateController) fixedUpdateList.Add(fixedUpdateController);
         if (updatable is ILateUpdate lateUpdateController) lateUpdateList.Add(lateUpdateController);
         if (updatable is IUnscaledUpdate unscaledUpdateController) unscaledUpdateList.Add(unscaledUpdateController);
+    }
+
+    public void RemoveController(IUpdatable updatable)
+    {
+        if (updatable is IUpdate updateController) updateList.Remove(updateController);
+        if (updatable is IFixedUpdate fixedUpdateController) fixedUpdateList.Remove(fixedUpdateController);
+        if (updatable is ILateUpdate lateUpdateController) lateUpdateList.Remove(lateUpdateController);
+        if (updatable is IUnscaledUpdate unscaledUpdateController) unscaledUpdateList.Remove(unscaledUpdateController);
     }
 }
