@@ -10,9 +10,11 @@ namespace Tank_Game
     public sealed class Reference 
     {
         private GameObject _player;
+        private GameObject _enemy;
         private Canvas _mainCanvas;
         private Button _restartButton;
         private EventSystem _eventSystem;
+
 
         public GameObject Player
         {
@@ -24,6 +26,18 @@ namespace Tank_Game
                     _player = Object.Instantiate(player);
                 }
                 return _player;
+            }
+        }
+        public GameObject Enemy
+        {
+            get
+            {
+                if (_enemy == null)
+                {
+                    var enemy = Resources.Load<GameObject>("Prefabs/enemyTank");
+                    _enemy = Object.Instantiate(enemy);
+                }
+                return _enemy;
             }
         }
         public Canvas MainCanvas
