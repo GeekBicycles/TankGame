@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUpdatable
+namespace Tank_Game
 {
+    public interface IUpdatable
+    {
 
+    }
 }

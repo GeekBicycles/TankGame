@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IEnemyTank : ITank
+namespace Tank_Game
 {
-    /// <summary>
-    /// Максимальный разброс точности
-    /// </summary>
-    public float maxAccuracy { get; set; }
+    public interface IEnemyTank : ITank
+    {
+        /// <summary>
+        /// Максимальный разброс точности
+        /// </summary>
+        public float maxAccuracy { get; set; }
 
-    /// <summary>
-    /// Текущий разброс точности
-    /// </summary>
-    public float currentAccuracy { get; set; }
+        /// <summary>
+        /// Текущий разброс точности
+        /// </summary>
+        public float currentAccuracy { get; set; }
 
-    /// <summary>
-    /// Скорость изменения точности
-    /// </summary>
-    public float changeAccuracy { get; set; }
+        /// <summary>
+        /// Скорость изменения точности
+        /// </summary>
+        public float changeAccuracy { get; set; }
 
+    }
 }
