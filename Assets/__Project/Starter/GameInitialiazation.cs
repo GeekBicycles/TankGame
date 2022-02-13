@@ -11,6 +11,10 @@ namespace Tank_Game
         {
             mainUpdateController = new UpdateController();
             gameStarter.SetUpdateController(mainUpdateController);
+
+            SpawnPosition spawnPosition = new SpawnPosition();
+            TankSpawner tankSpawner = new TankSpawner();
+            tankSpawner.Spawn(spawnPosition.playerSpawnPoint, spawnPosition.EnemySpawnPoint);
         }
     }
 }
