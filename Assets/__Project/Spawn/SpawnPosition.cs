@@ -6,13 +6,13 @@ namespace Tank_Game
 {
     public sealed class SpawnPosition
     {
-        public GameObject playerSpawnPoint;
-        public GameObject EnemySpawnPoint;
+        public Transform playerSpawnPoint;
+        public Transform EnemySpawnPoint;
 
         public SpawnPosition()
         {
-            playerSpawnPoint = GameObject.Find("SpawnPoint1");
-            EnemySpawnPoint = GameObject.Find("SpawnPoint2");
+            playerSpawnPoint = GameObject.Find("SpawnPoint1").transform;
+            EnemySpawnPoint = GameObject.Find("SpawnPoint2").transform;
         }
     }
 }

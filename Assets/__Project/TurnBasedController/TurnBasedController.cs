@@ -4,27 +4,27 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class TurnBasedController : IUpdate, IFixedUpdate, ILateUpdate, IUnscaledUpdate
+    public sealed class TurnBasedController : IUpdateController
     {
-        private List<IUpdateController> updateControllers;
+        private List<IUpdatable> updateControllers;
         private int turnIndex;
-        private IUpdateController currentController;
+        private IUpdatable currentController;
         private bool enable;
 
         public TurnBasedController()
         {
-            updateControllers = new List<IUpdateController>();
+            updateControllers = new List<IUpdatable>();
             turnIndex = 0;
             currentController = null;
             enable = false;
         }
 
-        public void AddController(IUpdateController updateController)
+        public void AddController(IUpdatable updateController)
         {
             updateControllers.Add(updateController);
         }
 
-        public void RemoveController(IUpdateController updateController)
+        public void RemoveController(IUpdatable updateController)
         {
             int removeIndex = updateControllers.IndexOf(updateController);
 
@@ -102,22 +102,34 @@ namespace Tank_Game
 
         public void FixedUpdate(float fixedDeltaTime)
         {
-            if (enable) currentController.FixedUpdate(fixedDeltaTime);
+            if (enable) 
+            {
+                if (currentController is IFixedUpdate controller) controller.FixedUpdate(fixedDeltaTime);
+            }
         }
 
         public void LateUpdate(float deltaTime)
         {
-            if (enable) currentController.LateUpdate(deltaTime);
+            if (enable)
+            {
+                if (currentController is ILateUpdate controller) controller.LateUpdate(deltaTime);
+            }
         }
 
         public void UnscaledUpdate(float unscaledDeltaTime)
         {
-            if (enable) currentController.UnscaledUpdate(unscaledDeltaTime);
+            if (enable)
+            {
+                if (currentController is IUnscaledUpdate controller) controller.UnscaledUpdate(unscaledDeltaTime);
+            }
         }
 
         public void Update(float deltaTime)
         {
-            if (enable) currentController.Update(deltaTime);
+            if (enable)
+            {
+                if (currentController is IUpdate controller) controller.Update(deltaTime);
+            }
         }
     }
 }

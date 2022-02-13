@@ -7,17 +7,17 @@ namespace Tank_Game
     public sealed class TankSpawner
     {
         
-        public GameObject playerTank;
-        public GameObject ememyTank;
+        public Transform playerTank;
+        public Transform ememyTank;
 
-        public void Spawn(GameObject playerPosition, GameObject enemyPosition)
+        public void Spawn(Vector3 playerPosition, Vector3 enemyPosition)
         {
             GameObject playerTankPrefab = Resources.Load<GameObject>(ResourcesPathes.playerTank);
-            playerTank = GameObject.Instantiate(playerTankPrefab, playerPosition.transform.position, Quaternion.identity);
+            playerTank = GameObject.Instantiate(playerTankPrefab, playerPosition, Quaternion.identity).transform;
             playerTank.name = PrefabsNames.playerTankName;
 
             GameObject enemyTankPrefab = Resources.Load<GameObject>(ResourcesPathes.enemyTank);
-            ememyTank = GameObject.Instantiate(enemyTankPrefab, enemyPosition.transform.position, Quaternion.identity);
+            ememyTank = GameObject.Instantiate(enemyTankPrefab, enemyPosition, Quaternion.identity).transform;
             ememyTank.name = PrefabsNames.enemyTankName;
 
         }

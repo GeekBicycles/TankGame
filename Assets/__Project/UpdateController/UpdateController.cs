@@ -66,5 +66,6 @@ namespace Tank_Game
             if (updatable is ILateUpdate lateUpdateController) lateUpdateList.Remove(lateUpdateController);
             if (updatable is IUnscaledUpdate unscaledUpdateController) unscaledUpdateList.Remove(unscaledUpdateController);
         }
+
     }
 }
