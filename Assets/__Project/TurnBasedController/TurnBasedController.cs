@@ -2,119 +2,123 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class TurnBasedController : IUpdate, IFixedUpdate, ILateUpdate, IUnscaledUpdate
+namespace Tank_Game
 {
-    private List<IUpdateController> updateControllers;
-    private int turnIndex;
-    private IUpdateController currentController;
-    private bool enable;
-
-    public TurnBasedController()
+    public sealed class TurnBasedController : IUpdate, IFixedUpdate, ILateUpdate, IUnscaledUpdate
     {
-        updateControllers = new List<IUpdateController>();
-        turnIndex = 0;
-        currentController = null;
-        enable = false;
-    }
+        private List<IUpdateController> updateControllers;
+        private int turnIndex;
+        private IUpdateController currentController;
+        private bool enable;
 
-    public void AddController(IUpdateController updateController)
-    {
-        updateControllers.Add(updateController);
-    }
-
-    public void RemoveController(IUpdateController updateController)
-    {
-        int removeIndex = updateControllers.IndexOf(updateController);
-
-        RemoveController(removeIndex);
-    }
-
-    private void RemoveController(int removeIndex)
-    {
-        if (turnIndex > removeIndex) turnIndex--;
-        updateControllers.RemoveAt(removeIndex);
-        if (updateControllers.Count == 0) enable = false;
-        if (turnIndex > updateControllers.Count - 1) turnIndex = 0;
-        SetCurrentController();
-    }
-
-    private void SetCurrentController()
-    {
-        if (!enable)
+        public TurnBasedController()
         {
+            updateControllers = new List<IUpdateController>();
+            turnIndex = 0;
             currentController = null;
-            return;
-        }
-
-        if (updateControllers[turnIndex] == null)
-        {
-            RemoveController(turnIndex);
-        }
-        else
-        {
-            currentController = updateControllers[turnIndex];
-        }
-    }
-
-    public void Start()
-    {
-        enable = true;
-        turnIndex = 0;
-        SetCurrentController();
-    }
-
-    public bool SetEnable(bool value)
-    {
-        if (value == false)
-        {
             enable = false;
-            currentController = null;
-            return true;
         }
 
-        if (updateControllers.Count == 0)
+        public void AddController(IUpdateController updateController)
         {
-            enable = false;
-            currentController = null;
-            return false;
+            updateControllers.Add(updateController);
         }
-        
-        if (turnIndex > updateControllers.Count - 1) turnIndex = 0;
-        enable = true;
-        SetCurrentController();
 
-        return enable;
+        public void RemoveController(IUpdateController updateController)
+        {
+            int removeIndex = updateControllers.IndexOf(updateController);
 
-    }
+            RemoveController(removeIndex);
+        }
 
-    public void NextTurn()
-    {
-        turnIndex = (turnIndex + 1) % updateControllers.Count;
-        SetCurrentController();
-    }
+        private void RemoveController(int removeIndex)
+        {
+            if (turnIndex > removeIndex) turnIndex--;
+            updateControllers.RemoveAt(removeIndex);
+            if (updateControllers.Count == 0) enable = false;
+            if (turnIndex > updateControllers.Count - 1) turnIndex = 0;
+            SetCurrentController();
+        }
 
-    public void Stop()
-    {
-        SetEnable(false);
-    }
+        private void SetCurrentController()
+        {
+            if (!enable)
+            {
+                currentController = null;
+                return;
+            }
 
-    public void FixedUpdate(float fixedDeltaTime)
-    {
-        if (enable) currentController.FixedUpdate(fixedDeltaTime);
-    }
+            if (updateControllers[turnIndex] == null)
+            {
+                RemoveController(turnIndex);
+            }
+            else
+            {
+                currentController = updateControllers[turnIndex];
+            }
+        }
 
-    public void LateUpdate(float deltaTime)
-    {
-        if (enable) currentController.LateUpdate(deltaTime);
-    }
+        public void Start()
+        {
+            enable = true;
+            turnIndex = 0;
+            SetCurrentController();
+        }
 
-    public void UnscaledUpdate(float unscaledDeltaTime)
-    {
-        if (enable) currentController.UnscaledUpdate(unscaledDeltaTime);
-    }
+        public bool SetEnable(bool value)
+        {
+            if (value == false)
+            {
+                enable = false;
+                currentController = null;
+                return true;
+            }
 
-    public void Update(float deltaTime)
-    {
-        if (enable) currentController.Update(deltaTime);
+            if (updateControllers.Count == 0)
+            {
+                enable = false;
+                currentController = null;
+                return false;
+            }
+
+            if (turnIndex > updateControllers.Count - 1) turnIndex = 0;
+            enable = true;
+            SetCurrentController();
+
+            return enable;
+
+        }
+
+        public void NextTurn()
+        {
+            turnIndex = (turnIndex + 1) % updateControllers.Count;
+            SetCurrentController();
+        }
+
+        public void Stop()
+        {
+            SetEnable(false);
+        }
+
+        public void FixedUpdate(float fixedDeltaTime)
+        {
+            if (enable) currentController.FixedUpdate(fixedDeltaTime);
+        }
+
+        public void LateUpdate(float deltaTime)
+        {
+            if (enable) currentController.LateUpdate(deltaTime);
+        }
+
+        public void UnscaledUpdate(float unscaledDeltaTime)
+        {
+            if (enable) currentController.UnscaledUpdate(unscaledDeltaTime);
+        }
+
+        public void Update(float deltaTime)
+        {
+            if (enable) currentController.Update(deltaTime);
+        }
     }
 }
+

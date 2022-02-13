@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ILateUpdate : IUpdatable
+namespace Tank_Game
 {
-    public void LateUpdate(float deltaTime);
+    public interface ILateUpdate : IUpdatable
+    {
+        public void LateUpdate(float deltaTime);
 
+    }
 }

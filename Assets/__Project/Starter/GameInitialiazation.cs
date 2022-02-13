@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class GameInitialiazation
+namespace Tank_Game
 {
-    private IUpdateController mainUpdateController;
-    public void Start(GameStarter gameStarter)
+    public sealed class GameInitialiazation
     {
-        mainUpdateController = new UpdateController();
-        gameStarter.SetUpdateController(mainUpdateController);
+        private IUpdateController mainUpdateController;
+        public void Start(GameStarter gameStarter)
+        {
+            mainUpdateController = new UpdateController();
+            gameStarter.SetUpdateController(mainUpdateController);
+        }
     }
 }

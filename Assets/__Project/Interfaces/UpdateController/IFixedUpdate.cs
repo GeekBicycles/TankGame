@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IFixedUpdate : IUpdatable
+namespace Tank_Game
 {
-    public void FixedUpdate(float fixedDeltaTime);
+    public interface IFixedUpdate : IUpdatable
+    {
+        public void FixedUpdate(float fixedDeltaTime);
+    }
 }
+
