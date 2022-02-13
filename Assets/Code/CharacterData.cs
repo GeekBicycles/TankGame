@@ -10,6 +10,9 @@ namespace Tank_Game
         [Range(0, 10)]
         public float Speed;
 
+        [Range(0, 10)]
+        public float gravity;
+
         [Range(0, 5)]
         public float Health;
 
