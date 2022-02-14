@@ -6,23 +6,13 @@ namespace Tank_Game
 {
     public class BulletModel : IBullet
     {
-        private float _speed;
-        private int _damage;
+        public float Speed { get; }
+        public int Damage { get; }
 
         public BulletModel(float speed, int damage)
         {
-            _speed = speed;
-            _damage = damage;
-        }
-
-        public float Speed
-        {
-            get { return _speed; }
-        }
-
-        public int Damage
-        {
-            get { return _damage; }
+            Speed = speed;
+            Damage = damage;
         }
     }
 }
