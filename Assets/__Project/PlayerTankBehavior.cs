@@ -11,10 +11,7 @@ namespace Tank_Game
 
         public void OnTriggerEnter(Collider other)
         {
-            if (GetComponent<Collider>())
-            {
-                throw new NotImplementedException();
-            }
+            throw new NotImplementedException();
         }
     }
 }

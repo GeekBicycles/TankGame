@@ -6,16 +6,15 @@ namespace Tank_Game
 {
     public class EnemyTankBehavior : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [RequireComponent(typeof(BoxCollider))]
+        public class PlayerTankBehavior : MonoBehaviour
         {
-        
-        }
+            public EnemyTankController EnemyTankController;
 
-        // Update is called once per frame
-        void Update()
-        {
-        
+            public void OnTriggerEnter(Collider other)
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }
