@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
-
 namespace Tank_Game
 {
+    [RequireComponent(typeof(BoxCollider))]
     public class PlayerTankBehavior : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        public PlayerTankController PlayerTankController;
 
-        // Update is called once per frame
-        void Update()
+        public void OnTriggerEnter(Collider other)
         {
-        
+            if (GetComponent<Collider>())
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
