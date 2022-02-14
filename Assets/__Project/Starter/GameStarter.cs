@@ -10,8 +10,8 @@ namespace Tank_Game
         private IUpdateController mainUpdateController;
         private void Start()
         {
-            GameInitialiazation gameInitialiazation = new GameInitialiazation();
-            gameInitialiazation.Start(this);
+            Game game = new Game();
+            game.Start(this);
         }
 
         public void SetUpdateController(IUpdateController updateController)
