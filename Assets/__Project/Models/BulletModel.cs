@@ -4,11 +4,16 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public interface IBullet
+    public class BulletModel : IBullet
     {
-        // Комментарий для теста
         public float Speed { get; set; }
         public int Damage { get; set; }
         public Transform transform { get; set; }
+
+        public BulletModel(float speed, int damage)
+        {
+            Speed = speed;
+            Damage = damage;
+        }
     }
 }
