@@ -6,14 +6,27 @@ namespace Tank_Game
 {
     public sealed class EnemyTankController : IUpdate
     {
-        public EnemyTankController(IEnemyTank enemyTank, BulletFactory bulletFactory)
+        private float time = 3;
+        private float speedfire;
+        private BulletFactory bulletFactory;
+        GameObject[] Fire = GameObject.FindGameObjectsWithTag("FireBot");
+        public EnemyTankController(/*IEnemyTank enemyTank, */BulletFactory bulletFactory)
         {
-
+            this.bulletFactory = bulletFactory;
+            
         }
 
         public void Update(float deltaTime)
         {
-            throw new System.NotImplementedException();
+            time -= deltaTime;
+            if (time <= 0)
+            {
+                foreach (GameObject FireTransform in Fire)
+                {
+                    bulletFactory.Fire(FireTransform.transform.position, speedfire, FireTransform.transform.rotation);
+                }
+                 
+            }
         }
     }
 }
