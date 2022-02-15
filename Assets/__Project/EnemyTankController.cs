@@ -10,9 +10,11 @@ namespace Tank_Game
         private float speedfire;
         private BulletFactory bulletFactory;
         GameObject[] Fire = GameObject.FindGameObjectsWithTag("FireBot");
-        public EnemyTankController(/*IEnemyTank enemyTank, */BulletFactory bulletFactory)
+        private IEnemyTank enemyTank;
+        public EnemyTankController(IEnemyTank enemyTank, BulletFactory bulletFactory)
         {
             this.bulletFactory = bulletFactory;
+            this.enemyTank = enemyTank;
             
         }
 
@@ -23,7 +25,8 @@ namespace Tank_Game
             {
                 foreach (GameObject FireTransform in Fire)
                 {
-                    bulletFactory.Fire(FireTransform.transform.position, speedfire, FireTransform.transform.rotation);
+                    Transform bulletSpawnPoint = enemyTank.transform.GetComponentInChildren<EnemyTankBehavior>().bulletSpawnPoint;
+                    bulletFactory.Fire(bulletSpawnPoint.position, speedfire, bulletSpawnPoint.rotation);
                 }
                  
             }
