@@ -33,7 +33,7 @@ namespace Tank_Game
             transform.rotation = _playerStartPoint.rotation;
             gameObject.SetActive(false);
             
-            if (collision.gameObject.TryGetComponent(Type EnemyTank, out IEnemyTank enemy))
+            if (collision.gameObject.TryGetComponent(out IEnemyTank enemy))
             {
                 enemy.health -= _bulletModel.Damage;
             }
