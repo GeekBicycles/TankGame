@@ -47,7 +47,7 @@ namespace Tank_Game
             SpawnTanks();
 
             BulletsData bulletsData = new BulletsData();
-            BulletController bulletController = new BulletController(bulletsData);
+            BulletController bulletController = new BulletController(bulletsData, new BulletView());//TODO  убрать костыль
             BulletFactory bulletFactory = new BulletFactory(bulletController);
             PlayerTankController playerTankController = new PlayerTankController(inputData, playerTankModel, bulletFactory);
             EnemyTankController enemyTankController = new EnemyTankController(/*enemyTankModel, */bulletFactory);

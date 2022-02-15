@@ -4,21 +4,20 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class BulletController : IUpdate
+    public sealed class BulletController : IFixedUpdate
     {
-        private BulletsData bulletsdata;
-        public BulletController(BulletsData bulletsData)
+        private BulletsData _bulletModel;
+        private BulletView _bulletView;
+
+        public BulletController(BulletsData bullet, BulletView bulletView)
         {
-            bulletsdata = bulletsData;
+            _bulletModel = bullet;
+            _bulletView = bulletView;
         }
 
-        public void Update(float deltaTime)
+        public void FixedUpdate(float fixedDeltaTime)
         {
-            throw new System.NotImplementedException();
-        }
-        public void PlayParticleDamage()
-        {
-
+            _bulletView.Fire(_bulletModel.bullets[0].Speed * fixedDeltaTime);
         }
     }
 }
