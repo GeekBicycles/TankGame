@@ -21,5 +21,7 @@ namespace Tank_Game
         /// </summary>
         public float changeAccuracy { get; set; }
 
+
+
     }
 }

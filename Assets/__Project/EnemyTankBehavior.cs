@@ -4,9 +4,11 @@ using UnityEngine;
 
 namespace Tank_Game
 {
+    [RequireComponent(typeof(BoxCollider))]
     public class EnemyTankBehavior : MonoBehaviour
     {
-        [RequireComponent(typeof(BoxCollider))]
+
+        public Transform bulletSpawnPoint;
         public class PlayerTankBehavior : MonoBehaviour
         {
             public EnemyTankController EnemyTankController;

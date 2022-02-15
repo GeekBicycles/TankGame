@@ -50,7 +50,7 @@ namespace Tank_Game
             BulletController bulletController = new BulletController(bulletsData, new BulletView());//TODO  убрать костыль
             BulletFactory bulletFactory = new BulletFactory(bulletController);
             PlayerTankController playerTankController = new PlayerTankController(inputData, playerTankModel, bulletFactory);
-            EnemyTankController enemyTankController = new EnemyTankController(/*enemyTankModel, */bulletFactory);
+            EnemyTankController enemyTankController = new EnemyTankController(enemyTankModel, bulletFactory);
             TurnBasedController turnBasedController = new TurnBasedController(playerTankController, enemyTankController, bulletsData);
             EndGameController endGameController = new EndGameController(playerTankModel, enemyTankModel);
             CameraController cameraController = new CameraController();
