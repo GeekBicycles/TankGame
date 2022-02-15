@@ -9,5 +9,6 @@ namespace Tank_Game
         public float health { get; set; }
         public float speed { get; set; }
         public float maxBulletSpeed { get; set; }
+        public Transform transform { get; set; }
     }
 }
