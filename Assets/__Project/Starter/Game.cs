@@ -11,8 +11,8 @@ namespace Tank_Game
         private InputController inputController;
 
         private IInputData inputData;
-        private ITank playerTankModel;
-        private IEnemyTank enemyTankModel;
+        private IPlayerTank playerTank;
+        private IEnemyTankList enemyTankList;
 
         public void Start(GameStarter gameStarter)
         {
@@ -20,7 +20,8 @@ namespace Tank_Game
 
             InitInputController();
 
-            WaitForStart();
+            //WaitForStart(); //TODO включить метод, отключил на тестирование
+            BeginGame();
         }
 
         private void InitInputController()
@@ -44,24 +45,22 @@ namespace Tank_Game
 
         private void BeginGame()
         {
-            SpawnTanks();
+            BulletController bulletController = new BulletController();
+            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController);
+            playerTank = playerTankController.GetPlayerTank();
+            EnemyTankController enemyTankController = new EnemyTankController(bulletController);
 
-            BulletsData bulletsData = new BulletsData();
-            BulletController bulletController = new BulletController(bulletsData);
-            BulletFactory bulletFactory = new BulletFactory(bulletController);
-            PlayerTankController playerTankController = new PlayerTankController(inputData, playerTankModel, bulletFactory);
-            EnemyTankController enemyTankController = new EnemyTankController(/*enemyTankModel, */bulletFactory);
-            TurnBasedController turnBasedController = new TurnBasedController(playerTankController, enemyTankController, bulletsData);
-            EndGameController endGameController = new EndGameController(playerTankModel, enemyTankModel);
+            EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
+            
             CameraController cameraController = new CameraController();
-            UIController uIController = new UIController(playerTankModel, enemyTankModel);
+            
+            UIController uIController = new UIController(playerTank);
 
             UpdateController updateController = new UpdateController();
-            //updateController.AddController(inputController);
-            //updateController.AddController(playerTankController);
+            updateController.AddController(inputController);
+            updateController.AddController(bulletController);
+            updateController.AddController(playerTankController);
             //updateController.AddController(enemyTankController);
-            //updateController.AddController(bulletController);
-            //updateController.AddController(turnBasedController);
             //updateController.AddController(endGameController);
             //updateController.AddController(cameraController);
             //updateController.AddController(uIController);
@@ -70,17 +69,17 @@ namespace Tank_Game
 
         private void SpawnTanks()
         {
-            TankFactory tankFactory = new TankFactory();
-            playerTankModel = tankFactory.GetPlayerTankModel();
-            enemyTankModel = tankFactory.GetEnemyTankModel();
+            //TankFactory tankFactory = new TankFactory();
+            //playerTankModel = tankFactory.GetPlayerTankModel();
+            //enemyTankModel = tankFactory.GetEnemyTankModel();
 
-            SpawnPosition spawnPosition = new SpawnPosition();
-            TankSpawner tankSpawner = new TankSpawner();
-            tankSpawner.Spawn(spawnPosition.playerSpawnPoint.position, spawnPosition.EnemySpawnPoint.position);
-            new TankAutoRotator(tankSpawner.playerTank, tankSpawner.ememyTank);
+            //SpawnPosition spawnPosition = new SpawnPosition();
+            //TankSpawner tankSpawner = new TankSpawner();
+            //tankSpawner.Spawn(spawnPosition.playerSpawnPoint.position, spawnPosition.EnemySpawnPoint.position);
+            //new TankAutoRotator(tankSpawner.playerTank, tankSpawner.ememyTank);
 
-            playerTankModel.transform = tankSpawner.playerTank;
-            enemyTankModel.transform = tankSpawner.ememyTank;
+            //playerTankModel.transform = tankSpawner.playerTank;
+            //enemyTankModel.transform = tankSpawner.ememyTank;
         }
     }
 }

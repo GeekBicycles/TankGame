@@ -8,5 +8,6 @@ namespace Tank_Game
     {
         public const string playerTankName = "PlayerTank";
         public const string enemyTankName = "EnemyTank";
+        public const string bulletName = "Bullet";
     }
 }

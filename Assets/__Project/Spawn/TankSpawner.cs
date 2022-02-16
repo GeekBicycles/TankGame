@@ -12,13 +12,13 @@ namespace Tank_Game
 
         public void Spawn(Vector3 playerPosition, Vector3 enemyPosition)
         {
-            GameObject playerTankPrefab = Resources.Load<GameObject>(ResourcesPathes.playerTank);
-            playerTank = GameObject.Instantiate(playerTankPrefab, playerPosition, Quaternion.identity).transform;
-            playerTank.name = PrefabsNames.playerTankName;
+            //GameObject playerTankPrefab = Resources.Load<GameObject>(ResourcesPathes.playerTank);
+            //playerTank = GameObject.Instantiate(playerTankPrefab, playerPosition, Quaternion.identity).transform;
+            //playerTank.name = PrefabsNames.playerTankName;
 
-            GameObject enemyTankPrefab = Resources.Load<GameObject>(ResourcesPathes.enemyTank);
-            ememyTank = GameObject.Instantiate(enemyTankPrefab, enemyPosition, Quaternion.identity).transform;
-            ememyTank.name = PrefabsNames.enemyTankName;
+            //GameObject enemyTankPrefab = Resources.Load<GameObject>(ResourcesPathes.enemyTank);
+            //ememyTank = GameObject.Instantiate(enemyTankPrefab, enemyPosition, Quaternion.identity).transform;
+            //ememyTank.name = PrefabsNames.enemyTankName;
 
         }
 
