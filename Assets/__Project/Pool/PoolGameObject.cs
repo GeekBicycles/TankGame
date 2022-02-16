@@ -5,18 +5,20 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class PoolGameObject :IDisposable
+    public sealed class PoolGameObject : IDisposable, IPoolGameObject
     {
         private Stack<GameObject> stack;
         private GameObject prefab;
         private Transform root;
+        private string prefabGameName;
 
-        public PoolGameObject(GameObject prefab)
+        public PoolGameObject(GameObject prefab, string prefabGameName)
         {
             this.prefab = prefab;
+            this.prefabGameName = prefabGameName;
 
             stack = new Stack<GameObject>();
-            root = new GameObject(prefab.name).transform;
+            root = new GameObject(prefabGameName).transform;
         }
 
         public GameObject Pop()
@@ -25,7 +27,7 @@ namespace Tank_Game
             if (stack.Count == 0)
             {
                 gameObject = GameObject.Instantiate(prefab);
-                gameObject.name = prefab.name;
+                gameObject.name = prefabGameName;
             }
             else
             {
