@@ -7,8 +7,6 @@ namespace Tank_Game
         public IPlayerTank GetPlayerTank(Vector3 position, Quaternion rotation)
         {
             PlayerTankModel playerTankModel = Resources.Load<PlayerTankModel>(ResourcesPathes.playerTankModel);
-            playerTankModel.maxTimeToFire = 0.1f;
-            playerTankModel.timeToFire = playerTankModel.maxTimeToFire;
 
             GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.playerTankPrefab);
             GameObject gameObject = GameObject.Instantiate(prefab, position, rotation);
@@ -16,6 +14,7 @@ namespace Tank_Game
             PlayerTankView playerTankView = new PlayerTankView(gameObject.transform);
 
             PlayerTank playerTank = new PlayerTank(playerTankModel, playerTankView);
+            playerTank.timeToFire = playerTank.model.maxTimeToFire;
 
             return playerTank;
         }

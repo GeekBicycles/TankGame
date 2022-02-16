@@ -8,5 +8,6 @@ namespace Tank_Game
     {
         public IPlayerTankModel model { get; set; }
         public IPlayerTankView view { get; set; }
+        public float timeToFire { get; set; }
     }
 }

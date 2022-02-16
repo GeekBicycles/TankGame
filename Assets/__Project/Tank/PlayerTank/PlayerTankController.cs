@@ -6,20 +6,21 @@ namespace Tank_Game
 {
     public sealed class PlayerTankController : IUpdate, IPlayerTankController
     {
-        //[SerializeField] public CharacterData _data;
-        //private CharacterController _charControler;
         private IInputData inputData;
         private IBulletController bulletController;
         private IPlayerTank playerTank;
         private IPlayerTankFactory playerTankFactory;
+        private IMoveController moveController;
+        private IFireController fireController;
 
         public PlayerTankController(IInputData inputData, IBulletController bulletController)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;
-            this.playerTankFactory = new PlayerTankFactory();
-            this.playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
-
+            playerTankFactory = new PlayerTankFactory();
+            playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
+            moveController = new MoveController(inputData, this.playerTank);
+            fireController = new FireController(playerTank, inputData, bulletController);
         }
 
         public IPlayerTank GetPlayerTank()
@@ -29,23 +30,9 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            Vector3 movement = new Vector3(inputData.up ? 1 : 0, 0, inputData.down ? 1 : 0);
-            movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
-            movement.y = playerTank.model.gravity;
-            movement *= Time.deltaTime;
-            movement = playerTank.view.transform.TransformDirection(movement);
-            //_charControler.Move(movement);
+            moveController.Move(deltaTime);
 
-            playerTank.model.timeToFire += deltaTime;
-            if (playerTank.model.timeToFire >= playerTank.model.maxTimeToFire)
-            {
-                if (inputData.fire)
-                {
-                    playerTank.model.timeToFire = 0;
-                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, 500f);
-                }
-            }
-            
+            fireController.FireControl(deltaTime);
         }
 
     }
