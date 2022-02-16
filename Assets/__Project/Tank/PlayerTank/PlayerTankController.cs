@@ -29,11 +29,13 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            Vector3 movement = new Vector3(inputData.up ? 1 : 0, 0, inputData.down ? 1 : 0);
+            float z = (inputData.up ? 1 : 0) - (inputData.down ? 1 : 0);
+            Vector3 movement = new Vector3(0, 0, z);
             movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
             movement.y = playerTank.model.gravity;
             movement *= Time.deltaTime;
-            movement = playerTank.view.transform.TransformDirection(movement);
+            Debug.Log(movement);
+            playerTank.view.transform.Translate(movement);
             //_charControler.Move(movement);
 
             playerTank.model.timeToFire += deltaTime;
