@@ -12,6 +12,7 @@ namespace Tank_Game
         private IPlayerTankFactory playerTankFactory;
         private IMoveController moveController;
         private IFireController fireController;
+        private IRotateController rotateController;
 
         public PlayerTankController(IInputData inputData, IBulletController bulletController)
         {
@@ -21,6 +22,7 @@ namespace Tank_Game
             playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
             moveController = new MoveController(inputData, this.playerTank);
             fireController = new FireController(playerTank, inputData, bulletController);
+            rotateController = new RotateController(playerTank, inputData);
         }
 
         public IPlayerTank GetPlayerTank()
@@ -31,7 +33,7 @@ namespace Tank_Game
         public void Update(float deltaTime)
         {
             moveController.Move(deltaTime);
-
+            rotateController.Rotate(deltaTime);
             fireController.FireControl(deltaTime);
         }
 
