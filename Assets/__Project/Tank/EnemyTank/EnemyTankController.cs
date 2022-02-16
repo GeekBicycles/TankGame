@@ -27,13 +27,13 @@ namespace Tank_Game
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
 
-                //enemyTank.timeToFire += deltaTime;
-                //if (enemyTank.timeToFire >= enemyTank.maxTimeToFire)
-                //{
-                //    enemyTank.timeToFire -= enemyTank.maxTimeToFire;
-                //    Transform bulletSpawnPoint = enemyTank.transform.GetComponentInChildren<EnemyTankBehavior>().bulletSpawnPoint;
-                //    bulletController.Fire(bulletSpawnPoint.position, bulletSpawnPoint.rotation, enemyTank.bulletforce);
-                //}
+                enemyTank.model.timeToFire += deltaTime;
+                if (enemyTank.model.timeToFire >= enemyTank.model.maxTimeToFire)
+                {
+                    enemyTank.model.timeToFire -= enemyTank.model.maxTimeToFire;
+                    //Transform bulletSpawnPoint = enemyTank.view.transform.GetComponentInChildren<EnemyTankBehavior>().bulletSpawnPoint;
+                    bulletController.Fire(enemyTank.view.bulletSpawnTransform.position, enemyTank.view.bulletSpawnTransform.rotation, enemyTank.model.bulletforce);
+                }
 
             }
         }
