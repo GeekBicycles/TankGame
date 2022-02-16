@@ -4,22 +4,26 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class TankSpawner
+    public sealed class TankSpawner : ITankSpawner
     {
-        
-        public Transform playerTank;
-        public Transform ememyTank;
+        private IEnemyTankFactory enemyTankFactory;
+        private ISpawnPosition spawnPosition;
 
-        public void Spawn(Vector3 playerPosition, Vector3 enemyPosition)
+        public TankSpawner(IEnemyTankFactory enemyTankFactory)
         {
-            //GameObject playerTankPrefab = Resources.Load<GameObject>(ResourcesPathes.playerTank);
-            //playerTank = GameObject.Instantiate(playerTankPrefab, playerPosition, Quaternion.identity).transform;
-            //playerTank.name = PrefabsNames.playerTankName;
+            this.enemyTankFactory = enemyTankFactory;
+            this.spawnPosition = new SpawnPosition();
+        }
 
-            //GameObject enemyTankPrefab = Resources.Load<GameObject>(ResourcesPathes.enemyTank);
-            //ememyTank = GameObject.Instantiate(enemyTankPrefab, enemyPosition, Quaternion.identity).transform;
-            //ememyTank.name = PrefabsNames.enemyTankName;
+        public IEnemyTank Spawn()
+        {
+            Vector3 position = spawnPosition.GetSpawnPosition();
+            if (position == Vector3.zero) return null;
 
+            IEnemyTank enemyTank = enemyTankFactory.GetEnemyTank(position, Quaternion.identity);
+            enemyTank.view.transform.position = position;
+
+            return enemyTank;
         }
 
     }

@@ -9,11 +9,17 @@ namespace Tank_Game
         private IBulletController bulletController;
         private IEnemyTankList enemyTankList;
         private IEnemyTankFactory enemyTankFactory;
+        private ITankSpawner tankSpawner;
+
+        private int enemyTanksCount = 10;
+
         public EnemyTankController(IBulletController bulletController)
         {
-            this.enemyTankList = new EnemyTankList();
-            this.enemyTankFactory = new EnemyTankFactory();
             this.bulletController = bulletController;
+
+            enemyTankList = new EnemyTankList();
+            enemyTankFactory = new EnemyTankFactory();
+            tankSpawner = new TankSpawner(enemyTankFactory);
             
         }
 
@@ -22,16 +28,25 @@ namespace Tank_Game
             return enemyTankList;
         }
 
+        public void SpawnTanks()
+        {
+            if (enemyTankList.enemyTanks.Count >= enemyTanksCount) return;
+            IEnemyTank enemyTank = tankSpawner.Spawn();
+            if (enemyTank == null) return;
+            enemyTankList.enemyTanks.Add(enemyTank);
+        }
+
         public void Update(float deltaTime)
         {
+            SpawnTanks();
+
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
 
-                enemyTank.model.timeToFire += deltaTime;
-                if (enemyTank.model.timeToFire >= enemyTank.model.maxTimeToFire)
+                enemyTank.timeToFire += deltaTime;
+                if (enemyTank.timeToFire >= enemyTank.model.maxTimeToFire)
                 {
-                    enemyTank.model.timeToFire -= enemyTank.model.maxTimeToFire;
-                    //Transform bulletSpawnPoint = enemyTank.view.transform.GetComponentInChildren<EnemyTankBehavior>().bulletSpawnPoint;
+                    enemyTank.timeToFire -= enemyTank.model.maxTimeToFire;
                     bulletController.Fire(enemyTank.view.bulletSpawnTransform.position, enemyTank.view.bulletSpawnTransform.rotation, enemyTank.model.bulletforce);
                 }
 

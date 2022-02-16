@@ -8,5 +8,6 @@ namespace Tank_Game
     {
         public IEnemyTankModel model { get; set; }
         public IEnemyTankView view { get; set; }
+        public float timeToFire { get; set; }
     }
 }
