@@ -12,13 +12,13 @@ namespace Tank_Game
         private Transform root;
         private string prefabGameName;
 
-        public PoolGameObject(GameObject prefab, string prefabGameName)
+        public PoolGameObject(GameObject prefab, string prefabGameName, string poolName)
         {
             this.prefab = prefab;
             this.prefabGameName = prefabGameName;
 
             stack = new Stack<GameObject>();
-            root = new GameObject(prefabGameName).transform;
+            root = new GameObject(poolName).transform;
         }
 
         public GameObject Pop()

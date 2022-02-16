@@ -10,12 +10,12 @@ namespace Tank_Game
         public BulletFactory()
         {
             GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.bulletPrefab);
-            poolGameObject = new PoolGameObject(prefab, PrefabsNames.bulletName);
+            poolGameObject = new PoolGameObject(prefab, PrefabsNames.bulletName, PrefabsNames.bulletPoolName);
         }
 
         public IBullet GetBullet(Vector3 position, Quaternion rotation)
         {
-            BulletModel bulletModel = new BulletModel(10, 5); //TODO заменить числа
+            BulletModel bulletModel = Resources.Load<BulletModel>(ResourcesPathes.bulletModel);
 
             GameObject gameObject = poolGameObject.Pop();
             gameObject.transform.position = position;

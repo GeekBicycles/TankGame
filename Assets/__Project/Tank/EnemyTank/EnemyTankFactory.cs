@@ -8,7 +8,7 @@ namespace Tank_Game
         public EnemyTankFactory()
         {
             GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.enemyTankPrefab);
-            poolGameObject = new PoolGameObject(prefab, PrefabsNames.enemyTankName);
+            poolGameObject = new PoolGameObject(prefab, PrefabsNames.enemyTankName, PrefabsNames.enemyTankPoolName);
         }
 
         public IEnemyTank GetEnemyTank(Vector3 position, Quaternion rotation)
