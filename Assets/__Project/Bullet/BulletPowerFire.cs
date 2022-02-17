@@ -6,7 +6,7 @@ using UnityEngine.PlayerLoop;
 
 namespace Tank_Game
 {
-    public class BulletPowerFire : IUpdate
+    public class BulletPowerFire : IUpdate, IBulletPowerFire
     {
         private IInputData _inputData;
         private float _powerPressFire = 0f;
@@ -15,7 +15,7 @@ namespace Tank_Game
         private bool _stopPressFireButton = true;
         private float _maxPower = 2f;
 
-        public bool _isBulletReady = false;
+        public bool _isBulletReady { get; set; } = false;
 
         public BulletPowerFire(IInputData inputData)
         {
@@ -59,6 +59,6 @@ namespace Tank_Game
             _startPressFireButton = false;
             _stopPressFireButton = true;
         }
-        
+
     }
 }
