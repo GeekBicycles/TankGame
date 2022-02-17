@@ -37,6 +37,7 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
+<<<<<<< Updated upstream
             float z = (inputData.up ? 1 : 0) - (inputData.down ? 1 : 0);
             Vector3 movement = new Vector3(0, 0, z);
             //movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
@@ -44,6 +45,13 @@ namespace Tank_Game
             movement *= Time.deltaTime * playerTank.model.speed;
             //Debug.Log(movement);
             playerTank.view.transform.Translate(movement);
+=======
+            Vector3 movement = new Vector3(inputData.up ? 1 : 0, 0, inputData.down ? 1 : 0);
+            movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
+            movement.y -= playerTank.model.gravity;
+            movement *= Time.deltaTime;
+            movement = playerTank.view.transform.TransformDirection(movement);
+>>>>>>> Stashed changes
             //_charControler.Move(movement);
             float y = (inputData.left ? 1 : 0) - (inputData.right ? 1 : 0);
             playerTank.view.transform.Rotate(0,y,0);
