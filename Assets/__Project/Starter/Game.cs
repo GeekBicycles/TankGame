@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace Tank_Game
@@ -13,6 +14,9 @@ namespace Tank_Game
         private IInputData inputData;
         private IPlayerTank playerTank;
         private IEnemyTankList enemyTankList;
+
+        private PlayerTankView _data;
+        private ICameraSettings cameraSettings;
 
         public void Start(GameStarter gameStarter)
         {
@@ -49,11 +53,9 @@ namespace Tank_Game
             PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController);
             playerTank = playerTankController.GetPlayerTank();
             EnemyTankController enemyTankController = new EnemyTankController(bulletController);
-
+            
             EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
-            
-            CameraController cameraController = new CameraController();
-            
+            CameraController cameraController = new CameraController(_data.transform.transform);
             UIController uIController = new UIController(playerTank);
 
             UpdateController updateController = new UpdateController();
@@ -62,7 +64,7 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             //updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
-            //updateController.AddController(cameraController);
+            updateController.AddController(cameraController);
             //updateController.AddController(uIController);
             gameStarter.SetUpdateController(updateController);
         }
