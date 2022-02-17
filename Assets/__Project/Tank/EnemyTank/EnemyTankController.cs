@@ -54,17 +54,17 @@ namespace Tank_Game
 
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
-                //enemyMoveController.Move(enemyTank);
-                var direction = enemyTank.view.collider.transform.position - enemyTank.view.transform.position;
+                enemyMoveController.Move(enemyTank);
+                //var direction = enemyTank.view.collider.transform.position - enemyTank.view.transform.position;
 
-                if (Physics.Raycast(enemyTank.view.transform.position + Vector3.up, direction, out RaycastHit hit))
-                {
-                    if (hit.collider.CompareTag("Player"))
-                    {
-                        enemyTank.view._pursuitPoint = enemyTank.view.collider.transform;
-                        return;
-                    }
-                }
+                //if (Physics.Raycast(enemyTank.view.transform.position + Vector3.up, direction, out RaycastHit hit))
+                //{
+                //    if (hit.collider.CompareTag("Player"))
+                //    {
+                //        enemyTank.view._pursuitPoint = enemyTank.view.collider.transform;
+                //        return;
+                //    }
+                //}
                 enemyTank.timeToFire += deltaTime;
                 if (enemyTank.timeToFire >= enemyTank.model.maxTimeToFire)
                 {
