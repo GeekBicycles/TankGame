@@ -10,8 +10,8 @@ namespace Tank_Game
     {
         public event Action<IEnemyTank, Collision> actionOnColliderEnter;
         public IEnemyTank enemyTank { get; set; }
-        public NavMeshAgent navMeshAgent;
-        public Transform[] waypoints;
+        //public NavMeshAgent navMeshAgent;
+        //public Transform[] waypoints;
         int m_CurrentWaypointIndex;
 
         public void OnCollisionEnter(Collision collision)
