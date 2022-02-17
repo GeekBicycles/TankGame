@@ -12,6 +12,7 @@ namespace Tank_Game
 
         public const string playerTankModel = "ScriptableObjects/Models/PlayerTankModel";
         public const string enemyTankModel = "ScriptableObjects/Models/EnemyTankModel";
+        public const string bulletModel = "ScriptableObjects/Models/BulletModel";
 
         public const string keySetControl = "ScriptableObjects/KeySetControl/KeySetControl";
     }

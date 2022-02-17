@@ -1,18 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class SpawnPosition
+    public sealed class SpawnPosition : ISpawnPosition
     {
-        public Transform playerSpawnPoint;
-        public Transform EnemySpawnPoint;
+        private ISpawnPositionSettings spawnPositionSettings;
 
         public SpawnPosition()
         {
-            playerSpawnPoint = GameObject.Find("SpawnPoint1").transform;
-            EnemySpawnPoint = GameObject.Find("SpawnPoint2").transform;
+            spawnPositionSettings = new SpawnPositionSettings();
+        }
+
+        public Vector3 GetSpawnPosition()
+        {
+            Vector3 randomPosition = GetRandomPosition();
+            bool free = CheckFreePosition(randomPosition);
+            if (free)
+            {
+                return randomPosition;
+            }
+            else
+            {
+                return Vector3.zero;
+            }
+        }
+
+        private bool CheckFreePosition(Vector3 randomPosition)
+        {
+            Collider[] colliders = Physics.OverlapSphere(randomPosition, spawnPositionSettings.radiusOverlapSphere);
+            foreach (Collider collider in colliders)
+            {
+                if (!collider.name.Equals(spawnPositionSettings.groundNameGameObject)) return false;
+            }
+
+            return true;
+        }
+
+        private Vector3 GetRandomPosition()
+        {
+            float x = Random.Range(spawnPositionSettings.fieldMinX, spawnPositionSettings.fieldMaxX);
+            float y = Random.Range(spawnPositionSettings.fieldMinY, spawnPositionSettings.fieldMaxY);
+            return new Vector3(x, 0, y);
         }
     }
 }

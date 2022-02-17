@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public interface ICameraSettings 
+    public interface ICameraSettings
     {
         public Camera mainCamera { get; }
         public Vector3 camOffset { get; set; }

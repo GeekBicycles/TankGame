@@ -11,7 +11,7 @@ namespace Tank_Game
         public float maxBulletSpeed { get; set; }
         public float gravity { get; set; }
 
-        public float timeToFire { get; set; }
         public float maxTimeToFire { get; set; }
+        public float rotateSpeed { get; set; }
     }
 }

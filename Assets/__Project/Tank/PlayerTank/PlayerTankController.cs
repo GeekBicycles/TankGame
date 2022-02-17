@@ -6,18 +6,24 @@ namespace Tank_Game
 {
     public sealed class PlayerTankController : IUpdate, IPlayerTankController
     {
-        //[SerializeField] public CharacterData _data;
-        //private CharacterController _charControler;
         private IInputData inputData;
         private IBulletController bulletController;
         private IPlayerTank playerTank;
         private IPlayerTankFactory playerTankFactory;
+        private IMoveController moveController;
+        private IFireController fireController;
+        private IRotateController rotateController;
         private BulletPowerFire bulletPowerFire;
 
         public PlayerTankController(IInputData inputData, IBulletController bulletController, BulletPowerFire bulletPowerFire)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;
+            playerTankFactory = new PlayerTankFactory();
+            playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
+            //moveController = new MoveController(inputData, this.playerTank);
+            //fireController = new FireController(playerTank, inputData, bulletController);
+            //rotateController = new RotateController(playerTank, inputData);
             this.bulletPowerFire = bulletPowerFire;
             this.playerTankFactory = new PlayerTankFactory();
             this.playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
@@ -55,6 +61,9 @@ namespace Tank_Game
                 }
             }
             
+            //moveController.Move(deltaTime);
+            //rotateController.Rotate(deltaTime);
+            //fireController.FireControl(deltaTime);
         }
 
     }

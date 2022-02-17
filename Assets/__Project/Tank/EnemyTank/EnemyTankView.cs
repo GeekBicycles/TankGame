@@ -8,8 +8,9 @@ namespace Tank_Game
     public class EnemyTankView : IEnemyTankView
     {
         public Transform transform { get; set; }
-
         public Transform bulletSpawnTransform { get; set; }
+        public NavMeshAgent navMeshAgent { get; set; }
+        public IEnemyTankBehaviour enemyTankBehaviour { get; set; }
 
         public Collider collider { get; set; }
 
@@ -22,7 +23,9 @@ namespace Tank_Game
         {
             this.transform = transform;
             bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
-            navMeshAgent = transform.GetComponentInChildren<EnemyTankBehaviour>().navMeshAgent;
+            navMeshAgent = transform.GetComponent<NavMeshAgent>();
+            enemyTankBehaviour = transform.gameObject.AddComponent<EnemyTankBehaviour>();
+            //navMeshAgent = transform.GetComponentInChildren<EnemyTankBehaviour>().navMeshAgent;
         }
     }
 }

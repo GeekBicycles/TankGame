@@ -17,18 +17,34 @@ namespace Tank_Game
 
         public void Fire(Vector3 position, Quaternion rotation, float force)
         {
+            NewBullet(position, rotation, force);
+        }
+
+        private void NewBullet(Vector3 position, Quaternion rotation, float force)
+        {
             IBullet bullet = bulletFactory.GetBullet(position, rotation);
             bullet.view.bulletBehaviour.actionOnColliderEnter += OnCollisionEnter;
+            bullet.view.rigidbody.isKinematic = false;
             bullet.view.rigidbody.AddForce(bullet.view.transform.forward.normalized * force);
             bulletList.bullets.Add(bullet);
             bullet.view.audioSource.Play();
         }
 
-        private void OnCollisionEnter(IBullet bullet, Collision collision)
+        private void RemoveBullet(IBullet bullet)
         {
             bullet.view.particleSystem.Play();
             bulletList.bullets.Remove(bullet);
+            bullet.view.bulletBehaviour.actionOnColliderEnter -= OnCollisionEnter;
+            bullet.view.rigidbody.isKinematic = true;
             bulletFactory.Destroy(bullet);
+        }
+
+        private void OnCollisionEnter(IBullet bullet, Collision collision)
+        {
+            if (!collision.collider.CompareTag(GameTags.bullet))
+            {
+                RemoveBullet(bullet);
+            }
         }
 
         public void FixedUpdate(float fixedDeltaTime)

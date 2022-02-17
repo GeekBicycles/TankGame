@@ -61,7 +61,7 @@ namespace Tank_Game
             updateController.AddController(bulletController);
             updateController.AddController(playerTankController);
             updateController.AddController(bulletPowerFire);
-            //updateController.AddController(enemyTankController);
+            updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
             updateController.AddController(cameraController);
             //updateController.AddController(uIController);
