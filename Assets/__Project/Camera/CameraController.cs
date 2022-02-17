@@ -4,16 +4,42 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class CameraController : ILateUpdate
-    {
-        public CameraController()
-        {
+    public class CameraController :  ICameraSettings,  ILateUpdate
 
+    {
+        private Camera _mainCamera;
+        public Camera mainCamera
+        {
+            get
+            {
+                if (_mainCamera == null)
+                {
+                    _mainCamera = Camera.main;
+                }
+                return _mainCamera;
+            }
+        }
+        private Transform _mainCameraPosition;
+        public Transform mainCameraPosition { get { return _mainCameraPosition; } set { _mainCameraPosition = value; } }
+
+        private Transform _target;
+        public Transform target { get { return _target; } set { _target = value; } }
+
+        private Vector3 _camOffset;
+        public Vector3 camOffset { get { return _camOffset; } set { _camOffset = new Vector3(-15f, 20f, -25f); } }
+
+        public CameraController(Transform target)
+        {
+            _target = target;
+            _mainCameraPosition = mainCameraPosition;
+            _mainCamera = mainCamera;
+            _mainCameraPosition.LookAt(_target);
+            _camOffset = _mainCameraPosition.position - _target.position;
         }
 
         public void LateUpdate(float deltaTime)
         {
-            throw new System.NotImplementedException();
+            _mainCameraPosition.position = _target.position + _camOffset;
         }
     }
 }
