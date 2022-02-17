@@ -6,6 +6,8 @@ namespace Tank_Game
     {
         public Transform transform { get; set; }
         public Rigidbody rigidbody { get; set; }
+        public ParticleSystem particleSystem { get; set; }
+        public AudioSource audioSource { get; }
 
         public IBulletBehaviour bulletBehaviour { get; set; }
 
@@ -14,6 +16,8 @@ namespace Tank_Game
             this.transform = transform;
             this.rigidbody = transform.GetComponent<Rigidbody>();
             this.bulletBehaviour = transform.GetComponent<IBulletBehaviour>();
+            this.particleSystem = transform.GetComponentInChildren<ParticleSystem>();
+            this.audioSource = transform.GetComponentInChildren<AudioSource>();
         }
     }
 }

@@ -21,10 +21,12 @@ namespace Tank_Game
             bullet.view.bulletBehaviour.actionOnColliderEnter += OnCollisionEnter;
             bullet.view.rigidbody.AddForce(bullet.view.transform.forward.normalized * force);
             bulletList.bullets.Add(bullet);
+            bullet.view.audioSource.Play();
         }
 
         private void OnCollisionEnter(IBullet bullet, Collision collision)
         {
+            bullet.view.particleSystem.Play();
             bulletList.bullets.Remove(bullet);
             bulletFactory.Destroy(bullet);
         }

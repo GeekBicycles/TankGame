@@ -8,6 +8,8 @@ namespace Tank_Game
     {
         public Transform transform { get; set; }
         public Rigidbody rigidbody { get; set; }
+        public ParticleSystem particleSystem { get; }
+        public AudioSource audioSource { get; }
         public IBulletBehaviour bulletBehaviour { get; set; }
 
     }

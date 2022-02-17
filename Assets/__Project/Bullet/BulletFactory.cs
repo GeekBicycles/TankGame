@@ -13,7 +13,7 @@ namespace Tank_Game
 
         public IBullet GetBullet(Vector3 position, Quaternion rotation)
         {
-            BulletModel bulletModel = new BulletModel(10, 5); //TODO заменить числа
+            BulletModel bulletModel = new BulletModel(10, 5); //TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 
             GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.bulletPrefab);
             GameObject gameObject = GameObject.Instantiate(prefab, position, rotation);
@@ -30,7 +30,7 @@ namespace Tank_Game
 
         public void Destroy(IBullet bullet)
         {
-            GameObject.Destroy(bullet.view.transform.gameObject);
+            GameObject.Destroy(bullet.view.transform.gameObject, 0.2f);
             bullet = null;
         }
 
