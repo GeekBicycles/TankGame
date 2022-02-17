@@ -55,7 +55,7 @@ namespace Tank_Game
             EnemyTankController enemyTankController = new EnemyTankController(bulletController);
             
             EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
-            CameraController cameraController = new CameraController(_data.transform.transform);
+            CameraController cameraController = new CameraController(playerTank.view.transform);
             UIController uIController = new UIController(playerTank);
 
             UpdateController updateController = new UpdateController();

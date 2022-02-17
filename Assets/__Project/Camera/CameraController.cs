@@ -31,8 +31,8 @@ namespace Tank_Game
         public CameraController(Transform target)
         {
             _target = target;
-            _mainCameraPosition = mainCameraPosition;
             _mainCamera = mainCamera;
+            _mainCameraPosition = mainCamera.transform;
             _mainCameraPosition.LookAt(_target);
             _camOffset = _mainCameraPosition.position - _target.position;
         }
