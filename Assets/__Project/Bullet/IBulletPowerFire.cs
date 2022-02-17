@@ -2,7 +2,7 @@
 {
     public interface IBulletPowerFire
     {
-        public bool _isBulletReady { get; set; }
+        public bool isBulletReady { get; set; }
         float GetFirePower();
         void Update(float deltaTime);
     }

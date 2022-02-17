@@ -56,9 +56,9 @@ namespace Tank_Game
             playerTank.timeToFire += deltaTime;
             if (playerTank.timeToFire >= playerTank.model.maxTimeToFire)
             {
-                if (bulletPowerFire._isBulletReady)
+                if (bulletPowerFire.isBulletReady)
                 {
-                    bulletPowerFire._isBulletReady = false;
+                    bulletPowerFire.isBulletReady = false;
                     playerTank.timeToFire = 0;
                     bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, bulletPowerFire.GetFirePower()*500f);
                 }
