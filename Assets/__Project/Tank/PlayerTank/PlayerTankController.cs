@@ -42,7 +42,7 @@ namespace Tank_Game
             //movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
             movement.y = playerTank.model.gravity;
             movement *= Time.deltaTime * playerTank.model.speed;
-            Debug.Log(movement);
+            //Debug.Log(movement);
             playerTank.view.transform.Translate(movement);
             //_charControler.Move(movement);
             float y = (inputData.left ? 1 : 0) - (inputData.right ? 1 : 0);
