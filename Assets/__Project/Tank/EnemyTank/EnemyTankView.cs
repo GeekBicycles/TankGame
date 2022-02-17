@@ -14,7 +14,7 @@ namespace Tank_Game
 
         public Collider collider { get; set; }
 
-        public NavMeshAgent navMeshAgent { get; set; }
+        ///public NavMeshAgent navMeshAgent { get; set; }
 
         public Transform _pursuitPoint { get; set; }
 

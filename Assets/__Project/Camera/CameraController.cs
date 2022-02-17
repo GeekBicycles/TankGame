@@ -28,6 +28,9 @@ namespace Tank_Game
         private Vector3 _camOffset;
         public Vector3 camOffset { get { return _camOffset; } set { _camOffset = new Vector3(-15f, 20f, -25f); } }
 
+        //Sergey - compatibility
+        public Vector3 offSet { get; set; }
+
         public CameraController(Transform target)
         {
             _target = target;
