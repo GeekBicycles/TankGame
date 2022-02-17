@@ -12,11 +12,13 @@ namespace Tank_Game
         private IBulletController bulletController;
         private IPlayerTank playerTank;
         private IPlayerTankFactory playerTankFactory;
+        private BulletPowerFire bulletPowerFire;
 
-        public PlayerTankController(IInputData inputData, IBulletController bulletController)
+        public PlayerTankController(IInputData inputData, IBulletController bulletController, BulletPowerFire bulletPowerFire)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;
+            this.bulletPowerFire = bulletPowerFire;
             this.playerTankFactory = new PlayerTankFactory();
             this.playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
 
@@ -45,10 +47,11 @@ namespace Tank_Game
             playerTank.model.timeToFire += deltaTime;
             if (playerTank.model.timeToFire >= playerTank.model.maxTimeToFire)
             {
-                if (inputData.fire)
+                if (bulletPowerFire._isBulletReady)
                 {
+                    bulletPowerFire._isBulletReady = false;
                     playerTank.model.timeToFire = 0;
-                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, 500f);
+                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, bulletPowerFire.GetFirePower()*500f);
                 }
             }
             

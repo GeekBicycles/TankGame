@@ -20,7 +20,7 @@ namespace Tank_Game
 
             InitInputController();
 
-            //WaitForStart(); //TODO включить метод, отключил на тестирование
+            //WaitForStart(); //TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             BeginGame();
         }
 
@@ -46,7 +46,8 @@ namespace Tank_Game
         private void BeginGame()
         {
             BulletController bulletController = new BulletController();
-            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController);
+            BulletPowerFire bulletPowerFire = new BulletPowerFire(inputData);
+            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController, bulletPowerFire);
             playerTank = playerTankController.GetPlayerTank();
             EnemyTankController enemyTankController = new EnemyTankController(bulletController);
 
@@ -60,6 +61,7 @@ namespace Tank_Game
             updateController.AddController(inputController);
             updateController.AddController(bulletController);
             updateController.AddController(playerTankController);
+            updateController.AddController(bulletPowerFire);
             //updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
             //updateController.AddController(cameraController);
