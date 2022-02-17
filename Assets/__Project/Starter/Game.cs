@@ -10,8 +10,9 @@ namespace Tank_Game
         private GameStarter gameStarter;
 
         private InputController inputController;
-
+        private InputMouseController inputMouseController;
         private IInputData inputData;
+        private IInputMouseData inputMouseData;
         private IPlayerTank playerTank;
         private IEnemyTankList enemyTankList;
 
@@ -30,6 +31,10 @@ namespace Tank_Game
             IKeySetControl keySetControl = Resources.Load<KeySetControl>(ResourcesPathes.keySetControl);
             inputData = new InputData();
             inputController = new InputController(inputData, keySetControl);
+
+            IMouseSetControl mouseSetControl = Resources.Load<MouseSetControl>(ResourcesPathes.mouseSetControl);
+            inputMouseData = new InputMouseData();
+            inputMouseController = new InputMouseController(inputMouseData, mouseSetControl);
         }
 
         private void WaitForStart()
@@ -58,6 +63,7 @@ namespace Tank_Game
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(inputController);
+            updateController.AddController(inputMouseController);
             updateController.AddController(bulletController);
             updateController.AddController(playerTankController);
             //updateController.AddController(bulletPowerFire);
