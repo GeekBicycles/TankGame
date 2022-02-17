@@ -14,14 +14,14 @@ namespace Tank_Game
         }
         void Update()
         {
-            float deltaX = Input.GetAxis("Horizontal") * _data.Speed;
-            float deltaZ = Input.GetAxis("Vertical") * _data.Speed;
-            Vector3 movement = new Vector3(deltaX, 0, deltaZ);
-            movement = Vector3.ClampMagnitude(movement, _data.Speed);
-            movement.y = _data.gravity;
-            movement *= Time.deltaTime;
-            movement = transform.TransformDirection(movement);
-            _charControler.Move(movement);
+            //float deltaX = Input.GetAxis("Horizontal") * _data.Speed;
+            //float deltaZ = Input.GetAxis("Vertical") * _data.Speed;
+            //Vector3 movement = new Vector3(deltaX, 0, deltaZ);
+            //movement = Vector3.ClampMagnitude(movement, _data.Speed);
+            //movement.y = _data.gravity;
+            //movement *= Time.deltaTime;
+            //movement = transform.TransformDirection(movement);
+            //_charControler.Move(movement);
         }
     }
 }
