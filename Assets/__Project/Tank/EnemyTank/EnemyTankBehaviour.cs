@@ -1,21 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    [RequireComponent(typeof(BoxCollider))]
-    public class EnemyTankBehaviour : MonoBehaviour
+    public class EnemyTankBehaviour : MonoBehaviour, IEnemyTankBehaviour
     {
+        public event Action<IEnemyTank, Collision> actionOnColliderEnter;
+        public IEnemyTank enemyTank { get; set; }
 
-        public class PlayerTankBehavior : MonoBehaviour
+        public void OnCollisionEnter(Collision collision)
         {
-            public EnemyTankController EnemyTankController;
-
-            public void OnTriggerEnter(Collider other)
-            {
-                throw new System.NotImplementedException();
-            }
+            actionOnColliderEnter?.Invoke(enemyTank, collision);
         }
     }
 }

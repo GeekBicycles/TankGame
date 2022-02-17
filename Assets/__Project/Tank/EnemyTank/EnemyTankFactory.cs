@@ -22,8 +22,14 @@ namespace Tank_Game
 
             EnemyTank enemyTank = new EnemyTank(enemyTankModel, enemyTankView);
             enemyTank.timeToFire = enemyTankModel.maxTimeToFire;
+            enemyTankView.enemyTankBehaviour.enemyTank = enemyTank;
 
             return enemyTank;
+        }
+        public void Destroy(IEnemyTank enemyTank)
+        {
+            poolGameObject.Push(enemyTank.view.transform.gameObject);
+            enemyTank = null;
         }
     }
 }

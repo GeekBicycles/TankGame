@@ -34,7 +34,18 @@ namespace Tank_Game
             if (enemyTankList.enemyTanks.Count >= enemyTanksCount) return;
             IEnemyTank enemyTank = tankSpawner.Spawn();
             if (enemyTank == null) return;
+            enemyTank.view.enemyTankBehaviour.actionOnColliderEnter += OnCollisionEnter;
             enemyTankList.enemyTanks.Add(enemyTank);
+        }
+
+        private void OnCollisionEnter(IEnemyTank enemyTank, Collision collision)
+        {
+            if (collision.collider.CompareTag(GameTags.bullet))
+            {
+                enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
+                enemyTankList.enemyTanks.Remove(enemyTank);
+                enemyTankFactory.Destroy(enemyTank);
+            }
         }
 
         public void Update(float deltaTime)

@@ -10,5 +10,6 @@ namespace Tank_Game
         public Transform transform { get; set; }
         public Transform bulletSpawnTransform { get; set; }
         public NavMeshAgent navMeshAgent { get; set; }
+        public IEnemyTankBehaviour enemyTankBehaviour { get; set; }
     }
 }

@@ -39,7 +39,10 @@ namespace Tank_Game
 
         private void OnCollisionEnter(IBullet bullet, Collision collision)
         {
-            RemoveBullet(bullet);
+            if (!collision.collider.CompareTag(GameTags.bullet))
+            {
+                RemoveBullet(bullet);
+            }
         }
 
         public void FixedUpdate(float fixedDeltaTime)
