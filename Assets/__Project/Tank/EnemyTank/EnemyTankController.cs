@@ -24,9 +24,19 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
+
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
+                var direction = enemyTank.view.collider.transform.position - enemyTank.view.transform.position;
 
+                if (Physics.Raycast(enemyTank.view.transform.position + Vector3.up, direction, out RaycastHit hit))
+                {
+                    if (hit.collider.CompareTag("Player"))
+                    {
+                        enemyTank.view._pursuitPoint = enemyTank.view.collider.transform;
+                        return;
+                    }
+                }
                 enemyTank.model.timeToFire += deltaTime;
                 if (enemyTank.model.timeToFire >= enemyTank.model.maxTimeToFire)
                 {
@@ -36,6 +46,11 @@ namespace Tank_Game
                 }
 
             }
+        }
+
+        private void Pursuit(IEnemyTank enemyTank)
+        {
+            enemyTank.view.navMeshAgent.SetDestination(enemyTank.view._pursuitPoint.position);
         }
     }
 }
