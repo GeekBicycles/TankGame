@@ -17,9 +17,10 @@ namespace Tank_Game
         public Vector3 GetNormalCameraPosition()
         {
             Vector3 cameraGlobalOffSet = Vector3.zero;
-            cameraGlobalOffSet += playerTank.view.transform.forward * cameraSettings.offSet.z;
-            cameraGlobalOffSet += playerTank.view.transform.up * cameraSettings.offSet.y;
-            cameraGlobalOffSet += playerTank.view.transform.right * cameraSettings.offSet.x;
+            Transform playerTransform = playerTank.view.transform;
+            cameraGlobalOffSet += playerTransform.forward * cameraSettings.offSet.z;
+            cameraGlobalOffSet += playerTransform.up * cameraSettings.offSet.y;
+            cameraGlobalOffSet += playerTransform.right * cameraSettings.offSet.x;
             
 
             return playerTank.view.transform.position + cameraGlobalOffSet;
