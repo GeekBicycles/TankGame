@@ -52,7 +52,7 @@ namespace Tank_Game
 
             EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
             
-            CameraController cameraController = new CameraController();
+            CameraController cameraController = new CameraController(playerTank);
             
             UIController uIController = new UIController(playerTank);
 
@@ -62,7 +62,7 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
-            //updateController.AddController(cameraController);
+            updateController.AddController(cameraController);
             //updateController.AddController(uIController);
             gameStarter.SetUpdateController(updateController);
         }

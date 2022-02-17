@@ -6,14 +6,21 @@ namespace Tank_Game
 {
     public class CameraController : ILateUpdate
     {
-        public CameraController()
+        private IPlayerTank playerTank;
+        private ICameraPosition cameraPosition;
+        private Transform cameraTransform;
+        public CameraController(IPlayerTank playerTank)
         {
+            cameraTransform = Camera.main.transform;
+            this.playerTank = playerTank;
+            cameraPosition = new CameraPosition(playerTank);
 
         }
 
         public void LateUpdate(float deltaTime)
         {
-            throw new System.NotImplementedException();
+            cameraTransform.position = cameraPosition.GetNormalCameraPosition();
+            cameraTransform.LookAt(playerTank.view.transform.position);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Tank_Game
         private IEnemyTankList enemyTankList;
         private IEnemyTankFactory enemyTankFactory;
         private ITankSpawner tankSpawner;
+        private IEnemyMoveController enemyMoveController;
 
         private int enemyTanksCount = 10;
 
@@ -20,7 +21,7 @@ namespace Tank_Game
             enemyTankList = new EnemyTankList();
             enemyTankFactory = new EnemyTankFactory();
             tankSpawner = new TankSpawner(enemyTankFactory);
-            
+            enemyMoveController = new EnemyMoveController();
         }
 
         public IEnemyTankList GetEnemyTankList()
@@ -42,6 +43,7 @@ namespace Tank_Game
 
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
+                enemyMoveController.Move(enemyTank);
 
                 enemyTank.timeToFire += deltaTime;
                 if (enemyTank.timeToFire >= enemyTank.model.maxTimeToFire)
