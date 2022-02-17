@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
@@ -9,11 +7,13 @@ namespace Tank_Game
     {
         private IInputData inputData;
         private Action actionBeginGame = delegate { };
+        private GameObject beginCanvas;
 
         public BeginGameController(IInputData inputData, Action action)
         {
             this.inputData = inputData;
             this.actionBeginGame = action;
+            beginCanvas = GameObject.Find(SceneObjectNames.beginCanvas);
         }
 
         public void Update(float deltaTime)
@@ -23,8 +23,7 @@ namespace Tank_Game
 
         private void BeginGame()
         {
-            GameObject canvas = GameObject.Find("MessageCanvas");
-            canvas?.SetActive(false);
+            beginCanvas?.SetActive(false);
             actionBeginGame?.Invoke();
         }
     }

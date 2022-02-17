@@ -21,8 +21,8 @@ namespace Tank_Game
 
             InitInputController();
 
-            //WaitForStart(); //TODO �������� �����, �������� �� ������������
-            BeginGame();
+            WaitForStart();
+
         }
 
         private void InitInputController()
