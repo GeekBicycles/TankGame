@@ -14,9 +14,9 @@ namespace Tank_Game
         private IFireController fireController;
         private IRotateController rotateController;
         private IBulletPowerFire bulletPowerFire;
-        private ChooseEnemy _enemy;
+        private IChooseEnemy _enemy;
 
-        public PlayerTankController(IInputData inputData, IBulletController bulletController, ChooseEnemy enemy)
+        public PlayerTankController(IInputData inputData, IBulletController bulletController, IChooseEnemy enemy)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;

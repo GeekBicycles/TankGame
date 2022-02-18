@@ -5,7 +5,7 @@ using System;
 
 namespace Tank_Game
 {
-    public class ChooseEnemy : IUpdate
+    public class ChooseEnemy : IUpdate, IChooseEnemy
     {
         private Camera _camera;
         private IInputMouseData _mouseData;
