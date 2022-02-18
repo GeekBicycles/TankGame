@@ -52,15 +52,14 @@ namespace Tank_Game
         private void BeginGame()
         {
             BulletController bulletController = new BulletController();
+            ChooseEnemy chooseEnemy = new ChooseEnemy(inputMouseData);
             //BulletPowerFire bulletPowerFire = new BulletPowerFire(inputData);
-            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController);
+            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController, chooseEnemy);
             playerTank = playerTankController.GetPlayerTank();
             EnemyTankController enemyTankController = new EnemyTankController(bulletController);
             
             EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
             CameraController cameraController = new CameraController(playerTank.view.transform);
-
-            ChooseEnemy chooseEnemy = new ChooseEnemy(inputMouseData, playerTank, cameraController.mainCamera);
             
             UIController uIController = new UIController(playerTank);
             

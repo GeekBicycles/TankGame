@@ -1,23 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Tank_Game
 {
     public class ChooseEnemy : IUpdate
     {
-        private Collider _enemyCollider;
         private Camera _camera;
-        private IPlayerTank _player;
         private IInputMouseData _mouseData;
-        private bool _isLookAt;
-        private Transform _target;
+        public event Action<Transform> actionChooseEnemy;
 
-        public ChooseEnemy(IInputMouseData mouseData, IPlayerTank player, Camera camera)
+        public ChooseEnemy(IInputMouseData mouseData)
         {
             _mouseData = mouseData;
-            _player = player;
-            _camera = camera;
+            _camera = Camera.main;
         }
         public void Update(float deltaTime)
         {
@@ -26,17 +23,9 @@ namespace Tank_Game
                 IRunRay _runRay = new RunRay(_camera, _mouseData);
                 if (_runRay.StartRay().transform.TryGetComponent(out EnemyTankBehaviour enemy))
                 {
-                    _isLookAt = true;
-                    _target = enemy.transform;
+                    actionChooseEnemy?.Invoke(enemy.transform);
                 }
             }
-            
-            if (_isLookAt)
-            {
-                _player.view.transform.LookAt(_target);
-                // TODO при уничтожении _target поменять _isLookAt на false
-            }
         }
-
     }
 }

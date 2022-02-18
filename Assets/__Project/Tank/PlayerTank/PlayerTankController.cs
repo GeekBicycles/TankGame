@@ -14,8 +14,9 @@ namespace Tank_Game
         private IFireController fireController;
         private IRotateController rotateController;
         private IBulletPowerFire bulletPowerFire;
+        private ChooseEnemy _enemy;
 
-        public PlayerTankController(IInputData inputData, IBulletController bulletController)
+        public PlayerTankController(IInputData inputData, IBulletController bulletController, ChooseEnemy enemy)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;
@@ -27,7 +28,8 @@ namespace Tank_Game
             //this.playerTankFactory = new PlayerTankFactory();
             //this.playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
             bulletPowerFire = new BulletPowerFire(inputData);
-
+            _enemy = enemy;
+            _enemy.actionChooseEnemy += RotatePlayerToEnemy;
         }
 
         public IPlayerTank GetPlayerTank()
@@ -60,7 +62,7 @@ namespace Tank_Game
                 {
                     bulletPowerFire.isBulletReady = false;
                     playerTank.timeToFire = 0;
-                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, bulletPowerFire.GetFirePower()*500f);
+                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, bulletPowerFire.GetFirePower()*1500f);
                 }
             }
             
@@ -69,5 +71,9 @@ namespace Tank_Game
             //fireController.FireControl(deltaTime);
         }
 
+        private void RotatePlayerToEnemy(Transform enemyTransform)
+        {
+            playerTank.view.transform.LookAt(enemyTransform);
+        }
     }
 }
