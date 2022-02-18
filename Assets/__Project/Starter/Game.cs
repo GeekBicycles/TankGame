@@ -59,7 +59,11 @@ namespace Tank_Game
             
             EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
             CameraController cameraController = new CameraController(playerTank.view.transform);
+
+            ChooseEnemy chooseEnemy = new ChooseEnemy(inputMouseData, playerTank, cameraController.mainCamera);
+            
             UIController uIController = new UIController(playerTank);
+            
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(inputController);
@@ -70,6 +74,7 @@ namespace Tank_Game
             updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
             updateController.AddController(cameraController);
+            updateController.AddController(chooseEnemy);
             //updateController.AddController(uIController);
             gameStarter.SetUpdateController(updateController);
         }
