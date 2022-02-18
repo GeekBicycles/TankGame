@@ -1,29 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
     public sealed class CameraPosition : ICameraPosition
     {
-        private IPlayerTank playerTank;
-        private ICameraSettings cameraSettings;
-        public CameraPosition(IPlayerTank playerTank)
+        private Transform _playerTankTransform;
+        private ICameraSettings _cameraSettings;
+
+        public CameraPosition(Transform target)
         {
-            this.playerTank = playerTank;
-            this.cameraSettings = new CameraSettings();
+            _playerTankTransform = target;
+            _cameraSettings = new CameraSettings();
         }
 
         public Vector3 GetNormalCameraPosition()
         {
             Vector3 cameraGlobalOffSet = Vector3.zero;
-            Transform playerTransform = playerTank.view.transform;
-            cameraGlobalOffSet += playerTransform.forward * cameraSettings.offSet.z;
-            cameraGlobalOffSet += playerTransform.up * cameraSettings.offSet.y;
-            cameraGlobalOffSet += playerTransform.right * cameraSettings.offSet.x;
-            
+            cameraGlobalOffSet += _playerTankTransform.forward * _cameraSettings.offSet.z;
+            cameraGlobalOffSet += _playerTankTransform.up * _cameraSettings.offSet.y;
+            cameraGlobalOffSet += _playerTankTransform.right * _cameraSettings.offSet.x;
 
-            return playerTank.view.transform.position + cameraGlobalOffSet;
+            return _playerTankTransform.position + cameraGlobalOffSet;
         }
     }
 }

@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
-
 namespace Tank_Game
 {
     public class BulletPowerFire : IUpdate, IBulletPowerFire
@@ -21,6 +15,7 @@ namespace Tank_Game
         {
             _inputData = inputData;
         }
+
         public void Update(float deltaTime)
         {
             if (_inputData.fire && _stopPressFireButton)
