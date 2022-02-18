@@ -19,7 +19,6 @@ namespace Tank_Game
         {
             RaycastHit hit;
             Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            Debug.DrawRay(ray.origin, ray.direction * 10, Color.red);
             if (Physics.Raycast(ray, out hit, 100))
             {
                 return hit.collider;

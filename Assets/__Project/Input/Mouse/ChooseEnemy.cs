@@ -10,6 +10,8 @@ namespace Tank_Game
         private Camera _camera;
         private IPlayerTank _player;
         private IInputMouseData _mouseData;
+        private bool _isLookAt;
+        private Transform _target;
 
         public ChooseEnemy(IInputMouseData mouseData, IPlayerTank player, Camera camera)
         {
@@ -24,8 +26,15 @@ namespace Tank_Game
                 IRunRay _runRay = new RunRay(_camera, _mouseData);
                 if (_runRay.StartRay().transform.TryGetComponent(out EnemyTankBehaviour enemy))
                 {
-                    _player.view.transform.LookAt(enemy.transform);
+                    _isLookAt = true;
+                    _target = enemy.transform;
                 }
+            }
+            
+            if (_isLookAt)
+            {
+                _player.view.transform.LookAt(_target);
+                // TODO при уничтожении _target поменять _isLookAt на false
             }
         }
 
