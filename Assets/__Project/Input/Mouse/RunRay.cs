@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
@@ -18,8 +16,8 @@ namespace Tank_Game
         public Collider StartRay()
         {
             RaycastHit hit;
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100))
+            Ray ray = _camera.ScreenPointToRay(_mouseData.mousePosition);
+            if (Physics.Raycast(ray, out hit, InputSettings.MAX_RAY_LENGTH))
             {
                 return hit.collider;
             }

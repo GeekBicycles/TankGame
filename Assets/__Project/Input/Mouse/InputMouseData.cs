@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
@@ -8,11 +6,13 @@ namespace Tank_Game
     {
         public bool mouse0 { get; set; }
         public bool mouse1 { get; set; }
-        
+        public Vector3 mousePosition { get; set; }
+
         public InputMouseData()
         {
             mouse0 = false;
             mouse1 = false;
+            mousePosition = Vector3.zero;
         }
     }
 }

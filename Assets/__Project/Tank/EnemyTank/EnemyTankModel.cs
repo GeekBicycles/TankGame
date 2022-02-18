@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
@@ -16,14 +14,15 @@ namespace Tank_Game
         [SerializeField, Range(0, 10)] private float _maxTimeToFire;
         [SerializeField, Range(0, 1000)] private float _bulletforce;
         [SerializeField, Range(0, 360)] private float _rotateSpeed;
-        public float health { get => _health; set => _health = value; }
-        public float speed { get => _speed; set => _speed = value; }
-        public float maxBulletSpeed { get => _maxBulletSpeed; set => _maxBulletSpeed = value; }
-        public float maxAccuracy { get => _maxAccuracy; set => _maxAccuracy = value; }
-        public float currentAccuracy { get => _currentAccuracy; set => _currentAccuracy = value; }
-        public float changeAccuracy { get => _changeAccuracy; set => _changeAccuracy = value; }
-        public float maxTimeToFire { get => _maxTimeToFire; set => _maxTimeToFire = value; }
-        public float bulletforce { get => _bulletforce; set => _bulletforce = value; }
-        public float rotateSpeed { get => _rotateSpeed; set => _rotateSpeed = value; }
+
+        public float health { get => _health; }
+        public float speed { get => _speed; }
+        public float maxBulletSpeed { get => _maxBulletSpeed; }
+        public float maxAccuracy { get => _maxAccuracy; }
+        public float currentAccuracy { get => _currentAccuracy; }
+        public float changeAccuracy { get => _changeAccuracy; }
+        public float maxTimeToFire { get => _maxTimeToFire; }
+        public float bulletforce { get => _bulletforce; }
+        public float rotateSpeed { get => _rotateSpeed; }
     }
 }
