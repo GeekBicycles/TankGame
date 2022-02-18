@@ -15,5 +15,6 @@ namespace Tank_Game
         public const string bulletModel = "ScriptableObjects/Models/BulletModel";
 
         public const string keySetControl = "ScriptableObjects/KeySetControl/KeySetControl";
+        public const string mouseSetControl = "ScriptableObjects/KeySetControl/MouseSetControl";
     }
 }

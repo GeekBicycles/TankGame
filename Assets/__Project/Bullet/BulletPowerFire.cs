@@ -15,7 +15,7 @@ namespace Tank_Game
         private bool _stopPressFireButton = true;
         private float _maxPower = 2f;
 
-        public bool _isBulletReady { get; set; } = false;
+        public bool isBulletReady { get; set; } = false;
 
         public BulletPowerFire(IInputData inputData)
         {
@@ -31,7 +31,7 @@ namespace Tank_Game
             else if (_startPressFireButton && !_inputData.fire)
             {
                 _currentFirePower = _powerPressFire;
-                _isBulletReady = true;
+                isBulletReady = true;
                 Reset();
             }
 
