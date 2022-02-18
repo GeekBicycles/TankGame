@@ -10,6 +10,7 @@ namespace Tank_Game
         private IEnemyTankList enemyTankList;
         private IEnemyTankFactory enemyTankFactory;
         private ITankSpawner tankSpawner;
+        private IEnemyTankSpawn enemyTankSpawn;
         private IEnemyMoveController enemyMoveController;
 
         private int enemyTanksCount = 10;
@@ -50,21 +51,12 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            SpawnTanks();
-
+            //SpawnTanks();
+            
             foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
             {
-                enemyMoveController.Move(enemyTank);
-                //var direction = enemyTank.view.collider.transform.position - enemyTank.view.transform.position;
-
-                //if (Physics.Raycast(enemyTank.view.transform.position + Vector3.up, direction, out RaycastHit hit))
-                //{
-                //    if (hit.collider.CompareTag("Player"))
-                //    {
-                //        enemyTank.view._pursuitPoint = enemyTank.view.collider.transform;
-                //        return;
-                //    }
-                //}
+                enemyTankSpawn.SpawnPoint(enemyTank);
+                //enemyMoveController.Move(enemyTank);
                 enemyTank.timeToFire += deltaTime;
                 if (enemyTank.timeToFire >= enemyTank.model.maxTimeToFire)
                 {
@@ -73,11 +65,6 @@ namespace Tank_Game
                 }
 
             }
-        }
-
-        private void Pursuit(IEnemyTank enemyTank)
-        {
-            enemyTank.view.navMeshAgent.SetDestination(enemyTank.view._pursuitPoint.position);
         }
     }
 }
