@@ -2,6 +2,6 @@
 {
     public interface IEnemyTankSpawner
     {
-        IEnemyTank Spawn();
+        public IEnemyTank Spawn();
     }
 }

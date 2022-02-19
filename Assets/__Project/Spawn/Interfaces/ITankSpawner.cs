@@ -2,6 +2,6 @@
 {
     public interface ITankSpawner
     {
-        void Spawn();
+        public void Spawn();
     }
 }

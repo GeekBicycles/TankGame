@@ -4,6 +4,6 @@ namespace Tank_Game
 {
     public interface ISpawnPosition
     {
-        Vector3 GetSpawnPosition();
+        public Vector3 GetSpawnPosition();
     }
 }
