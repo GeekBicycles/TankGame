@@ -46,6 +46,12 @@ namespace Tank_Game
 
         private void BeginGame()
         {
+            IPlayerTankList playerTankList = new PlayerTankList();
+            IEnemyTankList enemyTankList = new EnemyTankList();
+
+            new TankSpawner(playerTankList, enemyTankList).Spawn();
+            new StartTankPosition().SetStartupPosition(playerTankList, enemyTankList);
+
             BulletController bulletController = new BulletController();
             ChooseEnemy chooseEnemy = new ChooseEnemy(_inputMouseData);
 
