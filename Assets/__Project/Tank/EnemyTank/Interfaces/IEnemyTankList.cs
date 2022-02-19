@@ -6,5 +6,6 @@ namespace Tank_Game
     {
         public List<IEnemyTank> enemyTanks { get; }
         public IEnemyTank current { get; set; }
+        public void Remove(IEnemyTank enemyTank);
     }
 }

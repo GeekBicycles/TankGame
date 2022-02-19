@@ -10,6 +10,7 @@ namespace Tank_Game
         private InputMouseController _inputMouseController;
         private IInputData _inputData;
         private IInputMouseData _inputMouseData;
+        private TurnBasedController _turnBasedController;
 
         public void Start(GameStarter gameStarter)
         {
@@ -57,8 +58,10 @@ namespace Tank_Game
             PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
-            EnemyTankController enemyTankController = new EnemyTankController(enemyTankList);
+            EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
             CameraController cameraController = new CameraController(playerTank.view.transform);
+
+            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(_inputController);

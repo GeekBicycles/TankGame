@@ -1,7 +1,10 @@
-﻿namespace Tank_Game
+﻿using System;
+
+namespace Tank_Game
 {
     public interface ITurnBased
     {
-        public void SetOnTurn(bool value);
+        public event Action endTurn;
+        public void StartTurn();
     }
 }

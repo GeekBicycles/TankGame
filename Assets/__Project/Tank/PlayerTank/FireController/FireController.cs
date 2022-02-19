@@ -11,8 +11,9 @@ namespace Tank_Game
             _bulletPowerFire = bulletPowerFire;
         }
 
-        public void Fire(float deltaTime, IPlayerTank playerTank, float bulletForce)
+        public bool Fire(float deltaTime, IPlayerTank playerTank, float bulletForce)
         {
+            bool fireResult = false;
             playerTank.timeToFire += deltaTime;
             if (playerTank.timeToFire >= playerTank.model.maxTimeToFire)
             {
@@ -21,8 +22,10 @@ namespace Tank_Game
                     _bulletPowerFire.isBulletReady = false;
                     playerTank.timeToFire = 0;
                     _bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, bulletForce);
+                    fireResult = true;
                 }
             }
+            return fireResult;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IFireController
     {
-        public void Fire(float deltaTime, IPlayerTank playerTank, float bulletForce);
+        public bool Fire(float deltaTime, IPlayerTank playerTank, float bulletForce);
     }
 }

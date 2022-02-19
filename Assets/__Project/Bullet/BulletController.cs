@@ -13,6 +13,11 @@ namespace Tank_Game
             _bulletList = new BulletList();
         }
 
+        public int GetCurrentBulletCount()
+        {
+            return _bulletList.bullets.Count;
+        }
+
         public void Fire(Vector3 position, Quaternion rotation, float force)
         {
             NewBullet(position, rotation, force);
