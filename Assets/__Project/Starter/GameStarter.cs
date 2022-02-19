@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,7 +5,8 @@ namespace Tank_Game
 {
     public sealed class GameStarter : MonoBehaviour
     {
-        private IUpdateController mainUpdateController;
+        private IUpdateController _mainUpdateController;
+
         private void Start()
         {
             Game game = new Game();
@@ -16,23 +15,23 @@ namespace Tank_Game
 
         public void SetUpdateController(IUpdateController updateController)
         {
-            this.mainUpdateController = updateController;
+            _mainUpdateController = updateController;
         }
 
         private void Update()
         {
-            mainUpdateController.Update(Time.deltaTime);
-            mainUpdateController.UnscaledUpdate(Time.unscaledDeltaTime);
+            _mainUpdateController.Update(Time.deltaTime);
+            _mainUpdateController.UnscaledUpdate(Time.unscaledDeltaTime);
         }
 
         private void FixedUpdate()
         {
-            mainUpdateController.FixedUpdate(Time.fixedDeltaTime);
+            _mainUpdateController.FixedUpdate(Time.fixedDeltaTime);
         }
 
         private void LateUpdate()
         {
-            mainUpdateController.LateUpdate(Time.deltaTime);
+            _mainUpdateController.LateUpdate(Time.deltaTime);
         }
 
     }

@@ -1,24 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
     public class InputMouseController : IUpdate
     {
-        private IInputMouseData inputMouseData { get; set; }
-        private IMouseSetControl mouseSetControl { get; set; }
+        private IInputMouseData _inputMouseData;
+        private IMouseSetControl _mouseSetControl;
 
         public InputMouseController(IInputMouseData inputMouseData, IMouseSetControl mouseDetControl)
         {
-            this.inputMouseData = inputMouseData;
-            this.mouseSetControl = mouseDetControl;
+            _inputMouseData = inputMouseData;
+            _mouseSetControl = mouseDetControl;
         }
 
         public void Update(float deltaTime)
         {
-            inputMouseData.mouse0 = Input.GetKey(mouseSetControl.mouse0);
-            inputMouseData.mouse1 = Input.GetKey(mouseSetControl.mouse1);
+            _inputMouseData.mouse0 = Input.GetKey(_mouseSetControl.mouse0);
+            _inputMouseData.mouse1 = Input.GetKey(_mouseSetControl.mouse1);
+            _inputMouseData.mousePosition = Input.mousePosition;
         }
     }
 }

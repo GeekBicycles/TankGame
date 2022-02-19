@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
@@ -10,7 +8,7 @@ namespace Tank_Game
         [SerializeField] private KeyCode _mouse0;
         [SerializeField] private KeyCode _mouse1;
         
-        public KeyCode mouse0 { get => _mouse0; set => _mouse0 = value; }
-        public KeyCode mouse1 { get => _mouse1; set => _mouse1 = value; }
+        public KeyCode mouse0 { get => _mouse0; }
+        public KeyCode mouse1 { get => _mouse1; }
     }
 }

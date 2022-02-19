@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Tank_Game
 {
     public sealed class EnemyTank : IEnemyTank
     {
-        public IEnemyTankModel model { get; set; }
-        public IEnemyTankView view { get; set; }
+        public IEnemyTankModel model { get; }
+        public IEnemyTankView view { get; }
         public float timeToFire { get; set; }
 
         public EnemyTank(IEnemyTankModel model, IEnemyTankView view)

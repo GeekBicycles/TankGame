@@ -1,70 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
     public sealed class EnemyTankController : IUpdate, IEnemyTankController
     {
-        private IBulletController bulletController;
-        private IEnemyTankList enemyTankList;
-        private IEnemyTankFactory enemyTankFactory;
-        private ITankSpawner tankSpawner;
-        private IEnemyTankSpawn enemyTankSpawn;
-        private IEnemyMoveController enemyMoveController;
+        private IEnemyTankList _enemyTankList;
+        private IEnemyTankFactory _enemyTankFactory;
 
-        private int enemyTanksCount = 10;
-
-        public EnemyTankController(IBulletController bulletController)
+        public EnemyTankController()
         {
-            this.bulletController = bulletController;
-
-            enemyTankList = new EnemyTankList();
-            enemyTankFactory = new EnemyTankFactory();
-            tankSpawner = new TankSpawner(enemyTankFactory);
-            enemyMoveController = new EnemyMoveController();
+            _enemyTankList = new EnemyTankList();
+            _enemyTankFactory = new EnemyTankFactory();
         }
 
         public IEnemyTankList GetEnemyTankList()
         {
-            return enemyTankList;
-        }
-
-        public void SpawnTanks()
-        {
-            if (enemyTankList.enemyTanks.Count >= enemyTanksCount) return;
-            IEnemyTank enemyTank = tankSpawner.Spawn();
-            if (enemyTank == null) return;
-            enemyTank.view.enemyTankBehaviour.actionOnColliderEnter += OnCollisionEnter;
-            enemyTankList.enemyTanks.Add(enemyTank);
+            return _enemyTankList;
         }
 
         private void OnCollisionEnter(IEnemyTank enemyTank, Collision collision)
         {
-            if (collision.collider.CompareTag(GameTags.bullet))
+            if (collision.collider.CompareTag(GameTags.BULLET))
             {
                 enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
-                enemyTankList.enemyTanks.Remove(enemyTank);
-                enemyTankFactory.Destroy(enemyTank);
+                _enemyTankList.enemyTanks.Remove(enemyTank);
+                _enemyTankFactory.Destroy(enemyTank);
             }
         }
 
         public void Update(float deltaTime)
         {
-            //SpawnTanks();
-            
-            foreach (IEnemyTank enemyTank in enemyTankList.enemyTanks)
-            {
-                enemyTankSpawn.SpawnPoint(enemyTank);
-                //enemyMoveController.Move(enemyTank);
-                enemyTank.timeToFire += deltaTime;
-                if (enemyTank.timeToFire >= enemyTank.model.maxTimeToFire)
-                {
-                    enemyTank.timeToFire -= enemyTank.model.maxTimeToFire;
-                    bulletController.Fire(enemyTank.view.bulletSpawnTransform.position, enemyTank.view.bulletSpawnTransform.rotation, enemyTank.model.bulletforce);
-                }
 
-            }
         }
     }
 }

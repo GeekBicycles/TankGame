@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -20,10 +18,10 @@ namespace Tank_Game
         {
             if (_mouseData.mouse0)
             {
-                IRunRay _runRay = new RunRay(_camera, _mouseData);
-                if (_runRay.StartRay().transform.TryGetComponent(out EnemyTankBehaviour enemy))
+                IRunRay runRay = new RunRay(_camera, _mouseData);
+                if (runRay.StartRay().transform.TryGetComponent(out IEnemyTankBehaviour enemyBehaviour))
                 {
-                    actionChooseEnemy?.Invoke(enemy.transform);
+                    actionChooseEnemy?.Invoke(enemyBehaviour.enemyTank.view.transform);
                 }
             }
         }

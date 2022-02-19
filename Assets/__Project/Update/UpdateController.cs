@@ -1,27 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 
 namespace Tank_Game
 {
     public sealed class UpdateController : IUpdateController
     {
-        private List<IUpdate> updateList;
-        private List<IFixedUpdate> fixedUpdateList;
-        private List<ILateUpdate> lateUpdateList;
-        private List<IUnscaledUpdate> unscaledUpdateList;
+        private List<IUpdate> _updateList;
+        private List<IFixedUpdate> _fixedUpdateList;
+        private List<ILateUpdate> _lateUpdateList;
+        private List<IUnscaledUpdate> _unscaledUpdateList;
 
         public UpdateController()
         {
-            updateList = new List<IUpdate>();
-            fixedUpdateList = new List<IFixedUpdate>();
-            lateUpdateList = new List<ILateUpdate>();
-            unscaledUpdateList = new List<IUnscaledUpdate>();
+            _updateList = new List<IUpdate>();
+            _fixedUpdateList = new List<IFixedUpdate>();
+            _lateUpdateList = new List<ILateUpdate>();
+            _unscaledUpdateList = new List<IUnscaledUpdate>();
         }
 
         public void Update(float deltaTime)
         {
-            foreach (IUpdate controller in updateList)
+            foreach (IUpdate controller in _updateList)
             {
                 controller.Update(deltaTime);
             }
@@ -29,7 +28,7 @@ namespace Tank_Game
 
         public void FixedUpdate(float fixedDeltaTime)
         {
-            foreach (IFixedUpdate controller in fixedUpdateList)
+            foreach (IFixedUpdate controller in _fixedUpdateList)
             {
                 controller.FixedUpdate(fixedDeltaTime);
             }
@@ -37,7 +36,7 @@ namespace Tank_Game
 
         public void LateUpdate(float deltaTime)
         {
-            foreach (ILateUpdate controller in lateUpdateList)
+            foreach (ILateUpdate controller in _lateUpdateList)
             {
                 controller.LateUpdate(deltaTime);
             }
@@ -45,7 +44,7 @@ namespace Tank_Game
 
         public void UnscaledUpdate(float unscaledDeltaTime)
         {
-            foreach (IUnscaledUpdate controller in unscaledUpdateList)
+            foreach (IUnscaledUpdate controller in _unscaledUpdateList)
             {
                 controller.UnscaledUpdate(unscaledDeltaTime);
             }
@@ -53,18 +52,18 @@ namespace Tank_Game
 
         public void AddController(IUpdatable updatable)
         {
-            if (updatable is IUpdate updateController) updateList.Add(updateController);
-            if (updatable is IFixedUpdate fixedUpdateController) fixedUpdateList.Add(fixedUpdateController);
-            if (updatable is ILateUpdate lateUpdateController) lateUpdateList.Add(lateUpdateController);
-            if (updatable is IUnscaledUpdate unscaledUpdateController) unscaledUpdateList.Add(unscaledUpdateController);
+            if (updatable is IUpdate updateController) _updateList.Add(updateController);
+            if (updatable is IFixedUpdate fixedUpdateController) _fixedUpdateList.Add(fixedUpdateController);
+            if (updatable is ILateUpdate lateUpdateController) _lateUpdateList.Add(lateUpdateController);
+            if (updatable is IUnscaledUpdate unscaledUpdateController) _unscaledUpdateList.Add(unscaledUpdateController);
         }
 
         public void RemoveController(IUpdatable updatable)
         {
-            if (updatable is IUpdate updateController) updateList.Remove(updateController);
-            if (updatable is IFixedUpdate fixedUpdateController) fixedUpdateList.Remove(fixedUpdateController);
-            if (updatable is ILateUpdate lateUpdateController) lateUpdateList.Remove(lateUpdateController);
-            if (updatable is IUnscaledUpdate unscaledUpdateController) unscaledUpdateList.Remove(unscaledUpdateController);
+            if (updatable is IUpdate updateController) _updateList.Remove(updateController);
+            if (updatable is IFixedUpdate fixedUpdateController) _fixedUpdateList.Remove(fixedUpdateController);
+            if (updatable is ILateUpdate lateUpdateController) _lateUpdateList.Remove(lateUpdateController);
+            if (updatable is IUnscaledUpdate unscaledUpdateController) _unscaledUpdateList.Remove(unscaledUpdateController);
         }
 
     }

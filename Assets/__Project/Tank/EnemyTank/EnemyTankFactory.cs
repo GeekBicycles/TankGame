@@ -4,18 +4,18 @@ namespace Tank_Game
 {
     public class EnemyTankFactory : IEnemyTankFactory
     {
-        private IPoolGameObject poolGameObject;
+        private IPoolGameObject _poolGameObject;
         public EnemyTankFactory()
         {
-            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.enemyTankPrefab);
-            poolGameObject = new PoolGameObject(prefab, PrefabsNames.enemyTankName, PrefabsNames.enemyTankPoolName);
+            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.ENEMY_TANK_PREFAB);
+            _poolGameObject = new PoolGameObject(prefab, PrefabsNames.ENEMY_TANK, PrefabsNames.ENEMY_TANK_POOL);
         }
 
         public IEnemyTank GetEnemyTank(Vector3 position, Quaternion rotation)
         {
-            EnemyTankModel enemyTankModel = Resources.Load<EnemyTankModel>(ResourcesPathes.enemyTankModel);
+            EnemyTankModel enemyTankModel = Resources.Load<EnemyTankModel>(ResourcesPathes.ENEMY_TANK_MODEL);
 
-            GameObject gameObject = poolGameObject.Pop();
+            GameObject gameObject = _poolGameObject.Pop();
             gameObject.transform.position = position;
             gameObject.transform.rotation = rotation;
             EnemyTankView enemyTankView = new EnemyTankView(gameObject.transform);
@@ -28,7 +28,7 @@ namespace Tank_Game
         }
         public void Destroy(IEnemyTank enemyTank)
         {
-            poolGameObject.Push(enemyTank.view.transform.gameObject);
+            _poolGameObject.Push(enemyTank.view.transform.gameObject);
             enemyTank = null;
         }
     }

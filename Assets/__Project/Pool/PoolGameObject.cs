@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,31 +6,31 @@ namespace Tank_Game
 {
     public sealed class PoolGameObject : IDisposable, IPoolGameObject
     {
-        private Stack<GameObject> stack;
-        private GameObject prefab;
-        private Transform root;
-        private string prefabGameName;
+        private Stack<GameObject> _stack;
+        private GameObject _prefab;
+        private Transform _root;
+        private string _prefabGameName;
 
         public PoolGameObject(GameObject prefab, string prefabGameName, string poolName)
         {
-            this.prefab = prefab;
-            this.prefabGameName = prefabGameName;
+            _prefab = prefab;
+            _prefabGameName = prefabGameName;
 
-            stack = new Stack<GameObject>();
-            root = new GameObject(poolName).transform;
+            _stack = new Stack<GameObject>();
+            _root = new GameObject(poolName).transform;
         }
 
         public GameObject Pop()
         {
             GameObject gameObject;
-            if (stack.Count == 0)
+            if (_stack.Count == 0)
             {
-                gameObject = GameObject.Instantiate(prefab);
-                gameObject.name = prefabGameName;
+                gameObject = GameObject.Instantiate(_prefab);
+                gameObject.name = _prefabGameName;
             }
             else
             {
-                gameObject = stack.Pop();
+                gameObject = _stack.Pop();
             }
 
             gameObject.SetActive(true);
@@ -42,19 +41,19 @@ namespace Tank_Game
 
         public void Push(GameObject gameObject)
         {
-            stack.Push(gameObject);
-            gameObject.transform.SetParent(root);
+            _stack.Push(gameObject);
+            gameObject.transform.SetParent(_root);
             gameObject.SetActive(false);
         }
 
         public void Dispose()
         {
-            while (stack.Count > 0)
+            while (_stack.Count > 0)
             {
-                GameObject gameObject = stack.Pop();
+                GameObject gameObject = _stack.Pop();
                 GameObject.Destroy(gameObject);
             }
-            GameObject.Destroy(root.gameObject);
+            GameObject.Destroy(_root.gameObject);
         }
     }
 }

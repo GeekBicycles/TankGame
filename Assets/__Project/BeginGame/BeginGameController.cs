@@ -13,7 +13,7 @@ namespace Tank_Game
         {
             this.inputData = inputData;
             this.actionBeginGame = action;
-            beginCanvas = GameObject.Find(SceneObjectNames.beginCanvas);
+            beginCanvas = GameObject.Find(SceneObjectNames.BEGIN_CANVAS);
         }
 
         public void Update(float deltaTime)
