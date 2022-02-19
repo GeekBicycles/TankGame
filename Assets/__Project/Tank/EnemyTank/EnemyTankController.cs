@@ -7,9 +7,9 @@ namespace Tank_Game
         private IEnemyTankList _enemyTankList;
         private IEnemyTankFactory _enemyTankFactory;
 
-        public EnemyTankController()
+        public EnemyTankController(IEnemyTankList enemyTankList)
         {
-            _enemyTankList = new EnemyTankList();
+            _enemyTankList = enemyTankList;
             _enemyTankFactory = new EnemyTankFactory();
         }
 
