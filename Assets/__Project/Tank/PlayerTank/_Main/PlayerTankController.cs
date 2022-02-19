@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class PlayerTankController : IUpdate, IPlayerTankController
+    public sealed class PlayerTankController : IUpdate, IPlayerTankController, ITurnBased
     {
         private IBulletController _bulletController;
         private IBulletPowerFire _bulletPowerFire;
@@ -11,6 +11,7 @@ namespace Tank_Game
         private IRotateController _rotateController;
         private IFireController _fireController;
         private IPlayerTankList _playerTankList;
+        private bool onTurn;
 
         public PlayerTankController(IInputData inputData, IInputMouseData inputMouseData, IPlayerTankList playerTankList, IBulletController bulletController)
         {
@@ -29,6 +30,11 @@ namespace Tank_Game
             _fireController = new FireController(_bulletController, _bulletPowerFire);
         }
 
+        public void SetOnTurn(bool value)
+        {
+            onTurn = value;
+        }
+
         public IPlayerTank GetPlayerTank()
         {
             return _playerTankList.current;
@@ -36,12 +42,18 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            _chooseEnemy.Update(deltaTime);
-            _bulletPowerFire.Update(deltaTime);
-
-            _moveController.Move(deltaTime, _playerTankList.current);
-            _rotateController.Rotate(deltaTime, _playerTankList.current);
-            _fireController.Fire(deltaTime, _playerTankList.current, _bulletPowerFire.GetFirePower() * _playerTankList.current.model.maxBulletSpeed);
+            if (onTurn)
+            {
+                _chooseEnemy.Update(deltaTime);
+                _bulletPowerFire.Update(deltaTime);
+                _moveController.Move(deltaTime, _playerTankList.current);
+                _rotateController.Rotate(deltaTime, _playerTankList.current);
+                _fireController.Fire(deltaTime, _playerTankList.current, _bulletPowerFire.GetFirePower() * _playerTankList.current.model.maxBulletSpeed);
+            }
+            else
+            {
+                _rotateController.Rotate(deltaTime, _playerTankList.current);
+            }
         }
 
         private void RotatePlayerToEnemy(Transform enemyTransform)
