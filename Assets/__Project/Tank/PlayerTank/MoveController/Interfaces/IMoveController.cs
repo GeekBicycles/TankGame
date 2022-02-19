@@ -2,6 +2,6 @@
 {
     public interface IMoveController
     {
-        void Move(float deltaTime);
+        public void Move(float deltaTime, IPlayerTank playerTank);
     }
 }

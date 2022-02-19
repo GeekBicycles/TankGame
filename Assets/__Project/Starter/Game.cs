@@ -53,9 +53,8 @@ namespace Tank_Game
             new StartTankPosition().SetStartupPosition(playerTankList, enemyTankList);
 
             BulletController bulletController = new BulletController();
-            ChooseEnemy chooseEnemy = new ChooseEnemy(_inputMouseData);
 
-            PlayerTankController playerTankController = new PlayerTankController(_inputData, bulletController, chooseEnemy);
+            PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
             EnemyTankController enemyTankController = new EnemyTankController();
@@ -67,7 +66,6 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
             updateController.AddController(cameraController);
-            updateController.AddController(chooseEnemy);
 
             _gameStarter.SetUpdateController(updateController);
         }

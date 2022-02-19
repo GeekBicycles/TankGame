@@ -2,6 +2,6 @@
 {
     public interface IRotateController
     {
-        void Rotate(float deltaTime);
+        public void Rotate(float deltaTime, IPlayerTank playerTank);
     }
 }
