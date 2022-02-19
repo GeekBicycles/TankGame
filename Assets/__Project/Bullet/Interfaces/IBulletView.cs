@@ -6,11 +6,11 @@ namespace Tank_Game
 {
     public interface IBulletView
     {
-        public Transform transform { get; set; }
-        public Rigidbody rigidbody { get; set; }
+        public Transform transform { get; }
+        public Rigidbody rigidbody { get; }
         public ParticleSystem particleSystem { get; }
         public AudioSource audioSource { get; }
-        public IBulletBehaviour bulletBehaviour { get; set; }
+        public IBulletBehaviour bulletBehaviour { get; }
 
     }
 }

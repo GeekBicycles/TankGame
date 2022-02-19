@@ -1,86 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 
 namespace Tank_Game
 {
     public sealed class Game
     {
-        private GameStarter gameStarter;
+        private GameStarter _gameStarter;
 
-        private InputController inputController;
-
-        private IInputData inputData;
-        private IPlayerTank playerTank;
-        private IEnemyTankList enemyTankList;
+        private InputController _inputController;
+        private InputMouseController _inputMouseController;
+        private IInputData _inputData;
+        private IInputMouseData _inputMouseData;
 
         public void Start(GameStarter gameStarter)
         {
-            this.gameStarter = gameStarter;
+            _gameStarter = gameStarter;
 
             InitInputController();
 
-            //WaitForStart(); //TODO �������� �����, �������� �� ������������
-            BeginGame();
+            WaitForStart();
+
         }
 
         private void InitInputController()
         {
-            IKeySetControl keySetControl = Resources.Load<KeySetControl>(ResourcesPathes.keySetControl);
-            inputData = new InputData();
-            inputController = new InputController(inputData, keySetControl);
+            IKeySetControl keySetControl = Resources.Load<KeySetControl>(ResourcesPathes.KEY_SET_CONTROL);
+            _inputData = new InputData();
+            _inputController = new InputController(_inputData, keySetControl);
+
+            IMouseSetControl mouseSetControl = Resources.Load<MouseSetControl>(ResourcesPathes.MOUSE_SET_CONTROL);
+            _inputMouseData = new InputMouseData();
+            _inputMouseController = new InputMouseController(_inputMouseData, mouseSetControl);
         }
 
         private void WaitForStart()
         {
-            BeginGameController beginGameController = new BeginGameController(inputData, BeginGame);
+            BeginGameController beginGameController = new BeginGameController(_inputData, BeginGame);
 
             IUpdateController updateController = new UpdateController();
 
-            updateController.AddController(inputController);
+            updateController.AddController(_inputController);
             updateController.AddController(beginGameController);
 
-            gameStarter.SetUpdateController(updateController);
+            _gameStarter.SetUpdateController(updateController);
         }
 
         private void BeginGame()
         {
             BulletController bulletController = new BulletController();
-            BulletPowerFire bulletPowerFire = new BulletPowerFire(inputData);
-            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController, bulletPowerFire);
-            playerTank = playerTankController.GetPlayerTank();
-            EnemyTankController enemyTankController = new EnemyTankController(bulletController);
-            
-            EndGameController endGameController = new EndGameController(playerTank, enemyTankController.GetEnemyTankList());
+            ChooseEnemy chooseEnemy = new ChooseEnemy(_inputMouseData);
+
+            PlayerTankController playerTankController = new PlayerTankController(_inputData, bulletController, chooseEnemy);
+            IPlayerTank playerTank = playerTankController.GetPlayerTank();
+
+            EnemyTankController enemyTankController = new EnemyTankController();
             CameraController cameraController = new CameraController(playerTank.view.transform);
-            UIController uIController = new UIController(playerTank);
 
             UpdateController updateController = new UpdateController();
-            updateController.AddController(inputController);
-            updateController.AddController(bulletController);
+            updateController.AddController(_inputController);
+            updateController.AddController(_inputMouseController);
             updateController.AddController(playerTankController);
-            updateController.AddController(bulletPowerFire);
             updateController.AddController(enemyTankController);
-            //updateController.AddController(endGameController);
             updateController.AddController(cameraController);
-            //updateController.AddController(uIController);
-            gameStarter.SetUpdateController(updateController);
-        }
+            updateController.AddController(chooseEnemy);
 
-        private void SpawnTanks()
-        {
-            //TankFactory tankFactory = new TankFactory();
-            //playerTankModel = tankFactory.GetPlayerTankModel();
-            //enemyTankModel = tankFactory.GetEnemyTankModel();
-
-            //SpawnPosition spawnPosition = new SpawnPosition();
-            //TankSpawner tankSpawner = new TankSpawner();
-            //tankSpawner.Spawn(spawnPosition.playerSpawnPoint.position, spawnPosition.EnemySpawnPoint.position);
-            //new TankAutoRotator(tankSpawner.playerTank, tankSpawner.ememyTank);
-
-            //playerTankModel.transform = tankSpawner.playerTank;
-            //enemyTankModel.transform = tankSpawner.ememyTank;
+            _gameStarter.SetUpdateController(updateController);
         }
     }
 }

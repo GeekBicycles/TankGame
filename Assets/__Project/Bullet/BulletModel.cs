@@ -8,9 +8,7 @@ namespace Tank_Game
         [SerializeField] private float _speed;
         [SerializeField] private int _damage;
 
-        public float Speed { get { return _speed; } set { _speed = value; } }
-        public int Damage { get { return _damage; } set { _damage = value; } }
-
-
+        public float speed { get { return _speed; } set { _speed = value; } }
+        public int damage { get { return _damage; } set { _damage = value; } }
     }
 }

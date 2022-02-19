@@ -1,31 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Tank_Game
 {
     public sealed class FireController : IFireController
     {
-        private IPlayerTank playerTank;
-        private IInputData inputData;
-        private IBulletController bulletController;
+        private IPlayerTank _playerTank;
+        private IInputData _inputData;
+        private IBulletController _bulletController;
 
         public FireController(IPlayerTank playerTank, IInputData inputData, IBulletController bulletController)
         {
-            this.playerTank = playerTank;
-            this.inputData = inputData;
-            this.bulletController = bulletController;
+            _playerTank = playerTank;
+            _inputData = inputData;
+            _bulletController = bulletController;
         }
 
         public void FireControl(float deltaTime)
         {
-            playerTank.timeToFire += deltaTime;
-            if (playerTank.timeToFire >= playerTank.model.maxTimeToFire)
+            _playerTank.timeToFire += deltaTime;
+            if (_playerTank.timeToFire >= _playerTank.model.maxTimeToFire)
             {
-                if (inputData.fire)
+                if (_inputData.fire)
                 {
-                    playerTank.timeToFire = 0;
-                    bulletController.Fire(playerTank.view.bulletSpawnTransform.position, playerTank.view.bulletSpawnTransform.rotation, playerTank.model.maxBulletSpeed);
+                    _playerTank.timeToFire = 0;
+                    _bulletController.Fire(_playerTank.view.bulletSpawnTransform.position, _playerTank.view.bulletSpawnTransform.rotation, _playerTank.model.maxBulletSpeed);
                 }
             }
         }

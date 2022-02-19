@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class BulletController : IFixedUpdate, IBulletController
+    public sealed class BulletController : IBulletController
     {
-        private IBulletList bulletList;
-        private IBulletFactory bulletFactory;
+        private IBulletList _bulletList;
+        private IBulletFactory _bulletFactory;
 
         public BulletController()
         {
-            bulletFactory = new BulletFactory();
-            bulletList = new BulletList();
+            _bulletFactory = new BulletFactory();
+            _bulletList = new BulletList();
         }
 
         public void Fire(Vector3 position, Quaternion rotation, float force)
@@ -22,34 +20,29 @@ namespace Tank_Game
 
         private void NewBullet(Vector3 position, Quaternion rotation, float force)
         {
-            IBullet bullet = bulletFactory.GetBullet(position, rotation);
+            IBullet bullet = _bulletFactory.GetBullet(position, rotation);
             bullet.view.bulletBehaviour.actionOnColliderEnter += OnCollisionEnter;
             bullet.view.rigidbody.isKinematic = false;
             bullet.view.rigidbody.AddForce(bullet.view.transform.forward.normalized * force);
-            bulletList.bullets.Add(bullet);
+            _bulletList.bullets.Add(bullet);
             bullet.view.audioSource.Play();
         }
 
         private void RemoveBullet(IBullet bullet)
         {
             bullet.view.particleSystem.Play();
-            bulletList.bullets.Remove(bullet);
+            _bulletList.bullets.Remove(bullet);
             bullet.view.bulletBehaviour.actionOnColliderEnter -= OnCollisionEnter;
             bullet.view.rigidbody.isKinematic = true;
-            bulletFactory.Destroy(bullet);
+            _bulletFactory.Destroy(bullet);
         }
 
         private void OnCollisionEnter(IBullet bullet, Collision collision)
         {
-            if (!collision.collider.CompareTag(GameTags.bullet))
+            if (!collision.collider.CompareTag(GameTags.BULLET))
             {
                 RemoveBullet(bullet);
             }
-        }
-
-        public void FixedUpdate(float fixedDeltaTime)
-        {
-            //_bulletView.Fire(_bulletModel.bullets[0].Speed * fixedDeltaTime);
         }
     }
 }

@@ -1,12 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
-using UnityEngine.PlayerLoop;
-
 namespace Tank_Game
 {
-    public class BulletPowerFire : IUpdate
+    public class BulletPowerFire : IUpdate, IBulletPowerFire
     {
         private IInputData _inputData;
         private float _powerPressFire = 0f;
@@ -15,12 +9,13 @@ namespace Tank_Game
         private bool _stopPressFireButton = true;
         private float _maxPower = 2f;
 
-        public bool _isBulletReady = false;
+        public bool isBulletReady { get; set; } = false;
 
         public BulletPowerFire(IInputData inputData)
         {
             _inputData = inputData;
         }
+
         public void Update(float deltaTime)
         {
             if (_inputData.fire && _stopPressFireButton)
@@ -31,7 +26,7 @@ namespace Tank_Game
             else if (_startPressFireButton && !_inputData.fire)
             {
                 _currentFirePower = _powerPressFire;
-                _isBulletReady = true;
+                isBulletReady = true;
                 Reset();
             }
 
@@ -59,6 +54,6 @@ namespace Tank_Game
             _startPressFireButton = false;
             _stopPressFireButton = true;
         }
-        
+
     }
 }
