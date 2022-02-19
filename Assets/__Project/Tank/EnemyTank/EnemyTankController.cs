@@ -2,15 +2,21 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class EnemyTankController : IUpdate, IEnemyTankController
+    public sealed class EnemyTankController : IUpdate, IEnemyTankController, ITurnBased
     {
         private IEnemyTankList _enemyTankList;
         private IEnemyTankFactory _enemyTankFactory;
+        private bool _onTurn;
 
         public EnemyTankController(IEnemyTankList enemyTankList)
         {
             _enemyTankList = enemyTankList;
             _enemyTankFactory = new EnemyTankFactory();
+        }
+
+        public void SetOnTurn(bool value)
+        {
+            _onTurn = value;
         }
 
         public IEnemyTankList GetEnemyTankList()
@@ -30,7 +36,14 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
+            if (_onTurn)
+            {
 
+            }
+            else
+            {
+
+            }
         }
     }
 }

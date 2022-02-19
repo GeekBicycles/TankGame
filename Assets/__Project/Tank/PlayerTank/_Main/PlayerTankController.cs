@@ -11,7 +11,7 @@ namespace Tank_Game
         private IRotateController _rotateController;
         private IFireController _fireController;
         private IPlayerTankList _playerTankList;
-        private bool onTurn;
+        private bool _onTurn;
 
         public PlayerTankController(IInputData inputData, IInputMouseData inputMouseData, IPlayerTankList playerTankList, IBulletController bulletController)
         {
@@ -32,7 +32,7 @@ namespace Tank_Game
 
         public void SetOnTurn(bool value)
         {
-            onTurn = value;
+            _onTurn = value;
         }
 
         public IPlayerTank GetPlayerTank()
@@ -42,7 +42,7 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            if (onTurn)
+            if (_onTurn)
             {
                 _chooseEnemy.Update(deltaTime);
                 _bulletPowerFire.Update(deltaTime);
