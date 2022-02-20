@@ -4,19 +4,18 @@ namespace Tank_Game
 {
     public sealed class RotateController : IRotateController
     {
-        private IPlayerTank _playerTank;
         private IInputData _inputData;
-        public RotateController(IPlayerTank playerTank, IInputData inputData)
+        public RotateController(IInputData inputData)
         {
-            _playerTank = playerTank;
             _inputData = inputData;
         }
 
-        public void Rotate(float deltaTime)
+        public void Rotate(float deltaTime, IPlayerTank playerTank)
         {
+            if (playerTank == null) return;
             float rotatedirection = (_inputData.right ? 1 : 0) - (_inputData.left ? 1 : 0);
-            Vector3 rotation = new Vector3(0, rotatedirection * _playerTank.model.rotateSpeed * deltaTime, 0);
-            _playerTank.view.transform.Rotate(rotation);
+            Vector3 rotation = new Vector3(0, rotatedirection * playerTank.model.rotateSpeed * deltaTime, 0);
+            playerTank.view.transform.Rotate(rotation);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Tank_Game
         private InputMouseController _inputMouseController;
         private IInputData _inputData;
         private IInputMouseData _inputMouseData;
+        private TurnBasedController _turnBasedController;
 
         public void Start(GameStarter gameStarter)
         {
@@ -46,14 +47,21 @@ namespace Tank_Game
 
         private void BeginGame()
         {
-            BulletController bulletController = new BulletController();
-            ChooseEnemy chooseEnemy = new ChooseEnemy(_inputMouseData);
+            IPlayerTankList playerTankList = new PlayerTankList();
+            IEnemyTankList enemyTankList = new EnemyTankList();
 
-            PlayerTankController playerTankController = new PlayerTankController(_inputData, bulletController, chooseEnemy);
+            new TankSpawner(playerTankList, enemyTankList).Spawn();
+            new StartTankPosition().SetStartupPosition(playerTankList, enemyTankList);
+
+            BulletController bulletController = new BulletController();
+
+            PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
-            EnemyTankController enemyTankController = new EnemyTankController();
+            EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
             CameraController cameraController = new CameraController(playerTank.view.transform);
+
+            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(_inputController);
@@ -61,7 +69,6 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
             updateController.AddController(cameraController);
-            updateController.AddController(chooseEnemy);
 
             _gameStarter.SetUpdateController(updateController);
         }

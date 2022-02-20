@@ -4,6 +4,6 @@ namespace Tank_Game
 {
     public sealed class CameraSettings : ICameraSettings
     {
-        public Vector3 offSet { get; } = new Vector3(0, 10, -10);
+        public Vector3 offSet { get; } = new Vector3(0, 20, -10);
     }
 }
