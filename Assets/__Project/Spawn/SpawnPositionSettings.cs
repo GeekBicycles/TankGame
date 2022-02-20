@@ -8,5 +8,6 @@ namespace Tank_Game
         public float fieldMaxY { get; } = 50f;
         public float radiusOverlapSphere { get; } = 5;
         public string groundNameGameObject { get; } = "GroundPlane";
+        public int maxColliders { get; } = 8;
     }
 }

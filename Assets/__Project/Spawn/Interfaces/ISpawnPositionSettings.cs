@@ -8,5 +8,6 @@
         public float fieldMinX { get; }
         public float fieldMinY { get; }
         public float radiusOverlapSphere { get; }
+        public int maxColliders { get; }
     }
 }
