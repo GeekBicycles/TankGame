@@ -47,8 +47,8 @@ namespace Tank_Game
         private void BeginGame()
         {
             BulletController bulletController = new BulletController();
-            BulletPowerFire bulletPowerFire = new BulletPowerFire(inputData);
-            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController, bulletPowerFire);
+            //BulletPowerFire bulletPowerFire = new BulletPowerFire(inputData);
+            PlayerTankController playerTankController = new PlayerTankController(inputData, bulletController);
             playerTank = playerTankController.GetPlayerTank();
             EnemyTankController enemyTankController = new EnemyTankController(bulletController);
             
@@ -60,7 +60,7 @@ namespace Tank_Game
             updateController.AddController(inputController);
             updateController.AddController(bulletController);
             updateController.AddController(playerTankController);
-            updateController.AddController(bulletPowerFire);
+            //updateController.AddController(bulletPowerFire);
             updateController.AddController(enemyTankController);
             //updateController.AddController(endGameController);
             updateController.AddController(cameraController);

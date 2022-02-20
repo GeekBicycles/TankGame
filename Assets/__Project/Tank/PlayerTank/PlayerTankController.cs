@@ -13,9 +13,9 @@ namespace Tank_Game
         private IMoveController moveController;
         private IFireController fireController;
         private IRotateController rotateController;
-        private BulletPowerFire bulletPowerFire;
+        private IBulletPowerFire bulletPowerFire;
 
-        public PlayerTankController(IInputData inputData, IBulletController bulletController, BulletPowerFire bulletPowerFire)
+        public PlayerTankController(IInputData inputData, IBulletController bulletController)
         {
             this.inputData = inputData;
             this.bulletController = bulletController;
@@ -24,9 +24,9 @@ namespace Tank_Game
             //moveController = new MoveController(inputData, this.playerTank);
             //fireController = new FireController(playerTank, inputData, bulletController);
             //rotateController = new RotateController(playerTank, inputData);
-            this.bulletPowerFire = bulletPowerFire;
             //this.playerTankFactory = new PlayerTankFactory();
             //this.playerTank = playerTankFactory.GetPlayerTank(Vector3.zero, Quaternion.identity);
+            bulletPowerFire = new BulletPowerFire(inputData);
 
         }
 
@@ -37,6 +37,9 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
+
+            bulletPowerFire.Update(deltaTime);
+
             float z = (inputData.up ? 1 : 0) - (inputData.down ? 1 : 0);
             Vector3 movement = new Vector3(0, 0, z);
             //movement = Vector3.ClampMagnitude(movement, playerTank.model.speed);
