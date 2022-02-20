@@ -4,6 +4,6 @@ namespace Tank_Game
 {
     public interface IRunRay
     {
-        public Collider StartRay();
+        public Transform StartRay();
     }
 }
