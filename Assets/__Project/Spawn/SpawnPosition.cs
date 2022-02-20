@@ -5,10 +5,12 @@ namespace Tank_Game
     public sealed class SpawnPosition : ISpawnPosition
     {
         private ISpawnPositionSettings _spawnPositionSettings;
+        private Collider[] _collidersResult;
 
         public SpawnPosition()
         {
             _spawnPositionSettings = new SpawnPositionSettings();
+            _collidersResult = new Collider[_spawnPositionSettings.maxColliders];
         }
 
         public Vector3 GetSpawnPosition()
@@ -27,10 +29,10 @@ namespace Tank_Game
 
         private bool CheckFreePosition(Vector3 randomPosition)
         {
-            Collider[] colliders = Physics.OverlapSphere(randomPosition, _spawnPositionSettings.radiusOverlapSphere);
-            foreach (Collider collider in colliders)
+            int countColliders = Physics.OverlapSphereNonAlloc(randomPosition, _spawnPositionSettings.radiusOverlapSphere, _collidersResult);
+            for (int i = 0; i < countColliders; i++)
             {
-                if (!collider.name.Equals(_spawnPositionSettings.groundNameGameObject)) return false;
+                if (!_collidersResult[i].name.Equals(_spawnPositionSettings.groundNameGameObject)) return false;
             }
 
             return true;
