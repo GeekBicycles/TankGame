@@ -15,6 +15,7 @@ namespace Tank_Game
         private IRotateController _rotateController;
         private IFireController _fireController;
         private IPlayerTankList _playerTankList;
+        private IPlayerTankFactory _playerTankFactory;
         private bool _onTurn;
         private bool _isFired;
 
@@ -33,8 +34,19 @@ namespace Tank_Game
             _moveController = new MoveController(inputData);
             _rotateController = new RotateController(inputData);
             _fireController = new FireController(_bulletController, _bulletPowerFire);
+            _playerTankFactory = new PlayerTankFactory();
             _onTurn = false;
             _isFired = false;
+            
+            AddReactionOnBullet();
+        }
+
+        private void AddReactionOnBullet()
+        {
+            foreach (IPlayerTank playerTank in _playerTankList.playerTanks)
+            {
+                playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
+            }
         }
 
         public void StartTurn()
@@ -88,6 +100,16 @@ namespace Tank_Game
             else
             {
                 _rotateController.Rotate(deltaTime, _playerTankList.current);
+            }
+        }
+        
+        private void OnCollisionEnter(IPlayerTank playerTank, Collision collision)
+        {
+            if (collision.collider.CompareTag(GameTags.BULLET))
+            {
+                playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
+                _playerTankList.Remove(playerTank);
+                _playerTankFactory.Destroy(playerTank);
             }
         }
 
