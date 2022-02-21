@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 namespace Tank_Game
 {
-    public class TankUIBehevior : MonoBehaviour, ITankUIBehevior
+    public class TankUIBehevior : MonoBehaviour//, ITankUIBehevior
     {
-        public ITankCount tankCount { get; set; }
+        //public ITankCount tankCount { get; set; }
+
+        public Text playerCount;
+        public Text enemyCaount;
     }
 }
