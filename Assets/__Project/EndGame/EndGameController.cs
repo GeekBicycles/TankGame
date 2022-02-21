@@ -22,6 +22,8 @@ namespace Tank_Game
 
         private void Restart()
         {
+            Time.timeScale = 1;
+            _endGameView.OnRestartButtonClick -= Restart;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

@@ -62,6 +62,7 @@ namespace Tank_Game
             CameraController cameraController = new CameraController(playerTank.view.transform);
 
             _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
+            EndGameCheck endGameCheck = new EndGameCheck(playerTankList, enemyTankList);
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(_inputController);
@@ -69,6 +70,7 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
             updateController.AddController(cameraController);
+            updateController.AddController(endGameCheck);
 
             _gameStarter.SetUpdateController(updateController);
         }
