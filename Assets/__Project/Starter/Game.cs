@@ -55,6 +55,8 @@ namespace Tank_Game
 
             BulletController bulletController = new BulletController();
 
+            TankCountController tankCountController = new TankCountController(playerTankList, enemyTankList);
+
             PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
@@ -69,6 +71,7 @@ namespace Tank_Game
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
             updateController.AddController(cameraController);
+            updateController.AddController(tankCountController);
 
             _gameStarter.SetUpdateController(updateController);
         }
