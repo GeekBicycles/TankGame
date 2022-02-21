@@ -4,11 +4,13 @@ namespace Tank_Game
 {
     public sealed class SpawnPosition : ISpawnPosition
     {
-        private ISpawnPositionSettings spawnPositionSettings;
+        private ISpawnPositionSettings _spawnPositionSettings;
+        private Collider[] _collidersResult;
 
         public SpawnPosition()
         {
-            spawnPositionSettings = new SpawnPositionSettings();
+            _spawnPositionSettings = new SpawnPositionSettings();
+            _collidersResult = new Collider[_spawnPositionSettings.maxColliders];
         }
 
         public Vector3 GetSpawnPosition()
@@ -27,10 +29,10 @@ namespace Tank_Game
 
         private bool CheckFreePosition(Vector3 randomPosition)
         {
-            Collider[] colliders = Physics.OverlapSphere(randomPosition, spawnPositionSettings.radiusOverlapSphere);
-            foreach (Collider collider in colliders)
+            int countColliders = Physics.OverlapSphereNonAlloc(randomPosition, _spawnPositionSettings.radiusOverlapSphere, _collidersResult);
+            for (int i = 0; i < countColliders; i++)
             {
-                if (!collider.name.Equals(spawnPositionSettings.groundNameGameObject)) return false;
+                if (!_collidersResult[i].name.Equals(_spawnPositionSettings.groundNameGameObject)) return false;
             }
 
             return true;
@@ -38,8 +40,8 @@ namespace Tank_Game
 
         private Vector3 GetRandomPosition()
         {
-            float x = Random.Range(spawnPositionSettings.fieldMinX, spawnPositionSettings.fieldMaxX);
-            float y = Random.Range(spawnPositionSettings.fieldMinY, spawnPositionSettings.fieldMaxY);
+            float x = Random.Range(_spawnPositionSettings.fieldMinX, _spawnPositionSettings.fieldMaxX);
+            float y = Random.Range(_spawnPositionSettings.fieldMinY, _spawnPositionSettings.fieldMaxY);
             return new Vector3(x, 0, y);
         }
     }
