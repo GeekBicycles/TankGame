@@ -5,26 +5,34 @@ using UnityEngine.SceneManagement;
 
 namespace Tank_Game
 {
-    public class EndGameController
+    public class EndGameController : IUpdate
     {
-        private IEndGameModel _endGameModel;
-        private IEndGameView _endGameView;
-        public EndGameController(bool winOrLose)
-        {
-            var prefab = Resources.Load<GameObject>(ResourcesPathes.END_GAME_CANVAS);
-            var canvas = GameObject.Instantiate(prefab);
-            _endGameView = canvas.GetComponent<EndGameView>();
-            _endGameModel = new EndGameModel();
-            _endGameView.SetText(winOrLose ? _endGameModel.WinGame : _endGameModel.LoseGame);
-            _endGameView.OnRestartButtonClick += Restart;
-            Time.timeScale = 0;
-        }
+        private IPlayerTankList _currentPlayerTankCount;
+        private IEnemyTankList _currentEnemyTankCount;
+        private bool _isUpdateble;
 
-        private void Restart()
+        public EndGameController(IPlayerTankList playerList, IEnemyTankList enemyList)
         {
-            Time.timeScale = 1;
-            _endGameView.OnRestartButtonClick -= Restart;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            _currentPlayerTankCount = playerList;
+            _currentEnemyTankCount = enemyList;
+            _isUpdateble = true;
+        }
+        public void Update(float deltaTime)
+        {
+            if (_isUpdateble)
+            {
+                if (_currentPlayerTankCount.playerTanks.Count <= 0)
+                {
+                    _isUpdateble = false;
+                    new EndGame(false);
+                }
+
+                else if (_currentEnemyTankCount.enemyTanks.Count <= 0)
+                {
+                    _isUpdateble = false;
+                    new EndGame(true);
+                }
+            }
         }
     }
 }
