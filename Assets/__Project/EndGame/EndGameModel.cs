@@ -4,18 +4,12 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class EndGameModel : MonoBehaviour
+    public class EndGameModel : IEndGameModel
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        private const string WIN_GAME = "YOU ARE WIN!";
+        private const string LOSE_GAME = "YOU ARE LOSE!";
         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public string WinGame { get => WIN_GAME; }
+        public string LoseGame { get => LOSE_GAME; }
     }
 }

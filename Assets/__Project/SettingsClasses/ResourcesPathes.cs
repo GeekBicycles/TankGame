@@ -16,5 +16,7 @@ namespace Tank_Game
         public const string MOUSE_SET_CONTROL = "ScriptableObjects/KeySetControl/MouseSetControl";
 
         public const string TANKS_STARTUP_POSITION = "Prefabs/TanksStartupPosition";
+
+        public const string END_GAME_CANVAS = "UI/EndGameCanvas";
     }
 }
