@@ -8,8 +8,8 @@ namespace Tank_Game
 
         public BulletFactory()
         {
-            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.BULLET_PREFAB);
-            _poolGameObject = new PoolGameObject(prefab, PrefabsNames.BULLET, PrefabsNames.BULLET_POOL);
+            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.BULLET_PREFAB_BUILDER);
+            _poolGameObject = new PoolBullet(prefab, PrefabsNames.BULLET, PrefabsNames.BULLET_POOL);
         }
 
         public IBullet GetBullet(Vector3 position, Quaternion rotation)

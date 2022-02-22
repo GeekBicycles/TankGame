@@ -5,7 +5,7 @@ namespace Tank_Game
     [CreateAssetMenu(fileName = "PlayerTankModel", menuName = "Models/PlayerTank", order = 1)]
     public sealed class PlayerTankModel : ScriptableObject, IPlayerTankModel
     {
-        [SerializeField, Range(0, 5)] private float _health;
+        [SerializeField, Range(0, 100)] private float _health;
         [SerializeField, Range(0, 10)] private float _speed;
         [SerializeField, Range(0, 10)] private float _gravity;
         [SerializeField, Range(0, 1000)] private float _maxBulletSpeed;
