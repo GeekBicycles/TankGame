@@ -107,9 +107,14 @@ namespace Tank_Game
         {
             if (collision.collider.CompareTag(GameTags.BULLET))
             {
-                playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
-                _playerTankList.Remove(playerTank);
-                _playerTankFactory.Destroy(playerTank);
+                playerTank.health -= collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage;
+                playerTank.view.healthSlider.healthSlider = playerTank.health;
+                if (playerTank.health <= 0)
+                {
+                    playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
+                    _playerTankList.Remove(playerTank);
+                    _playerTankFactory.Destroy(playerTank);
+                }
             }
         }
 

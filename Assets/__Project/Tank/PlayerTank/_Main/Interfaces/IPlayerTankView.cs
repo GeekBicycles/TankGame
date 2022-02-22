@@ -7,5 +7,6 @@ namespace Tank_Game
         public Transform transform { get; }
         public Transform bulletSpawnTransform { get; }
         public PlayerTankBehavior playerTankBehavior { get; }
+        public HealthSlider healthSlider { get; set; }
     }
 }

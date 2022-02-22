@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 namespace Tank_Game
 {
@@ -11,6 +12,8 @@ namespace Tank_Game
         public IEnemyTankBehaviour enemyTankBehaviour { get; }
         public Collider collider { get; }
         public Transform _pursuitPoint { get; }
+        public HealthSlider healthSlider { get; set; }
+        
 
         public EnemyTankView(Transform transform)
         {
@@ -18,6 +21,7 @@ namespace Tank_Game
             bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
             navMeshAgent = transform.GetComponent<NavMeshAgent>();
             enemyTankBehaviour = transform.gameObject.AddComponent<EnemyTankBehaviour>();
+            healthSlider = transform.GetComponent<HealthSlider>();
         }
     }
 }

@@ -7,12 +7,14 @@ namespace Tank_Game
         public Transform transform { get; }
         public Transform bulletSpawnTransform { get; }
         public PlayerTankBehavior playerTankBehavior { get; }
+        public HealthSlider healthSlider { get; set; }
 
         public PlayerTankView(Transform transform)
         {
             this.transform = transform;
             bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
             playerTankBehavior = transform.gameObject.AddComponent<PlayerTankBehavior>();
+            healthSlider = transform.GetComponent<HealthSlider>();
         }
     }
 }

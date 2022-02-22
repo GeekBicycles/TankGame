@@ -5,7 +5,7 @@ namespace Tank_Game
     [CreateAssetMenu(fileName = "EnemyTankModel", menuName = "Models/EnemyTank", order = 1)]
     public sealed class EnemyTankModel : ScriptableObject, IEnemyTankModel
     {
-        [SerializeField, Range(0, 5)] private float _health;
+        [SerializeField, Range(0, 100)] private float _health;
         [SerializeField, Range(0, 10)] private float _speed;
         [SerializeField, Range(0, 10)] private float _maxBulletSpeed;
         [SerializeField, Range(0, 20)] private float _maxAccuracy;
