@@ -8,7 +8,7 @@ namespace Tank_Game
     public class ChoosePlayerTank: IUpdate, IChooseTank
     {
         private IPlayerTankList _playerTankList;
-        public KeyCode playerSwitch = KeyCode.C;
+        public KeyCode playerSwitch = KeyCode.Tab;
         public event Action<IPlayerTank> actionChoosePlayer;
         public ChoosePlayerTank(IPlayerTankList playerTankListData)
         {

@@ -32,6 +32,7 @@ namespace Tank_Game
             _bulletPowerFire = new BulletPowerFire(inputData);
             _chooseEnemy = new ChooseEnemy(inputMouseData);
             _chooseEnemy.actionChooseEnemy += RotatePlayerToEnemy;
+            _chooseTank = new ChoosePlayerTank(playerTankList);
             _moveController = new MoveController(inputData);
             _rotateController = new RotateController(inputData);
             _fireController = new FireController(_bulletController, _bulletPowerFire);
@@ -67,6 +68,7 @@ namespace Tank_Game
         {
             return _playerTankList.current;
         }
+       
 
         private bool CheckCurrentTank()
         {
@@ -130,6 +132,8 @@ namespace Tank_Game
         }
         
         //TODO переделать в пул
+
+
         private void PlayExplosionParticle(IPlayerTank playerTank)
         {
             var destroyPoint = playerTank.view.transform.position;
