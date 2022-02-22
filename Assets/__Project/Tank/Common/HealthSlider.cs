@@ -9,7 +9,7 @@ namespace Tank_Game
     {
         [SerializeField] private Slider _healthSlider;
         
-        public float healthSlider { set{
+        public float Value { set{
             if (value >= 0)
             {
                 _healthSlider.value = value;

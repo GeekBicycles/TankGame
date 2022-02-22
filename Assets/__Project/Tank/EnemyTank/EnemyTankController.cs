@@ -60,7 +60,7 @@ namespace Tank_Game
             if (collision.collider.CompareTag(GameTags.BULLET))
             {
                 enemyTank.health -= collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage;
-                enemyTank.view.healthSlider.healthSlider = enemyTank.health;
+                enemyTank.view.healthSlider.Value = enemyTank.health;
                 if (enemyTank.health <= 0)
                 {
                     enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
