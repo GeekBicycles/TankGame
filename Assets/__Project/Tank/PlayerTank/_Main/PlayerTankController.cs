@@ -33,6 +33,7 @@ namespace Tank_Game
             _chooseEnemy = new ChooseEnemy(inputMouseData);
             _chooseEnemy.actionChooseEnemy += RotatePlayerToEnemy;
             _chooseTank = new ChoosePlayerTank(playerTankList);
+            _chooseTank.actionChoosePlayer += ChoosePlayerTank;
             _moveController = new MoveController(inputData);
             _rotateController = new RotateController(inputData);
             _fireController = new FireController(_bulletController, _bulletPowerFire);
@@ -129,6 +130,10 @@ namespace Tank_Game
         private void RotatePlayerToEnemy(Transform enemyTransform)
         {
             _playerTankList.current?.view.transform.LookAt(enemyTransform);
+        }
+        private void ChoosePlayerTank(IPlayerTank newPlayerTank)
+        {
+            _playerTankList.current = newPlayerTank;
         }
         
         //TODO переделать в пул
