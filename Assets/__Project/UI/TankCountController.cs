@@ -2,29 +2,25 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class TankCountController : IUpdate
+    public sealed class TankCountController : IUpdate, ITankCountController
     {
-        private IPlayerTankList playerTankList;
-        private IEnemyTankList enemyTankList;
-        private Transform canvas;
-        private TankUIBehevior tankUIBehevior;
+        public IPlayerTankList PlayerTankList { get; set; }
+        public ITankUIBehevior TankUIBehevior { get; set; }
+        public IEnemyTankList EnemyTankList { get; set; }
+        public Transform CanvasTransform { get; set; }
+
         public TankCountController(IPlayerTankList playerTankList, IEnemyTankList enemyTankList)
         {
-            this.playerTankList = playerTankList;
-            this.enemyTankList = enemyTankList;
-            GameObject prefab = Resources.Load<GameObject>("UI/TankCount");
-            canvas = GameObject.Instantiate(prefab).transform;
-            tankUIBehevior = canvas.GetComponent<TankUIBehevior>();
+            this.PlayerTankList = playerTankList;
+            this.EnemyTankList = enemyTankList;
+            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.TANK_COUNT_SPAWN);
+            CanvasTransform = GameObject.Instantiate(prefab).transform;
+            TankUIBehevior = CanvasTransform.GetComponent<ITankUIBehevior>();
         }
         public void Update(float deltaTime)
         {
-
-            tankUIBehevior.playerCount.text = playerTankList.playerTanks.Count.ToString();
-            tankUIBehevior.enemyCaount.text = enemyTankList.enemyTanks.Count.ToString();
-
-            //tankCount.view.EnemyTankCount = enemyTankList.enemyTanks.Count;
-            //tankCount.view.PlayerCountText.text = tankCount.view.PlayerTankCount.ToString();
-            //tankCount.view.EnemyCountText.text = tankCount.view.EnemyTankCount.ToString();
+            TankUIBehevior.PlayerCount.text = PlayerTankList.playerTanks.Count.ToString();
+            TankUIBehevior.EnemyCaount.text = EnemyTankList.enemyTanks.Count.ToString();
         }
 
     }

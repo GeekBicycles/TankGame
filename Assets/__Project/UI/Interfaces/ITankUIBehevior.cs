@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tank_Game
 {
     public interface ITankUIBehevior
     {
-        public ITankCount tankCount{ get; set; }
+        public Text PlayerCount { get; }
+        public Text EnemyCaount { get; }
     }
 }
