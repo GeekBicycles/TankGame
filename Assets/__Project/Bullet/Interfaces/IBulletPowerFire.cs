@@ -6,5 +6,6 @@
 
         public float GetFirePower();
         public void Update(float deltaTime);
+        public float GetPressFire();
     }
 }
