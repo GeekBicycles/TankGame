@@ -101,6 +101,8 @@ namespace Tank_Game
             {
                 _rotateController.Rotate(deltaTime, _playerTankList.current);
             }
+
+            _playerTankList.current.view.fireSlider.Value = _bulletPowerFire.GetPressFire();
         }
         
         private void OnCollisionEnter(IPlayerTank playerTank, Collision collision)

@@ -8,6 +8,7 @@ namespace Tank_Game
         public Transform bulletSpawnTransform { get; }
         public PlayerTankBehavior playerTankBehavior { get; }
         public HealthSlider healthSlider { get; set; }
+        public FireSlider fireSlider { get; set; }
 
         public PlayerTankView(Transform transform)
         {
@@ -15,6 +16,7 @@ namespace Tank_Game
             bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
             playerTankBehavior = transform.gameObject.AddComponent<PlayerTankBehavior>();
             healthSlider = transform.GetComponent<HealthSlider>();
+            fireSlider = transform.GetComponent<FireSlider>();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Tank_Game
 
         public float timeToFire { get; set; }
         public float health { get; set; }
+        
+        public float fireForce { get; set; }
 
         public PlayerTank(IPlayerTankModel model, IPlayerTankView view)
         {
