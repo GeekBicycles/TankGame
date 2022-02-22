@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class ResourcesPathes : MonoBehaviour
+    public sealed class ResourcesPathes
     {
         public const string PLAYER_TANK_PREFAB = "Prefabs/CompleteTank";
         public const string ENEMY_TANK_PREFAB = "Prefabs/CompleteEnemyTank";
@@ -19,5 +19,7 @@ namespace Tank_Game
         public const string TANKS_STARTUP_POSITION = "Prefabs/TanksStartupPosition";
 
         public const string END_GAME_CANVAS = "UI/EndGameCanvas";
+
+        public const string TANK_COUNT_SPAWN = "UI/TankCount";
     }
 }
