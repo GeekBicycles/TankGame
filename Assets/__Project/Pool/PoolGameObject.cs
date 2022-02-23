@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class PoolGameObject : IDisposable, IPoolGameObject
+    public class PoolGameObject : IDisposable, IPoolGameObject
     {
         private Stack<GameObject> _stack;
-        private GameObject _prefab;
+        protected GameObject _prefab;
         private Transform _root;
-        private string _prefabGameName;
+        protected string _prefabGameName;
 
         public PoolGameObject(GameObject prefab, string prefabGameName, string poolName)
         {
@@ -20,13 +20,19 @@ namespace Tank_Game
             _root = new GameObject(poolName).transform;
         }
 
+        protected virtual GameObject InstantiatePrefab()
+        {
+            GameObject gameObject = GameObject.Instantiate(_prefab);
+            gameObject.name = _prefabGameName;
+            return gameObject;
+        }
+
         public GameObject Pop()
         {
             GameObject gameObject;
             if (_stack.Count == 0)
             {
-                gameObject = GameObject.Instantiate(_prefab);
-                gameObject.name = _prefabGameName;
+                gameObject = InstantiatePrefab();
             }
             else
             {

@@ -55,5 +55,9 @@ namespace Tank_Game
             _stopPressFireButton = true;
         }
 
+        public float GetPressFire()
+        {
+            return _powerPressFire;
+        }
     }
 }

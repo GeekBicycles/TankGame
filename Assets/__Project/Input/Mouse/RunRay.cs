@@ -13,17 +13,17 @@ namespace Tank_Game
             _mouseData = mouseData;
         }
 
-        public Collider StartRay()
+        public Transform StartRay()
         {
             RaycastHit hit;
             Ray ray = _camera.ScreenPointToRay(_mouseData.mousePosition);
             if (Physics.Raycast(ray, out hit, InputSettings.MAX_RAY_LENGTH))
             {
-                return hit.collider;
+                return hit.collider.transform;
             }
             else
             {
-                return new Collider();
+                return new GameObject().transform;
             }
         }
     }

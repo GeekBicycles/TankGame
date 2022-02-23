@@ -12,5 +12,6 @@ namespace Tank_Game
         public IEnemyTankBehaviour enemyTankBehaviour { get; }
         public Collider collider { get; }
         public Transform _pursuitPoint { get; }
+        public HealthSlider healthSlider { get; set; }
     }
 }

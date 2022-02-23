@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Tank_Game
 {
@@ -58,9 +59,14 @@ namespace Tank_Game
         {
             if (collision.collider.CompareTag(GameTags.BULLET))
             {
-                enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
-                _enemyTankList.Remove(enemyTank);
-                _enemyTankFactory.Destroy(enemyTank);
+                enemyTank.health -= collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage;
+                enemyTank.view.healthSlider.Value = enemyTank.health;
+                if (enemyTank.health <= 0)
+                {
+                    enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
+                    _enemyTankList.Remove(enemyTank);
+                    _enemyTankFactory.Destroy(enemyTank);
+                }
             }
         }
 
@@ -88,7 +94,8 @@ namespace Tank_Game
                     IPlayerTank playerTank = ChooseTarget(_playerTankList);
                     _tankAutoRotator.RotateToTarget(_enemyTankList.current.view.transform, playerTank.view.transform);
                     Transform newBulletTransform = _enemyTankList.current.view.bulletSpawnTransform;
-                    _bulletController.Fire(newBulletTransform.position, newBulletTransform.rotation, UnityEngine.Random.Range(0f, _enemyTankList.current.model.bulletforce));
+                    float bulletForce = CalculateBulletForce(playerTank);
+                    _bulletController.Fire(newBulletTransform.position, newBulletTransform.rotation, bulletForce);
                     _isFired = true;
                 }
                 else 
@@ -96,6 +103,15 @@ namespace Tank_Game
                     if (_bulletController.GetCurrentBulletCount() == 0) EndTurn();
                 }
             }
+        }
+
+        private float CalculateBulletForce(IPlayerTank player)
+        {
+            var currentEnemy = _enemyTankList.current;
+            var heading = currentEnemy.view.transform.position - player.view.transform.position;
+            var distance = heading.magnitude;
+            var force = distance * currentEnemy.model.bulletforce * Random.Range(0.8f, 1.2f);
+            return force;
         }
     }
 }

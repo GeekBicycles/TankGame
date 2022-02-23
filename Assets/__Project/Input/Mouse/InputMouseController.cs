@@ -15,8 +15,8 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            _inputMouseData.mouse0 = Input.GetKey(_mouseSetControl.mouse0);
-            _inputMouseData.mouse1 = Input.GetKey(_mouseSetControl.mouse1);
+            _inputMouseData.mouse0 = Input.GetKeyDown(_mouseSetControl.mouse0);
+            _inputMouseData.mouse1 = Input.GetKeyDown(_mouseSetControl.mouse1);
             _inputMouseData.mousePosition = Input.mousePosition;
         }
     }

@@ -12,5 +12,10 @@ namespace Tank_Game
             playerTanks = new List<IPlayerTank>();
             current = null;
         }
+        public void Remove(IPlayerTank playerTank)
+        {
+            playerTanks.Remove(playerTank);
+            if (current == playerTank) current = null;
+        }
     }
 }

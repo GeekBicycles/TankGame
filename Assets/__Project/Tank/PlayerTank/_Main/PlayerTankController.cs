@@ -15,6 +15,7 @@ namespace Tank_Game
         private IRotateController _rotateController;
         private IFireController _fireController;
         private IPlayerTankList _playerTankList;
+        private IPlayerTankFactory _playerTankFactory;
         private bool _onTurn;
         private bool _isFired;
 
@@ -33,8 +34,19 @@ namespace Tank_Game
             _moveController = new MoveController(inputData);
             _rotateController = new RotateController(inputData);
             _fireController = new FireController(_bulletController, _bulletPowerFire);
+            _playerTankFactory = new PlayerTankFactory();
             _onTurn = false;
             _isFired = false;
+            
+            AddReactionOnBullet();
+        }
+
+        private void AddReactionOnBullet()
+        {
+            foreach (IPlayerTank playerTank in _playerTankList.playerTanks)
+            {
+                playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
+            }
         }
 
         public void StartTurn()
@@ -89,11 +101,39 @@ namespace Tank_Game
             {
                 _rotateController.Rotate(deltaTime, _playerTankList.current);
             }
+
+            _playerTankList.current.view.fireSlider.Value = _bulletPowerFire.GetPressFire();
+        }
+        
+        private void OnCollisionEnter(IPlayerTank playerTank, Collision collision)
+        {
+            if (collision.collider.CompareTag(GameTags.BULLET))
+            {
+                playerTank.health -= collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage;
+                playerTank.view.healthSlider.Value = playerTank.health;
+                if (playerTank.health <= 0)
+                {
+                    PlayExplosionParticle(playerTank);
+                    
+                    playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
+                    _playerTankList.Remove(playerTank);
+                    _playerTankFactory.Destroy(playerTank);
+                }
+            }
         }
 
         private void RotatePlayerToEnemy(Transform enemyTransform)
         {
             _playerTankList.current?.view.transform.LookAt(enemyTransform);
+        }
+        
+        //TODO переделать в пул
+        private void PlayExplosionParticle(IPlayerTank playerTank)
+        {
+            var destroyPoint = playerTank.view.transform.position;
+            GameObject prefab = Resources.Load<GameObject>(ResourcesPathes.EXPLOSION_EFFECT_PREFAB);
+            var go = GameObject.Instantiate(prefab, destroyPoint, Quaternion.identity);
+            go.GetComponent<ParticleSystem>().Play();
         }
     }
 }
