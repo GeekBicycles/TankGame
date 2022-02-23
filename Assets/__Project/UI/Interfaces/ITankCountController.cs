@@ -4,9 +4,9 @@ namespace Tank_Game
 {
     public interface ITankCountController
     {
-        public IPlayerTankList PlayerTankList { get; set; }
-        public ITankUIBehevior TankUIBehevior { get; set; }
-        public IEnemyTankList EnemyTankList { get; set; }
-        public Transform CanvasTransform { get; set; }
+        public IPlayerTankList playerTankList { get; set; }
+        public ITankUIBehaviour tankUIBehaviour { get; set; }
+        public IEnemyTankList enemyTankList { get; set; }
+        public Transform canvasTransform { get; set; }
     }
 }
