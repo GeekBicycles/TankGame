@@ -4,18 +4,23 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class StartHelicopterPosition : MonoBehaviour
+    public class StartHelicopterPosition : IStartHelicopterPosition
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        private GameObject _prefab;
+        private IStartupPosition _startupPosition;
 
-        // Update is called once per frame
-        void Update()
+        public StartHelicopterPosition()
         {
+            _prefab = Resources.Load<GameObject>(ResourcesPathes.TANKS_STARTUP_POSITION);
+            _startupPosition = _prefab.GetComponent<IStartupPosition>();
+        }
         
+        public void SetStartupPosition(IHelicopterList helicopterList)
+        {
+            if (helicopterList.helicopters.Count == 1)
+            {
+                helicopterList.helicopters[0].view.transform = _startupPosition.enemyHelicopter1;
+            }
         }
     }
 }

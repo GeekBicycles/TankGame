@@ -1,21 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class HelicopterSpawner : MonoBehaviour
+    public class HelicopterSpawner : IHelicopterSpawner
     {
-        // Start is called before the first frame update
-        void Start()
+        private IHelicopterList _helicopterList;
+
+        public HelicopterSpawner(IHelicopterList helicopterList)
         {
-        
+            _helicopterList = helicopterList;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void SpawnHelicopter()
         {
-        
+            IHelicopterFactory helicopterFactory = new HelicopterFactory();
+
+            while (_helicopterList.helicopters.Count < GameSettings.ENEMY_HELICOPTER_COUNT)
+            {
+                IHelicopter helicopter = helicopterFactory.GetHelicopter(Vector3.zero, Quaternion.identity);
+                if (helicopter != null)
+                {
+                    _helicopterList.helicopters.Add(helicopter);
+                }
+            }
         }
     }
 }
