@@ -49,13 +49,13 @@ namespace Tank_Game
         {
             IPlayerTankList playerTankList = new PlayerTankList();
             IEnemyTankList enemyTankList = new EnemyTankList();
-            // IHelicopterList helicopterList = new HelicopterList();
+            IHelicopterList helicopterList = new HelicopterList();
 
             new TankSpawner(playerTankList, enemyTankList).Spawn();
-            // new HelicopterSpawner(helicopterList).SpawnHelicopter();
-            
             new StartTankPosition().SetStartupPosition(playerTankList, enemyTankList);
-            // new StartHelicopterPosition().SetStartupPosition(helicopterList);
+            
+            new HelicopterSpawner(helicopterList).SpawnHelicopter();
+            new StartHelicopterPosition().SetStartupPosition(helicopterList);
 
             BulletController bulletController = new BulletController();
 
@@ -65,7 +65,7 @@ namespace Tank_Game
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
-            // HelicopterController helicopterController = new HelicopterController(helicopterList);
+            HelicopterController helicopterController = new HelicopterController(helicopterList);
             
             CameraController cameraController = new CameraController(playerTank.view.transform);
 
@@ -77,7 +77,7 @@ namespace Tank_Game
             updateController.AddController(_inputMouseController);
             updateController.AddController(playerTankController);
             updateController.AddController(enemyTankController);
-            // updateController.AddController(helicopterController);
+            updateController.AddController(helicopterController);
             updateController.AddController(cameraController);
             updateController.AddController(endGameController);
             updateController.AddController(tankCountController);

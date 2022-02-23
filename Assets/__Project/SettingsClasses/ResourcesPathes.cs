@@ -6,7 +6,7 @@ namespace Tank_Game
     {
         public const string PLAYER_TANK_PREFAB = "Prefabs/CompleteTank";
         public const string ENEMY_TANK_PREFAB = "Prefabs/CompleteEnemyTank";
-        public const string ENEMY_HELICOPTER_PREFAB = "Prefab/Helicopter";
+        public const string ENEMY_HELICOPTER_PREFAB = "Prefabs/Helicopter";
         public const string ENEMY_HELICOPTER_MODEL = "ScriptableObjects/Models/EnemyHelicopterModel";
         public const string BULLET_PREFAB = "Prefabs/Bullet";
         public const string BULLET_PREFAB_BUILDER = "Prefabs/BulletBuilder";

@@ -12,7 +12,7 @@ namespace Tank_Game
         public HelicopterView(Transform transform)
         {
             this.transform = transform;
-            bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
+            // bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
             helicopterBehaviour = transform.gameObject.AddComponent<HelicopterBehaviour>();
         }
     }

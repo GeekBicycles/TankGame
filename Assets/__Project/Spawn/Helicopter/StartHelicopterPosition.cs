@@ -19,7 +19,8 @@ namespace Tank_Game
         {
             if (helicopterList.helicopters.Count == 1)
             {
-                helicopterList.helicopters[0].view.transform = _startupPosition.enemyHelicopter1;
+                helicopterList.helicopters[0].view.transform.position = _startupPosition.enemyHelicopter1.position;
+                helicopterList.helicopters[0].view.transform.rotation = _startupPosition.enemyHelicopter1.rotation;
             }
         }
     }
