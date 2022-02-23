@@ -21,7 +21,6 @@ namespace Tank_Game
             EnemyTankView enemyTankView = new EnemyTankView(gameObject.transform);
 
             EnemyTank enemyTank = new EnemyTank(enemyTankModel, enemyTankView);
-            enemyTank.timeToFire = enemyTankModel.maxTimeToFire;
             enemyTankView.enemyTankBehaviour.enemyTank = enemyTank;
 
             return enemyTank;

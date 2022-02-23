@@ -12,6 +12,7 @@ namespace Tank_Game
             this.model = model;
             this.view = view;
             health = model.health;
+            timeToFire = model.maxTimeToFire;
         }
     }
 }
