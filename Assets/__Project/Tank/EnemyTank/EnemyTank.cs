@@ -14,5 +14,12 @@ namespace Tank_Game
             health = model.health;
             timeToFire = model.maxTimeToFire;
         }
+
+        public object Clone()
+        {
+            IEnemyTankModel newModel = model;
+            IEnemyTankView newView = (IEnemyTankView)view.Clone();
+            return new EnemyTank(newModel, newView);
+        }
     }
 }

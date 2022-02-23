@@ -6,22 +6,47 @@ namespace Tank_Game
 {
     public class EnemyTankView : IEnemyTankView
     {
-        public Transform transform { get; }
-        public Transform bulletSpawnTransform { get; }
-        public NavMeshAgent navMeshAgent { get; }
-        public IEnemyTankBehaviour enemyTankBehaviour { get; }
+        public Transform transform { get; private set; }
+        public Transform bulletSpawnTransform { get; private set; }
+        public NavMeshAgent navMeshAgent { get; private set; }
+        public IEnemyTankBehaviour enemyTankBehaviour { get; private set; }
         public Collider collider { get; }
         public Transform _pursuitPoint { get; }
         public HealthSlider healthSlider { get; set; }
         
-
-        public EnemyTankView(Transform transform)
+        public EnemyTankView()
         {
-            this.transform = transform;
+
+        }
+
+        private void CalculateComponents()
+        {
             bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
             navMeshAgent = transform.GetComponent<NavMeshAgent>();
             enemyTankBehaviour = transform.gameObject.AddComponent<EnemyTankBehaviour>();
             healthSlider = transform.GetComponent<HealthSlider>();
+        }
+
+        public void AttachTransform(Transform transform)
+        {
+            this.transform = transform;
+            CalculateComponents();
+        }
+        public void AttachTransform(Transform transform, IEnemyTank enemyTank)
+        {
+            AttachTransform(transform);
+            enemyTankBehaviour.enemyTank = enemyTank;
+        }
+
+        public EnemyTankView(Transform transform)
+        {
+            AttachTransform(transform);
+        }
+
+        public object Clone()
+        {
+            EnemyTankView newEnemyTankView = new EnemyTankView();
+            return newEnemyTankView;
         }
     }
 }
