@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class HelicopterModel : MonoBehaviour
+    [CreateAssetMenu(fileName = "EnemyHelicopterModel", menuName = "Models/EnemyHelicopter", order = 1)]
+    public class HelicopterModel : ScriptableObject, IHelicopterModel
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField, Range(0, 100)] private float _health;
+        [SerializeField, Range(0, 10)] private float _speed;
+        [SerializeField, Range(0, 5)] private float _maxFlyHeight;
+        public float health { get => _health; }
+        public float speed { get => _speed; }
+        public float maxFlyHeight { get => _maxFlyHeight; }
     }
 }

@@ -1,21 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class IHelicopterFactory : MonoBehaviour
+    public interface IHelicopterFactory
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        public IHelicopter GetHelicopter(Vector3 position, Quaternion rotation);
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public void Destroy(IHelicopter helicopter);
     }
 }

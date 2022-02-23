@@ -4,18 +4,11 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class IHelicopterView : MonoBehaviour
+    public interface IHelicopterView
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public Transform transform { get; }
+        public Transform bulletSpawnTransform { get; }
+        public IHelicopterBehaviour helicopterBehaviour { get; }
+        public Collider collider { get; }
     }
 }

@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class HelicopterView : MonoBehaviour
+    public class HelicopterView : IHelicopterView
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        public Transform transform { get; }
+        public Transform bulletSpawnTransform { get; }
+        public IHelicopterBehaviour helicopterBehaviour { get; }
+        public Collider collider { get; }
 
-        // Update is called once per frame
-        void Update()
+        public HelicopterView(Transform transform)
         {
-        
+            this.transform = transform;
+            bulletSpawnTransform = transform.GetComponentInChildren<IBulletSpawnTransform>().bulletSpawnTransform;
+            helicopterBehaviour = transform.gameObject.AddComponent<HelicopterBehaviour>();
         }
     }
 }

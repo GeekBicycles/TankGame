@@ -16,5 +16,6 @@ namespace Tank_Game
         public Transform playerGroup3Tank1 { get; }
         public Transform playerGroup3Tank2 { get; }
         public Transform playerGroup3Tank3 { get; }
+        public Transform enemyHelicopter1 { get; }
     }
 }

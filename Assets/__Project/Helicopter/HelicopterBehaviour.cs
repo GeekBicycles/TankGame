@@ -1,21 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class HelicopterBehaviour : MonoBehaviour
+    public class HelicopterBehaviour : MonoBehaviour, IHelicopterBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        public event Action<IHelicopter, Collision> actionOnColliderEnter;
+        public IHelicopter helicopter { get; set; }
+        public void OnCollisionEnter(Collision collision)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            actionOnColliderEnter?.Invoke(helicopter, collision);
         }
     }
 }
