@@ -11,6 +11,7 @@ namespace Tank_Game
         private IBulletController _bulletController;
         private IBulletPowerFire _bulletPowerFire;
         private IChooseEnemy _chooseEnemy;
+        private IChooseTank _chooseTank;
         private IMoveController _moveController;
         private IRotateController _rotateController;
         private IFireController _fireController;
@@ -31,6 +32,8 @@ namespace Tank_Game
             _bulletPowerFire = new BulletPowerFire(inputData);
             _chooseEnemy = new ChooseEnemy(inputMouseData);
             _chooseEnemy.actionChooseEnemy += RotatePlayerToEnemy;
+            _chooseTank = new ChoosePlayerTank(playerTankList);
+            _chooseTank.actionChoosePlayer += ChoosePlayerTank;
             _moveController = new MoveController(inputData);
             _rotateController = new RotateController(inputData);
             _fireController = new FireController(_bulletController, _bulletPowerFire);
@@ -66,6 +69,7 @@ namespace Tank_Game
         {
             return _playerTankList.current;
         }
+       
 
         private bool CheckCurrentTank()
         {
@@ -81,6 +85,7 @@ namespace Tank_Game
             if (_onTurn)
             {
                 _chooseEnemy.Update(deltaTime);
+                _chooseTank.Update(deltaTime);
                 _bulletPowerFire.Update(deltaTime);
                 _moveController.Move(deltaTime, _playerTankList.current);
                 _rotateController.Rotate(deltaTime, _playerTankList.current);
@@ -126,8 +131,14 @@ namespace Tank_Game
         {
             _playerTankList.current?.view.transform.LookAt(enemyTransform);
         }
+        private void ChoosePlayerTank(IPlayerTank newPlayerTank)
+        {
+            _playerTankList.current = newPlayerTank;
+        }
         
         //TODO переделать в пул
+
+
         private void PlayExplosionParticle(IPlayerTank playerTank)
         {
             var destroyPoint = playerTank.view.transform.position;

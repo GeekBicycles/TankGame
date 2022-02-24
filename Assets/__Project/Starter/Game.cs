@@ -61,7 +61,7 @@ namespace Tank_Game
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
-            CameraController cameraController = new CameraController(playerTank.view.transform);
+            CameraController cameraController = new CameraController(playerTankList);
 
             _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
             EndGameController endGameController = new EndGameController(playerTankList, enemyTankList);
