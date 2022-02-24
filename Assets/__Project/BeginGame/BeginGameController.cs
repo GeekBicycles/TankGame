@@ -18,7 +18,7 @@ namespace Tank_Game
 
         public void Update(float deltaTime)
         {
-            if (inputData.fire) BeginGame();
+            if (inputData.FireUp) BeginGame();
         }
 
         private void BeginGame()
