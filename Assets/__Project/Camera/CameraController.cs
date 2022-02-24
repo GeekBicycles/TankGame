@@ -17,6 +17,7 @@ namespace Tank_Game
 
         public void LateUpdate(float deltaTime)
         {
+            if (_playerTankList.current == null) return;
             _mainCamera.transform.position = _cameraPosition.GetNormalCameraPosition();
             _mainCamera.transform.LookAt(_playerTankList.current.view.transform);
         }
