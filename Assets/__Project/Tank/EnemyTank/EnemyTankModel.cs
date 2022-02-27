@@ -24,5 +24,10 @@ namespace Tank_Game
         public float maxTimeToFire { get => _maxTimeToFire; }
         public float bulletforce { get => _bulletforce; }
         public float rotateSpeed { get => _rotateSpeed; }
+
+        public object Clone()
+        {
+            return ScriptableObject.Instantiate(this);
+        }
     }
 }

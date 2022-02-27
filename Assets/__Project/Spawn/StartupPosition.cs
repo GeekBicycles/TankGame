@@ -18,6 +18,8 @@ namespace Tank_Game
         [SerializeField] private Transform _enemyGroup3Tank2;
         [SerializeField] private Transform _enemyGroup3Tank3;
 
+        [SerializeField] private Transform _enemyHelicopter1;
+
         public Transform playerGroup1Tank1 { get { return _playerGroup1Tank1; } }
         public Transform playerGroup2Tank1 { get { return _playerGroup2Tank1; } }
         public Transform playerGroup2Tank2 { get { return _playerGroup2Tank2; } }
@@ -31,5 +33,6 @@ namespace Tank_Game
         public Transform enemyGroup3Tank1 { get { return _enemyGroup3Tank1; } }
         public Transform enemyGroup3Tank2 { get { return _enemyGroup3Tank2; } }
         public Transform enemyGroup3Tank3 { get { return _enemyGroup3Tank3; } }
+        public Transform enemyHelicopter1 { get { return _enemyHelicopter1; } }
     }
 }

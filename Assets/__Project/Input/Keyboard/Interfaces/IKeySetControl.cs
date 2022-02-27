@@ -9,5 +9,6 @@ namespace Tank_Game
         public KeyCode left { get; }
         public KeyCode right { get; }
         public KeyCode fire { get; }
+        public KeyCode fireUp { get; }
     }
 }

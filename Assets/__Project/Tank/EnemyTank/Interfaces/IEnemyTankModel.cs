@@ -1,6 +1,8 @@
+using System;
+
 namespace Tank_Game
 {
-    public interface IEnemyTankModel
+    public interface IEnemyTankModel : ICloneable
     {
         public float health { get; }
         public float speed { get; }
