@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 
 namespace Tank_Game
 {
-    public interface IEnemyTankView
+    public interface IEnemyTankView : ICloneable
     {
         public Transform transform { get; }
         public Transform bulletSpawnTransform { get; }
@@ -13,5 +14,8 @@ namespace Tank_Game
         public Collider collider { get; }
         public Transform _pursuitPoint { get; }
         public HealthSlider healthSlider { get; set; }
+
+        public void AttachTransform(Transform transform);
+        public void AttachTransform(Transform transform, IEnemyTank enemyTank);
     }
 }
