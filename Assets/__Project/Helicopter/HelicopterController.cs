@@ -8,6 +8,10 @@ namespace Tank_Game
     {
         private IHelicopterList _helicopterList;
         private IHelicopterFactory _helicopterFactory;
+        private ISmoothRouter _router;
+        private IHelicopterMoveController _moveController;
+        private ITwinController _upTwinController;
+        private ITwinController _downTwinController;
 
         public HelicopterController(IHelicopterList helicopterList)
         {
@@ -15,6 +19,18 @@ namespace Tank_Game
             _helicopterFactory = new HelicopterFactory();
             
             AddReactionOnBullet();
+
+            GameObject helicopterRoute = Resources.Load<GameObject>(ResourcesPathes.HELICOPTER_ROUTE_POINTS);
+            ITransformPointList transformPointList = helicopterRoute.GetComponent<ITransformPointList>();
+            float moveSpeed = _helicopterList.current.model.moveSpeed;
+            float rotateSpeed = _helicopterList.current.model.rotateSpeed;
+            _router = new SmoothRouter(transformPointList, _helicopterList.current.view.transform, moveSpeed, rotateSpeed);
+            _moveController = new HelicopterMoveController(_helicopterList.current.view.transform, moveSpeed, rotateSpeed);
+
+            _upTwinController = new TwinController(_helicopterList.current, _helicopterList.current.view.twin1, false);
+            _upTwinController.SetTwinSpeed(_helicopterList.current.model.maxTwinSpeed);
+            _downTwinController = new TwinController(_helicopterList.current, _helicopterList.current.view.twin2, true);
+            _downTwinController.SetTwinSpeed(_helicopterList.current.model.maxTwinSpeed);
         }
 
         private void AddReactionOnBullet()
@@ -27,7 +43,14 @@ namespace Tank_Game
         
         public void Update(float deltaTime)
         {
-            return;
+            _upTwinController.Update(deltaTime);
+            _downTwinController.Update(deltaTime);
+            if (_upTwinController.SpeedReached() && _downTwinController.SpeedReached())
+            {
+                _router.Update(deltaTime);
+                _moveController.SetDestination(_router.GetTarget());
+                _moveController.Update(deltaTime);
+            }
         }
 
         public IHelicopterList GetHelicopterList()

@@ -21,6 +21,7 @@ namespace Tank_Game
                 if (helicopter != null)
                 {
                     _helicopterList.helicopters.Add(helicopter);
+                    _helicopterList.current = helicopter;
                 }
             }
         }
