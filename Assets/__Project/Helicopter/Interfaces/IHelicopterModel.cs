@@ -12,5 +12,6 @@ namespace Tank_Game
         public float fireSpread { get; }
         public float shootPerSec { get; }
         public int shootCountPerSeries { get; }
+        public int damage { get; }
     }
 }

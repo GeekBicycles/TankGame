@@ -15,6 +15,7 @@ namespace Tank_Game
         [SerializeField, Range(0, 1)] private float _fireSpread;
         [SerializeField, Range(0, 100)] private float _shootPerSec;
         [SerializeField, Range(0, 100)] private int _shootCountPerSeries;
+        [SerializeField, Range(0, 100)] private int _damage;
         public float health { get => _health; }
         public float moveSpeed { get => _moveSpeed; }
         public float rotateSpeed { get => _rotateSpeed; }
@@ -25,5 +26,6 @@ namespace Tank_Game
         public float fireSpread { get => _fireSpread; }
         public float shootPerSec { get => _shootPerSec; }
         public int shootCountPerSeries { get => _shootCountPerSeries; }
+        public int damage { get => _damage; }
     }
 }

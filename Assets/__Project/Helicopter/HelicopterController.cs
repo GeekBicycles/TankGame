@@ -84,7 +84,8 @@ namespace Tank_Game
 
         private void SetActionDamageTarget(RaycastHit raycastHit)
         {
-
+            IDamagable damagable = raycastHit.collider.GetComponentInParent<IDamagable>();
+            damagable?.SetDamage(_helicopterList.current.model.damage);
         }
 
         private void SetActionEndShooting()
