@@ -6,12 +6,14 @@ namespace Tank_Game
     {
         private ITurnBased _firstTurn;
         private ITurnBased _secondTurn;
+        private ITurnBased _thirdTurn;
         private IEnemyTankList _enemyTankList;
         private List<IEnemyTank> _enemyTanksToTurn;
-        public TurnBasedController(ITurnBased firstTurn, ITurnBased secondTurn, IEnemyTankList enemyTankList)
+        public TurnBasedController(ITurnBased firstTurn, ITurnBased secondTurn, ITurnBased thirdTurn, IEnemyTankList enemyTankList)
         {
             _firstTurn = firstTurn;
             _secondTurn = secondTurn;
+            _thirdTurn = thirdTurn;
             _enemyTankList = enemyTankList;
 
             _firstTurn.endTurn += FirstTurnEnd;
@@ -51,6 +53,13 @@ namespace Tank_Game
 
         private void SecondTurnEnd()
         {
+            _thirdTurn.endTurn += ThirdTurnEnd;
+            _thirdTurn.StartTurn();
+        }
+
+        private void ThirdTurnEnd()
+        {
+            _thirdTurn.endTurn -= ThirdTurnEnd;
             _firstTurn.endTurn += FirstTurnEnd;
             _firstTurn.StartTurn();
         }

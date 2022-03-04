@@ -7,6 +7,8 @@ namespace Tank_Game
     public sealed class HelicopterMoveController : IHelicopterMoveController
     {
 
+        private const float ON_POSITION_DISTANCE = 0.1f;
+
         private Transform _transform;
         private Transform _target;
         private float _moveSpeed;
@@ -32,6 +34,11 @@ namespace Tank_Game
 
             Quaternion newRotation = Quaternion.Lerp(_transform.rotation, _target.rotation, 1f * deltaTime);
             _transform.rotation = newRotation;
+        }
+
+        public bool OnPosition()
+        {
+            return (_target.position - _transform.position).sqrMagnitude <= ON_POSITION_DISTANCE;
         }
     }
 }

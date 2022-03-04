@@ -66,10 +66,11 @@ namespace Tank_Game
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
             HelicopterController helicopterController = new HelicopterController(helicopterList);
-            
+            helicopterController.SetTargets(playerTankList);
+
             CameraController cameraController = new CameraController(playerTankList);
 
-            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
+            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, helicopterController, enemyTankList);
             EndGameController endGameController = new EndGameController(playerTankList, enemyTankList);
 
             UpdateController updateController = new UpdateController();
