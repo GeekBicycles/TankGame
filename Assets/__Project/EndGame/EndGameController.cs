@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Tank_Game
         private IPlayerTankList _currentPlayerTankCount;
         private IEnemyTankList _currentEnemyTankCount;
         private bool _isUpdateble;
+        public event Action actionPlayerWin;
+        public event Action actionEnemyWin;
 
         public EndGameController(IPlayerTankList playerList, IEnemyTankList enemyList)
         {
@@ -24,12 +27,14 @@ namespace Tank_Game
                 if (_currentPlayerTankCount.playerTanks.Count <= 0)
                 {
                     _isUpdateble = false;
+                    actionEnemyWin?.Invoke();
                     new EndGame(false);
                 }
 
                 else if (_currentEnemyTankCount.enemyTanks.Count <= 0)
                 {
                     _isUpdateble = false;
+                    actionPlayerWin?.Invoke();
                     new EndGame(true);
                 }
             }
