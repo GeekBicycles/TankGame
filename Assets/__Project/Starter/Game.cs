@@ -11,12 +11,15 @@ namespace Tank_Game
         private IInputData _inputData;
         private IInputMouseData _inputMouseData;
         private TurnBasedController _turnBasedController;
+        private ILevelDataController levelDataController;
 
         public void Start(GameStarter gameStarter)
         {
             _gameStarter = gameStarter;
 
             InitInputController();
+
+            levelDataController = new LevelDataController();
 
             WaitForStart();
 
@@ -66,11 +69,14 @@ namespace Tank_Game
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
             HelicopterController helicopterController = new HelicopterController(helicopterList);
-            
+            helicopterController.SetTargets(playerTankList);
+
             CameraController cameraController = new CameraController(playerTankList);
 
-            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, enemyTankList);
+            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, helicopterController, enemyTankList);
             EndGameController endGameController = new EndGameController(playerTankList, enemyTankList);
+            endGameController.actionPlayerWin += levelDataController.IncrementLevel;
+            endGameController.actionEnemyWin += levelDataController.ResetLevel;
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(_inputController);

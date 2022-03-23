@@ -49,6 +49,22 @@ namespace Tank_Game
             foreach (IPlayerTank playerTank in _playerTankList.playerTanks)
             {
                 playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
+                playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
+            }
+        }
+
+        private void SetDamage(IPlayerTank playerTank, float damage)
+        {
+            playerTank.health -= damage;
+            playerTank.view.healthSlider.Value = playerTank.health;
+            if (playerTank.health <= 0)
+            {
+                PlayExplosionParticle(playerTank);
+
+                playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
+                playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
+                _playerTankList.Remove(playerTank);
+                _playerTankFactory.Destroy(playerTank);
             }
         }
 
@@ -114,16 +130,7 @@ namespace Tank_Game
         {
             if (collision.collider.CompareTag(GameTags.BULLET))
             {
-                playerTank.health -= collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage;
-                playerTank.view.healthSlider.Value = playerTank.health;
-                if (playerTank.health <= 0)
-                {
-                    PlayExplosionParticle(playerTank);
-                    
-                    playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
-                    _playerTankList.Remove(playerTank);
-                    _playerTankFactory.Destroy(playerTank);
-                }
+                SetDamage(playerTank, collision.gameObject.GetComponent<BulletBehaviour>().bullet.model.damage);
             }
         }
 

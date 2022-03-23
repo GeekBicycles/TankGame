@@ -20,5 +20,7 @@ namespace Tank_Game
 
         public const string TANK_COUNT_SPAWN = "UI/TankCount";
         public const string EXPLOSION_EFFECT_PREFAB = "Prefabs/TankExplosion";
+        public const string HELICOPTER_ROUTE_POINTS = "Prefabs/HelicopterRoute";
+        public const string GUN_LINE = "Prefabs/GunLine";
     }
 }
