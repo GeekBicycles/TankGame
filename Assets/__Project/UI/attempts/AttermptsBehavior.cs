@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace Tank_Game
 {
-    public class AttermptsBehavior : IAttermptsBehavior
+    public class AttermptsBehavior : MonoBehaviour, IAttermptsBehavior
     {
-        public Text attempts { get; }
+        [SerializeField] private Text _attempts;
+        public Text attempts { get { return _attempts; } }
     }
 }
