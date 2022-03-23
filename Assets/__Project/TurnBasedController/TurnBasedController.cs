@@ -8,13 +8,17 @@ namespace Tank_Game
         private ITurnBased _secondTurn;
         private ITurnBased _thirdTurn;
         private IEnemyTankList _enemyTankList;
+        private IMementoController _mementoController;
         private List<IEnemyTank> _enemyTanksToTurn;
-        public TurnBasedController(ITurnBased firstTurn, ITurnBased secondTurn, ITurnBased thirdTurn, IEnemyTankList enemyTankList)
+        public TurnBasedController(ITurnBased firstTurn, ITurnBased secondTurn, ITurnBased thirdTurn, IEnemyTankList enemyTankList, IMementoController mementoController)
         {
             _firstTurn = firstTurn;
             _secondTurn = secondTurn;
             _thirdTurn = thirdTurn;
             _enemyTankList = enemyTankList;
+            _mementoController = mementoController;
+
+            _mementoController.Save();
 
             _firstTurn.endTurn += FirstTurnEnd;
             _firstTurn.StartTurn();
@@ -60,6 +64,9 @@ namespace Tank_Game
         private void ThirdTurnEnd()
         {
             _thirdTurn.endTurn -= ThirdTurnEnd;
+
+            _mementoController.Save();
+
             _firstTurn.endTurn += FirstTurnEnd;
             _firstTurn.StartTurn();
         }
