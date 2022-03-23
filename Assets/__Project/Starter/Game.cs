@@ -50,6 +50,9 @@ namespace Tank_Game
 
         private void BeginGame()
         {
+
+            MementoController mementoController = new MementoController();
+
             IPlayerTankList playerTankList = new PlayerTankList();
             IEnemyTankList enemyTankList = new EnemyTankList();
             IHelicopterList helicopterList = new HelicopterList();
@@ -66,6 +69,7 @@ namespace Tank_Game
 
             PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
+            mementoController.AddMemento(playerTankController);
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
             HelicopterController helicopterController = new HelicopterController(helicopterList);
@@ -73,7 +77,7 @@ namespace Tank_Game
 
             CameraController cameraController = new CameraController(playerTankList);
 
-            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, helicopterController, enemyTankList);
+            _turnBasedController = new TurnBasedController(playerTankController, enemyTankController, helicopterController, enemyTankList, mementoController);
             EndGameController endGameController = new EndGameController(playerTankList, enemyTankList);
             endGameController.actionPlayerWin += levelDataController.IncrementLevel;
             endGameController.actionEnemyWin += levelDataController.ResetLevel;
@@ -87,6 +91,7 @@ namespace Tank_Game
             updateController.AddController(cameraController);
             updateController.AddController(endGameController);
             updateController.AddController(tankCountController);
+            updateController.AddController(mementoController);
 
             _gameStarter.SetUpdateController(updateController);
         }
