@@ -100,6 +100,8 @@ namespace Tank_Game
             foreach (PlayerTankMemento playerTankMemento in playerTankMementoList.playerTankMementos)
             {
                 IPlayerTank playerTank = _playerTankFactory.GetPlayerTank(playerTankMemento.position, playerTankMemento.rotation);
+                playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
+                playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
                 playerTank.health = playerTankMemento.health;
                 _playerTankList.playerTanks.Add(playerTank);
                 if (playerTankMemento == playerTankMementoList.current)
