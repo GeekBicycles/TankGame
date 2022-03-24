@@ -7,19 +7,15 @@ namespace Tank_Game
     public class AttermptsController : IAttemptsController
     {
         #region interface
-        public IPlayerTankList playerTankList { get; set; }
-        public IEnemyTankList enemyTankList { get; set; }
-        public IAttermptsBehavior attermptsBehavior { get; set; }
-        public Transform canvasTransform { get; set; }
-        #endregion
-        private ILevelDataController _levelDataController;
+        public IPlayerTankList playerTankList;
+        public IAttermptsBehavior attermptsBehavior;
         private IAttermptsData _attermptsData;
+        #endregion
         private float _attermptsCount;
 
-        public AttermptsController(IPlayerTankList playerTankList, ILevelDataController levelDataController)
+        public AttermptsController(IPlayerTankList playerTankList)
         {
             this.playerTankList = playerTankList;
-            _levelDataController = levelDataController;
             IAttermptsdataScene AttermptsdataScene = GameObject.FindObjectOfType<AttermptsdataScene>();
             attermptsBehavior = GameObject.FindObjectOfType<AttermptsBehavior>();
             if (AttermptsdataScene == null)
@@ -37,24 +33,13 @@ namespace Tank_Game
             }
             _attermptsCount = _attermptsData.Attermpts_count;
             Text();
-            counter();
         }
-        public void counter()
+        public void EndEnemyWIN()
         {
             if (playerTankList.playerTanks.Count == 0)
             {
-                _attermptsData.Attermpts_count -= Time.deltaTime;
-                new TankSpawner(playerTankList, enemyTankList).Spawn();
+                _attermptsData.Attermpts_count -= 1;
             }
-            else if (_attermptsData.Attermpts_count == 0)
-            {
-                _levelDataController.ResetLevel();
-            }
-            else if(enemyTankList.enemyTanks.Count == 0)
-            {
-                _levelDataController.IncrementLevel();
-            }
-            
         }
         private void Text()
         {

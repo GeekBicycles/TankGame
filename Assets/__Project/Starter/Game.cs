@@ -61,6 +61,7 @@ namespace Tank_Game
             new StartHelicopterPosition().SetStartupPosition(helicopterList);
 
             BulletController bulletController = new BulletController();
+            AttermptsController attermptsController = new AttermptsController(playerTankList);
 
             TankCountController tankCountController = new TankCountController(playerTankList, enemyTankList);
 
@@ -77,6 +78,7 @@ namespace Tank_Game
             EndGameController endGameController = new EndGameController(playerTankList, enemyTankList);
             endGameController.actionPlayerWin += levelDataController.IncrementLevel;
             endGameController.actionEnemyWin += levelDataController.ResetLevel;
+            endGameController.actionEnemyWin += attermptsController.EndEnemyWIN;
 
             UpdateController updateController = new UpdateController();
             updateController.AddController(_inputController);
