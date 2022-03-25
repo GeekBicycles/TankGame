@@ -19,7 +19,7 @@ namespace Tank_Game
         {
             if (_playerTankList.current == null) return;
             _mainCamera.transform.position = _cameraPosition.GetNormalCameraPosition();
-            _mainCamera.transform.LookAt(_playerTankList.current.view.transform);
+            _mainCamera.transform.LookAt(_playerTankList.current.view.transform);         
         }
     }
 }

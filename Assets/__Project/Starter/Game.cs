@@ -72,6 +72,8 @@ namespace Tank_Game
             mementoController.AddMemento(playerTankController);
 
             EnemyTankController enemyTankController = new EnemyTankController(enemyTankList, playerTankList, bulletController);
+            mementoController.AddMemento(enemyTankController);
+
             HelicopterController helicopterController = new HelicopterController(helicopterList);
             helicopterController.SetTargets(playerTankList);
 
