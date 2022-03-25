@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public class HelicopterController : IUpdate, IHelicopterController, ITurnBased
+    public class HelicopterController : IUpdate, IHelicopterController, ITurnBased, IMemento
     {
 
         public event Action endTurn;
@@ -18,11 +19,13 @@ namespace Tank_Game
         private IPlayerTankList _targets;
         private Transform _bulletSpawnTransform;
 
+        private List<HelicopterMementoList> _helicopterMementos;
         private bool _onTurn;
         private bool _isFired;
 
         public HelicopterController(IHelicopterList helicopterList)
         {
+            _helicopterMementos = new List<HelicopterMementoList>();
             _helicopterList = helicopterList;
             _helicopterFactory = new HelicopterFactory();
             _targets = null;
@@ -52,6 +55,59 @@ namespace Tank_Game
 
             _onTurn = false;
             _isFired = false;
+        }
+
+        public void SaveMemento()
+        {
+            HelicopterMementoList helicopterMementoList = new HelicopterMementoList();
+
+            foreach (IHelicopter helicopter in _helicopterList.helicopters)
+            {
+                HelicopterMemento helicopterMemento = new HelicopterMemento();
+                helicopterMemento.position = helicopter.view.transform.position;
+                helicopterMemento.rotation = helicopter.view.transform.rotation;
+                helicopterMementoList.helicopterMementos.Add(helicopterMemento);
+
+                if (helicopter == _helicopterList.current)
+                {
+                    helicopterMementoList.current = helicopterMemento;
+                }
+            }
+            _helicopterMementos.Add(helicopterMementoList);
+        }
+        public void LoadPrev()
+        {
+            int last = _helicopterMementos.Count - 1;
+            LoadMemento(last - 1);
+        }
+
+        public void LoadMemento(int index)
+        {
+            if ((index > _helicopterMementos.Count - 1) || (index <0 ))
+            {
+                return;
+            }
+            foreach (IHelicopter helicopter in _helicopterList.helicopters)
+            {
+                helicopter.view.helicopterBehaviour.actionOnColliderEnter -= OnCollisionEnter;
+                _helicopterFactory.Destroy(helicopter);
+            }
+            _helicopterList.helicopters.Clear();
+            _helicopterList.current = null;
+
+            HelicopterMementoList helicopterMementoList = _helicopterMementos[index];
+
+            foreach (HelicopterMemento helicopterMemento in helicopterMementoList.helicopterMementos)
+            {
+                IHelicopter helicopter = _helicopterFactory.GetHelicopter(helicopterMemento.position, helicopterMemento.rotation);
+                _helicopterList.helicopters.Add(helicopter);
+                if (helicopterMemento == helicopterMementoList.current)
+                {
+                    _helicopterList.current = helicopter;
+                }
+            }
+
+            _helicopterMementos.RemoveAt(_helicopterMementos.Count - 1);
         }
 
         public void SetTargets(IPlayerTankList playerTankList)

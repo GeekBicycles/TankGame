@@ -76,6 +76,7 @@ namespace Tank_Game
 
             HelicopterController helicopterController = new HelicopterController(helicopterList);
             helicopterController.SetTargets(playerTankList);
+            mementoController.AddMemento(helicopterController);
 
             CameraController cameraController = new CameraController(playerTankList);
 
