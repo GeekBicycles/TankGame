@@ -6,9 +6,9 @@ namespace Tank_Game
 {
     public class AttermptsData : IAttermptsData
     {
-        public float Attermpts_count { get; set; }
+        public int Attermpts_count { get; set; }
 
-        public AttermptsData(float Attermpts)
+        public AttermptsData(int Attermpts)
         {
             this.Attermpts_count = Attermpts;
         }

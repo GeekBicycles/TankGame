@@ -8,20 +8,19 @@ namespace Tank_Game
     {
         #region interface
         public IPlayerTankList playerTankList;
-        public IAttermptsBehavior attermptsBehavior;
+        private AttermptsBehavior _attermptsBehavior;
         private IAttermptsData _attermptsData;
         #endregion
-        private float _attermptsCount;
 
         public AttermptsController(IPlayerTankList playerTankList)
         {
             this.playerTankList = playerTankList;
             IAttermptsdataScene AttermptsdataScene = GameObject.FindObjectOfType<AttermptsdataScene>();
-            attermptsBehavior = GameObject.FindObjectOfType<AttermptsBehavior>();
+            
             if (AttermptsdataScene == null)
             {
                 GameObject go = new GameObject(SceneObjectNames.ATTERMPTS_DATA_SCENE);
-                IAttermptsdataScene newAttermptsDataScene = go.AddComponent<AttermptsdataScene>();
+                AttermptsdataScene newAttermptsDataScene = go.AddComponent<AttermptsdataScene>();
                 _attermptsData = new AttermptsData(GameSettings.ATTERMPTS);
                 newAttermptsDataScene.attermptsData = _attermptsData;
                 
@@ -31,8 +30,12 @@ namespace Tank_Game
             {
                 _attermptsData = AttermptsdataScene.attermptsData;
             }
-            _attermptsCount = _attermptsData.Attermpts_count;
-            Text();
+            InitAttermptsDataStartInfoBehaviour();
+            TextAttermpts();
+        }
+        private void InitAttermptsDataStartInfoBehaviour()
+        {
+            _attermptsBehavior = GameObject.FindObjectOfType<AttermptsBehavior>();
         }
         public void EndEnemyWIN()
         {
@@ -41,9 +44,10 @@ namespace Tank_Game
                 _attermptsData.Attermpts_count -= 1;
             }
         }
-        private void Text()
+        private void TextAttermpts()
         {
-            attermptsBehavior.attempts.text = _attermptsCount.ToString();
+            _attermptsBehavior.attempts.text = _attermptsData.Attermpts_count.ToString();
         }
     }
 }
+

@@ -6,6 +6,6 @@ namespace Tank_Game
 {
     public interface IAttermptsData
     {
-        float Attermpts_count { get; set; }
+        public int Attermpts_count { get; set; }
     }
 }

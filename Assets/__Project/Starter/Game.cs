@@ -61,9 +61,10 @@ namespace Tank_Game
             new StartHelicopterPosition().SetStartupPosition(helicopterList);
 
             BulletController bulletController = new BulletController();
-            AttermptsController attermptsController = new AttermptsController(playerTankList);
+            
 
             TankCountController tankCountController = new TankCountController(playerTankList, enemyTankList);
+            AttermptsController attermptsController = new AttermptsController(playerTankList);
 
             PlayerTankController playerTankController = new PlayerTankController(_inputData, _inputMouseData, playerTankList, bulletController);
             IPlayerTank playerTank = playerTankController.GetPlayerTank();
