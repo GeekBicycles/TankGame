@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tank_Game
 {
-    public sealed class PlayerTankController : IUpdate, IPlayerTankController, ITurnBased
+    public sealed class PlayerTankController : IUpdate, IPlayerTankController, ITurnBased, IMemento
     {
 
         public event Action endTurn;
@@ -20,8 +21,13 @@ namespace Tank_Game
         private bool _onTurn;
         private bool _isFired;
 
+        private List<PlayerTankMementoList> _playerTankMementos;
+
         public PlayerTankController(IInputData inputData, IInputMouseData inputMouseData, IPlayerTankList playerTankList, IBulletController bulletController)
         {
+
+            _playerTankMementos = new List<PlayerTankMementoList>();
+
             _playerTankList = playerTankList;
             if (_playerTankList.playerTanks.Count > 0)
             {
@@ -40,9 +46,74 @@ namespace Tank_Game
             _playerTankFactory = new PlayerTankFactory();
             _onTurn = false;
             _isFired = false;
-            
+
             AddReactionOnBullet();
         }
+
+        public void SaveMemento()
+        {
+            PlayerTankMementoList playerTankMementoList = new PlayerTankMementoList();
+
+            foreach (IPlayerTank playerTank in _playerTankList.playerTanks)
+            {
+                PlayerTankMemento playerTankMemento = new PlayerTankMemento();
+                playerTankMemento.health = playerTank.health;
+                playerTankMemento.position = playerTank.view.transform.position;
+                playerTankMemento.rotation = playerTank.view.transform.rotation;
+                playerTankMementoList.playerTankMementos.Add(playerTankMemento);
+
+                if (playerTank == _playerTankList.current)
+                {
+                    playerTankMementoList.current = playerTankMemento;
+                }
+            }
+
+            _playerTankMementos.Add(playerTankMementoList);
+        }
+
+        public void LoadPrev()
+        {
+            int last = _playerTankMementos.Count - 1;
+            LoadMemento(last - 1);
+        }
+
+        public void LoadMemento(int index)
+        {
+            if ((index > _playerTankMementos.Count - 1) || (index < 0))
+            {
+                return;
+            }
+
+            foreach (IPlayerTank playerTank in _playerTankList.playerTanks)
+            {
+                playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
+                playerTank.view.playerTankBehavior.actionOnSetDamage -= SetDamage;
+                _playerTankFactory.Destroy(playerTank);
+            }
+
+            _playerTankList.playerTanks.Clear();
+            _playerTankList.current = null;
+
+
+            PlayerTankMementoList playerTankMementoList = _playerTankMementos[index];
+
+            foreach (PlayerTankMemento playerTankMemento in playerTankMementoList.playerTankMementos)
+            {
+                IPlayerTank playerTank = _playerTankFactory.GetPlayerTank(playerTankMemento.position, playerTankMemento.rotation);
+                playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
+                playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
+                playerTank.health = playerTankMemento.health;
+                _playerTankList.playerTanks.Add(playerTank);
+                if (playerTankMemento == playerTankMementoList.current)
+                {
+                    _playerTankList.current = playerTank;
+                }
+            }
+
+            _playerTankMementos.RemoveAt(_playerTankMementos.Count - 1);
+
+        }
+
 
         private void AddReactionOnBullet()
         {
@@ -62,7 +133,7 @@ namespace Tank_Game
                 PlayExplosionParticle(playerTank);
 
                 playerTank.view.playerTankBehavior.actionOnColliderEnter -= OnCollisionEnter;
-                playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
+                playerTank.view.playerTankBehavior.actionOnSetDamage -= SetDamage;
                 _playerTankList.Remove(playerTank);
                 _playerTankFactory.Destroy(playerTank);
             }
@@ -85,7 +156,7 @@ namespace Tank_Game
         {
             return _playerTankList.current;
         }
-       
+
 
         private bool CheckCurrentTank()
         {
@@ -116,7 +187,7 @@ namespace Tank_Game
                         EndTurn();
                     }
                 }
-                
+
             }
             else
             {
@@ -125,7 +196,7 @@ namespace Tank_Game
 
             _playerTankList.current.view.fireSlider.Value = _bulletPowerFire.GetPressFire();
         }
-        
+
         private void OnCollisionEnter(IPlayerTank playerTank, Collision collision)
         {
             if (collision.collider.CompareTag(GameTags.BULLET))
@@ -142,7 +213,7 @@ namespace Tank_Game
         {
             _playerTankList.current = newPlayerTank;
         }
-        
+
         //TODO переделать в пул
 
 

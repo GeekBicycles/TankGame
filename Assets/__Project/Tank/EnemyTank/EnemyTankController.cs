@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Collections.Generic;
 
 namespace Tank_Game
 {
-    public sealed class EnemyTankController : IUpdate, IEnemyTankController, ITurnBased
+    public sealed class EnemyTankController : IUpdate, IEnemyTankController, ITurnBased, IMemento
     {
         public event Action endTurn;
 
@@ -16,8 +17,11 @@ namespace Tank_Game
         private bool _onTurn;
         private bool _isFired;
 
+        private List<EnemyTankMementoList> _enemyTankMementos;
+
         public EnemyTankController(IEnemyTankList enemyTankList, IPlayerTankList playerTankList, IBulletController bulletController)
         {
+            _enemyTankMementos = new List<EnemyTankMementoList>();
             _enemyTankList = enemyTankList;
             _playerTankList = playerTankList;
             _enemyTankFactory = new EnemyTankFactory();
@@ -28,7 +32,58 @@ namespace Tank_Game
 
             AddReactionOnBullet();
         }
+        public void SaveMemento()
+        {
+            EnemyTankMementoList enemyTankMementoList = new EnemyTankMementoList();
+            foreach (IEnemyTank enemyTank in _enemyTankList.enemyTanks)
+            {
+                EnemyTankMemento enemyTankMemento = new EnemyTankMemento();
+                enemyTankMemento.health = enemyTank.health;
+                enemyTankMemento.position = enemyTank.view.transform.position;
+                enemyTankMemento.rotation = enemyTank.view.transform.rotation;
+                enemyTankMementoList.enemyTankMementos.Add(enemyTankMemento);
+                if(enemyTank == _enemyTankList.current)
+                {
+                    enemyTankMementoList.current = enemyTankMemento;
+                }
+            }
+            _enemyTankMementos.Add(enemyTankMementoList);
 
+        }
+        public void LoadPrev()
+        {
+            int last = _enemyTankMementos.Count - 1;
+            LoadMemento(last - 1);
+        }
+        public void LoadMemento(int index)
+        {
+            if ((index > _enemyTankMementos.Count - 1) || (index < 0))
+            {
+                return;
+            }
+
+            foreach (IEnemyTank enemyTank in _enemyTankList.enemyTanks)
+            {
+                enemyTank.view.enemyTankBehaviour.actionOnColliderEnter -= OnCollisionEnter;
+                _enemyTankFactory.Destroy(enemyTank);
+            }
+            _enemyTankList.enemyTanks.Clear();
+            _enemyTankList.current = null;
+
+            EnemyTankMementoList enemyTankMementoList = _enemyTankMementos[index];
+             foreach (EnemyTankMemento enemyTankMemento in enemyTankMementoList.enemyTankMementos)
+            {
+                IEnemyTank enemyTank = _enemyTankFactory.GetEnemyTank(enemyTankMemento.position, enemyTankMemento.rotation);
+                enemyTank.view.enemyTankBehaviour.actionOnColliderEnter += OnCollisionEnter;
+                enemyTank.health = enemyTankMemento.health;
+                _enemyTankList.enemyTanks.Add(enemyTank);
+                if(enemyTankMemento == enemyTankMementoList.current)
+                {
+                    _enemyTankList.current = enemyTank;
+                }
+            }
+            _enemyTankMementos.RemoveAt(_enemyTankMementos.Count - 1);
+        }
         private void AddReactionOnBullet()
         {
             foreach(IEnemyTank enemyTank in _enemyTankList.enemyTanks)
