@@ -7,7 +7,7 @@ namespace Tank_Game
         public bool left { get; set; }
         public bool right { get; set; }
         public bool fire { get; set; }
-        public bool FireUp { get; set; }
+        public bool fireUp { get; set; }
 
         public InputData()
         {
@@ -16,7 +16,7 @@ namespace Tank_Game
             left = false;
             right = false;
             fire = false;
-            FireUp = false;
+            fireUp = false;
         }
     }
 }

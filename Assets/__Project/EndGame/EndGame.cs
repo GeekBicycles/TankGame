@@ -18,12 +18,10 @@ namespace Tank_Game
             _endGameModel = new EndGameModel();
             _endGameView.SetText(winOrLose ? _endGameModel.WinGame : _endGameModel.LoseGame);
             _endGameView.OnRestartButtonClick += Restart;
-            Time.timeScale = 0;
         }
 
         private void Restart()
         {
-            Time.timeScale = 1;
             _endGameView.OnRestartButtonClick -= Restart;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

@@ -20,7 +20,7 @@ namespace Tank_Game
             _inputData.left = Input.GetKey(_keySetControl.left);
             _inputData.right = Input.GetKey(_keySetControl.right);
             _inputData.fire = Input.GetKey(_keySetControl.fire);
-            _inputData.FireUp = Input.GetKeyUp(_keySetControl.FireUp);
+            _inputData.fireUp = Input.GetKeyUp(_keySetControl.fireUp);
 
         }
     }

@@ -4,23 +4,30 @@ namespace Tank_Game
 {
     public sealed class CameraPosition : ICameraPosition
     {
-        private Transform _playerTankTransform;
+
+        private IPlayerTankList _playerTankList;
         private ICameraSettings _cameraSettings;
 
-        public CameraPosition(Transform target)
+        public CameraPosition(IPlayerTankList playerTankList)
         {
-            _playerTankTransform = target;
+            _playerTankList = playerTankList;
             _cameraSettings = new CameraSettings();
         }
 
         public Vector3 GetNormalCameraPosition()
         {
+            if(_playerTankList.current == null)
+            {
+                return Vector3.zero;
+            }
             Vector3 cameraGlobalOffSet = Vector3.zero;
+            Transform _playerTankTransform = _playerTankList.current.view.transform;
             cameraGlobalOffSet += _playerTankTransform.forward * _cameraSettings.offSet.z;
             cameraGlobalOffSet += _playerTankTransform.up * _cameraSettings.offSet.y;
             cameraGlobalOffSet += _playerTankTransform.right * _cameraSettings.offSet.x;
 
             return _playerTankTransform.position + cameraGlobalOffSet;
+
         }
     }
 }
