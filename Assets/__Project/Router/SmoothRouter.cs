@@ -5,15 +5,16 @@ using UnityEngine;
 
 namespace Tank_Game
 {
-    public class SmoothRouter : ISmoothRouter
+    public class SmoothRouter : ISmoothRouter, IMemento
     {
         private const float MIN_DISTANCE = 0.1f;
 
         private GameObject _gameObject;
-        private IRouter _router;
+        private Router _router;
         private Transform _target;
         private float _moveSpeed;
         private float _rotateSpeed;
+        private List<SmoothRouterMemento> _gameObjectTransformsMemento;
 
         public SmoothRouter(ITransformPointList pointList, Transform startPosition, float moveSpeed, float rotateSpeed)
         {
@@ -25,6 +26,8 @@ namespace Tank_Game
             _target = _router.GetNextPoint();
             _moveSpeed = moveSpeed;
             _rotateSpeed = rotateSpeed;
+
+            _gameObjectTransformsMemento = new List<SmoothRouterMemento>();
         }
 
         public void Update(float deltaTime)
@@ -49,6 +52,40 @@ namespace Tank_Game
         public void Dispose()
         {
             GameObject.Destroy(_gameObject);
+        }
+
+        public void LoadMemento(int index)
+        {
+            if ((index > _gameObjectTransformsMemento.Count - 1) || (index < 0))
+            {
+                return;
+            }
+
+            SmoothRouterMemento gameObjectTransform = _gameObjectTransformsMemento[index];
+            _gameObject.transform.position = gameObjectTransform.position;
+            _gameObject.transform.rotation = gameObjectTransform.rotation;
+
+            while (index < _gameObjectTransformsMemento.Count - 1)
+            {
+                _gameObjectTransformsMemento.RemoveAt(_gameObjectTransformsMemento.Count - 1);
+            }
+
+            _router.LoadMemento(index);
+            _target = _router.GetPoint();
+        }
+
+        public void LoadPrev()
+        {
+            int last = _gameObjectTransformsMemento.Count - 1;
+            LoadMemento(last - 1);
+        }
+
+        public void SaveMemento()
+        {
+            _router.SaveMemento();
+
+            SmoothRouterMemento gameObjectTransform = new SmoothRouterMemento(_gameObject.transform.position, _gameObject.transform.rotation);
+            _gameObjectTransformsMemento.Add(gameObjectTransform);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Tank_Game
 
         private IHelicopterList _helicopterList;
         private IHelicopterFactory _helicopterFactory;
-        private ISmoothRouter _router;
+        private SmoothRouter _router;
         private IHelicopterMoveController _moveController;
         private ITwinController _upTwinController;
         private ITwinController _downTwinController;
@@ -74,6 +74,8 @@ namespace Tank_Game
                 }
             }
             _helicopterMementos.Add(helicopterMementoList);
+
+            _router.SaveMemento();
         }
         public void LoadPrev()
         {
@@ -108,6 +110,10 @@ namespace Tank_Game
             }
 
             _helicopterMementos.RemoveAt(_helicopterMementos.Count - 1);
+
+            _router.LoadMemento(index);
+
+            _moveController.SetDestination(_router.GetTarget());
         }
 
         public void SetTargets(IPlayerTankList playerTankList)
