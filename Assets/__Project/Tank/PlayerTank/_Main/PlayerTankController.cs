@@ -103,6 +103,7 @@ namespace Tank_Game
                 playerTank.view.playerTankBehavior.actionOnColliderEnter += OnCollisionEnter;
                 playerTank.view.playerTankBehavior.actionOnSetDamage += SetDamage;
                 playerTank.health = playerTankMemento.health;
+                playerTank.view.healthSlider.Value = playerTank.health;
                 _playerTankList.playerTanks.Add(playerTank);
                 if (playerTankMemento == playerTankMementoList.current)
                 {

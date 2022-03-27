@@ -76,6 +76,7 @@ namespace Tank_Game
                 IEnemyTank enemyTank = _enemyTankFactory.GetEnemyTank(enemyTankMemento.position, enemyTankMemento.rotation);
                 enemyTank.view.enemyTankBehaviour.actionOnColliderEnter += OnCollisionEnter;
                 enemyTank.health = enemyTankMemento.health;
+                enemyTank.view.healthSlider.Value = enemyTank.health;
                 _enemyTankList.enemyTanks.Add(enemyTank);
                 if(enemyTankMemento == enemyTankMementoList.current)
                 {
